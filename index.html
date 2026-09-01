@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>বসনীসে হেসাব খাতা - প্রফেশনাল দোকান ব্যবস্থাপনা</title>
+    <meta name="theme-color" content="#6C5CE7">
+    <title>বসনীসে হেসাব খাতা - প্রিমিয়াম দোকান ব্যবস্থাপনা</title>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -28,28 +29,40 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         :root {
             --primary: #6C5CE7;
             --primary-dark: #5A4BD1;
             --primary-light: #A29BFE;
+            --primary-gradient: linear-gradient(135deg, #6C5CE7 0%, #5A4BD1 100%);
             --success: #00B894;
+            --success-gradient: linear-gradient(135deg, #00B894 0%, #00A381 100%);
             --danger: #E17055;
+            --danger-gradient: linear-gradient(135deg, #E17055 0%, #D63031 100%);
             --warning: #FDCB6E;
+            --warning-gradient: linear-gradient(135deg, #FDCB6E 0%, #F39C12 100%);
             --info: #0984E3;
+            --info-gradient: linear-gradient(135deg, #0984E3 0%, #0366D6 100%);
             --dark: #2D3436;
             --gray: #636E72;
+            --gray-light: #B2BEC3;
             --light: #F8F9FA;
             --white: #FFFFFF;
             --border: #E9ECEF;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --radius-lg: 24px;
-            --sidebar-width: 280px;
-            --header-height: 72px;
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --header-height: 70px;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -58,9 +71,10 @@
             min-height: 100vh;
             overflow-x: hidden;
             color: var(--dark);
+            font-size: 14px;
         }
         
-        /* Enhanced Login Page */
+        /* === PREMIUM LOGIN PAGE === */
         .login-wrapper {
             min-height: 100vh;
             display: flex;
@@ -87,15 +101,16 @@
         }
         
         .login-card {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.98);
             backdrop-filter: blur(20px);
-            border-radius: var(--radius-lg);
+            border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             padding: 40px;
             width: 100%;
-            max-width: 460px;
+            max-width: 420px;
             position: relative;
             z-index: 1;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .login-card::before {
@@ -104,49 +119,70 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--success), var(--warning), var(--danger));
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            height: 5px;
+            background: linear-gradient(90deg, #6C5CE7, #00B894, #FDCB6E, #E17055);
+            border-radius: 24px 24px 0 0;
         }
         
         .login-logo {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 25px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
             animation: float 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
         }
         
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
         }
         
         .login-logo i {
-            font-size: 45px;
+            font-size: 40px;
             color: white;
+            z-index: 1;
         }
         
         .login-title {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             text-align: center;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.3;
         }
         
         .login-subtitle {
             text-align: center;
             color: var(--gray);
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 30px;
+            line-height: 1.5;
         }
         
         .form-group {
@@ -171,21 +207,30 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
+            font-size: 16px;
             transition: all 0.3s;
+            z-index: 1;
         }
         
         .input-group:focus-within i {
             color: var(--primary);
         }
         
+        .input-group .password-toggle {
+            left: auto;
+            right: 14px;
+            cursor: pointer;
+        }
+        
         .form-control {
             width: 100%;
-            padding: 14px 16px 14px 44px;
+            padding: 14px 16px 14px 46px;
             border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             font-size: 15px;
             transition: all 0.3s ease;
             background: var(--light);
+            color: var(--dark);
         }
         
         .form-control:focus {
@@ -195,18 +240,39 @@
             background: white;
         }
         
+        .form-control::placeholder {
+            color: var(--gray-light);
+        }
+        
         .btn-login {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-login:hover::before {
+            left: 100%;
         }
         
         .btn-login:hover {
@@ -227,6 +293,7 @@
             color: var(--primary);
             text-decoration: none;
             font-size: 14px;
+            font-weight: 500;
             transition: all 0.3s;
         }
         
@@ -234,14 +301,29 @@
             color: var(--primary-dark);
         }
         
-        /* Enhanced Dashboard */
+        .login-demo {
+            margin-top: 24px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .login-demo span {
+            font-size: 12px;
+            color: var(--gray);
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        /* === PREMIUM DASHBOARD === */
         .dashboard-wrapper {
             display: none;
             min-height: 100vh;
             background: #f0f2f5;
         }
         
-        /* Advanced Header */
+        /* Premium Header */
         .main-header {
             position: fixed;
             top: 0;
@@ -254,7 +336,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 16px;
             z-index: 1000;
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
@@ -262,18 +344,22 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .menu-toggle {
             background: none;
             border: none;
-            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s;
+            font-size: 20px;
             color: var(--dark);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .menu-toggle:hover {
@@ -282,9 +368,9 @@
         }
         
         .header-logo {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            width: 42px;
+            height: 42px;
+            background: var(--primary-gradient);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -293,64 +379,36 @@
         }
         
         .header-logo i {
-            font-size: 22px;
+            font-size: 20px;
             color: white;
         }
         
         .header-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: var(--dark);
-            margin-left: 10px;
+            margin-left: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
         }
         
         .header-center {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--light);
-            padding: 4px;
-            border-radius: 12px;
-        }
-        
-        .quick-nav-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray);
-        }
-        
-        .quick-nav-btn:hover {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        
-        .quick-nav-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+            display: none;
         }
         
         .header-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .header-btn {
             background: var(--light);
             border: none;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -374,10 +432,10 @@
             right: -4px;
             background: var(--danger);
             color: white;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -393,8 +451,8 @@
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 6px 12px;
+            gap: 8px;
+            padding: 4px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
@@ -406,21 +464,22 @@
         }
         
         .user-avatar {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--success));
+            background: var(--primary-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .user-name {
-            font-size: 14px;
+            display: none;
+            font-size: 13px;
             font-weight: 600;
             color: var(--dark);
         }
@@ -441,17 +500,17 @@
             transform: scale(1.1);
         }
         
-        /* Enhanced Sidebar */
+        /* Premium Sidebar */
         .sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 999;
             display: none;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(4px);
         }
         
         .sidebar-overlay.active {
@@ -461,14 +520,29 @@
         .main-sidebar {
             position: fixed;
             top: 0;
-            left: -300px;
-            width: 300px;
+            left: -280px;
+            width: 280px;
             height: 100vh;
             background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
             z-index: 1001;
             transition: all 0.3s ease;
             overflow-y: auto;
             padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
+        }
+        
+        .main-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .main-sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .main-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
         }
         
         .main-sidebar.active {
@@ -485,7 +559,7 @@
         .sidebar-logo {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary-gradient);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -501,7 +575,7 @@
         
         .sidebar-brand {
             color: white;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             flex: 1;
         }
@@ -514,6 +588,7 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 8px;
+            transition: all 0.3s;
         }
         
         .sidebar-close:hover {
@@ -546,6 +621,23 @@
             transition: all 0.3s ease;
             margin-bottom: 4px;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary-gradient);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+        
+        .sidebar-item:hover::before {
+            transform: scaleY(1);
         }
         
         .sidebar-item:hover {
@@ -555,9 +647,13 @@
         }
         
         .sidebar-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary-gradient);
             color: white;
             box-shadow: 0 4px 12px rgba(108,92,231,0.4);
+        }
+        
+        .sidebar-item.active::before {
+            transform: scaleY(1);
         }
         
         .sidebar-item-icon {
@@ -569,7 +665,8 @@
             border-radius: 10px;
             background: rgba(255,255,255,0.1);
             margin-right: 12px;
-            font-size: 16px;
+            font-size: 15px;
+            transition: all 0.3s;
         }
         
         .sidebar-item.active .sidebar-item-icon {
@@ -578,27 +675,28 @@
         
         .sidebar-item-text {
             flex: 1;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
         }
         
         .sidebar-badge {
             background: var(--danger);
             color: white;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             padding: 2px 8px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
         
-        /* Enhanced Main Content */
+        /* Premium Main Content */
         .main-content {
             margin-left: 0;
             padding-top: calc(var(--header-height) + 20px);
             min-height: 100vh;
             transition: all 0.3s ease;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-bottom: 80px;
         }
         
         .content-section {
@@ -621,31 +719,18 @@
             }
         }
         
-        /* Enhanced Stats Cards */
+        /* Premium Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        
-        @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .stat-card {
             background: white;
-            border-radius: var(--radius);
-            padding: 24px;
+            border-radius: 16px;
+            padding: 20px;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
             position: relative;
@@ -659,34 +744,34 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            opacity: 0.1;
-            transform: translate(30px, -30px);
+            opacity: 0.05;
+            transform: translate(20px, -20px);
             background: var(--primary);
         }
         
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
             border-color: var(--primary);
         }
         
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            margin-bottom: 16px;
+            font-size: 18px;
+            margin-bottom: 12px;
             transition: all 0.3s;
         }
         
         .stat-card:hover .stat-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
         }
         
         .stat-icon.primary {
@@ -710,29 +795,30 @@
         }
         
         .stat-label {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--gray);
             font-weight: 500;
+            margin-bottom: 4px;
         }
         
         .stat-value {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--dark);
-            margin-top: 4px;
-            background: linear-gradient(135deg, var(--dark), var(--gray));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
         
         .stat-trend {
             position: absolute;
-            bottom: 16px;
-            right: 16px;
-            font-size: 12px;
+            bottom: 12px;
+            right: 12px;
+            font-size: 10px;
             font-weight: 600;
             padding: 4px 8px;
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
         .stat-trend.up {
@@ -745,11 +831,11 @@
             color: var(--danger);
         }
         
-        /* Enhanced Cards */
+        /* Premium Cards */
         .card {
             background: white;
-            border-radius: var(--radius);
-            padding: 24px;
+            border-radius: 16px;
+            padding: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
             border: 1px solid transparent;
@@ -764,38 +850,55 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--dark);
         }
         
         .card-subtitle {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--gray);
             margin-top: 4px;
         }
         
-        /* Enhanced Buttons */
+        /* Premium Buttons */
         .btn {
-            padding: 12px 20px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary-gradient);
             color: white;
             box-shadow: 0 4px 12px rgba(108,92,231,0.3);
         }
@@ -806,25 +909,30 @@
         }
         
         .btn-success {
-            background: linear-gradient(135deg, #00b894, #00a381);
+            background: var(--success-gradient);
             color: white;
             box-shadow: 0 4px 12px rgba(0,184,148,0.3);
         }
         
         .btn-danger {
-            background: linear-gradient(135deg, #e17055, #d63031);
+            background: var(--danger-gradient);
             color: white;
             box-shadow: 0 4px 12px rgba(225,112,85,0.3);
         }
         
         .btn-info {
-            background: linear-gradient(135deg, #0984e3, #0366d6);
+            background: var(--info-gradient);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning-gradient);
             color: white;
         }
         
         .btn-sm {
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 6px 10px;
+            font-size: 11px;
             border-radius: 8px;
         }
         
@@ -843,10 +951,10 @@
             color: var(--primary);
         }
         
-        /* Enhanced Tables */
+        /* Premium Tables */
         .table-container {
             background: white;
-            border-radius: var(--radius);
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
         }
@@ -854,6 +962,7 @@
         .table-wrapper {
             overflow-x: auto;
             padding: 0;
+            -webkit-overflow-scrolling: touch;
         }
         
         table {
@@ -862,25 +971,24 @@
         }
         
         thead {
-            background: linear-gradient(135deg, var(--light), #f0f0f0);
+            background: var(--light);
         }
         
         th {
-            padding: 15px;
+            padding: 12px;
             text-align: left;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
-            border-bottom: 2px solid var(--border);
         }
         
         td {
-            padding: 15px;
+            padding: 12px;
             border-bottom: 1px solid var(--border);
-            font-size: 14px;
+            font-size: 13px;
             color: var(--dark);
         }
         
@@ -896,18 +1004,18 @@
             border-bottom: none;
         }
         
-        /* Enhanced Search Box */
+        /* Premium Search */
         .search-box {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .search-box input {
             width: 100%;
-            padding: 14px 16px 14px 48px;
+            padding: 12px 16px 12px 44px;
             border: 2px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 15px;
+            border-radius: 12px;
+            font-size: 14px;
             background: white;
             transition: all 0.3s;
         }
@@ -920,14 +1028,14 @@
         
         .search-box i {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
-            font-size: 18px;
+            font-size: 16px;
         }
         
-        /* Enhanced Modal */
+        /* Premium Modal */
         .modal {
             display: none;
             position: fixed;
@@ -940,14 +1048,15 @@
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(4px);
+            padding: 20px;
         }
         
         .modal-content {
             background: white;
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            width: 90%;
-            max-width: 520px;
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease;
@@ -969,13 +1078,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--border);
         }
         
         .modal-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--dark);
         }
@@ -983,14 +1092,14 @@
         .modal-close {
             background: var(--light);
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s;
         }
         
@@ -1004,21 +1113,21 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 24px;
+            margin-top: 20px;
             padding-top: 16px;
             border-top: 1px solid var(--border);
         }
         
-        /* Enhanced Payment Methods */
+        /* Premium Payment Methods */
         .payment-methods {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
         }
         
         .payment-method {
-            padding: 14px;
+            padding: 12px;
             border: 2px solid var(--border);
             border-radius: 12px;
             background: white;
@@ -1042,33 +1151,34 @@
         
         .payment-method i {
             display: block;
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 20px;
+            margin-bottom: 6px;
         }
         
         .payment-method span {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
+            display: block;
         }
         
-        /* Enhanced Notification */
+        /* Premium Notification */
         .notification-container {
             position: fixed;
-            top: 90px;
-            right: 20px;
+            top: 85px;
+            right: 16px;
             z-index: 3000;
-            max-width: 380px;
-            width: calc(100% - 40px);
+            max-width: 360px;
+            width: calc(100% - 32px);
         }
         
         .notification {
             background: white;
             border-radius: 14px;
-            padding: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            padding: 14px;
+            box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 10px;
             animation: slideInRight 0.3s ease;
             border-left: 4px solid var(--primary);
@@ -1107,10 +1217,15 @@
             border: none;
             color: var(--gray);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
+            padding: 4px;
         }
         
-        /* Enhanced Loading */
+        .notification-close:hover {
+            color: var(--danger);
+        }
+        
+        /* Premium Loading */
         .loading {
             display: none;
             position: fixed;
@@ -1130,13 +1245,13 @@
         }
         
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--light);
-            border-top: 5px solid var(--primary);
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--light);
+            border-top: 4px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
         }
         
         @keyframes spin {
@@ -1150,143 +1265,44 @@
             color: var(--gray);
         }
         
-        /* Enhanced Charts */
+        /* Premium Charts */
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 250px;
         }
         
-        /* Enhanced Empty State */
+        /* Premium Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: var(--gray);
         }
         
         .empty-state i {
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: 48px;
+            margin-bottom: 16px;
             color: var(--border);
         }
         
         .empty-state h4 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--dark);
         }
         
-        /* Enhanced Reports */
-        .date-picker-btn {
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 2px solid var(--border);
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-            font-weight: 600;
+        .empty-state p {
+            font-size: 13px;
             color: var(--gray);
         }
         
-        .date-picker-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        
-        .date-picker-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .header-center {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-title {
-                display: none;
-            }
-            
-            .user-name {
-                display: none;
-            }
-            
-            .main-content {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            
-            .content-section {
-                padding: 10px;
-            }
-            
-            .payment-methods {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .card {
-                padding: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            
-            .modal-content {
-                padding: 20px;
-            }
-            
-            .login-card {
-                padding: 30px 20px;
-            }
-            
-            .header-right {
-                gap: 4px;
-            }
-            
-            .header-btn {
-                width: 36px;
-                height: 36px;
-            }
-        }
-        
-        /* Print */
-        @media print {
-            .main-header,
-            .main-sidebar,
-            .sidebar-overlay,
-            .btn,
-            .search-box,
-            .notification-container,
-            .date-picker-btn {
-                display: none !important;
-            }
-            
-            .main-content {
-                padding-top: 0;
-                margin-left: 0;
-            }
-            
-            .content-section {
-                display: block !important;
-            }
-        }
-        
-        /* Status Badge */
+        /* Premium Status Badge */
         .status-badge {
             padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 11px;
             font-weight: 600;
+            display: inline-block;
         }
         
         .status-badge.success {
@@ -1309,33 +1325,33 @@
             color: var(--info);
         }
         
-        /* Summary Cards */
+        /* Premium Summary Cards */
         .summary-card {
             background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(108,92,231,0.02));
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 16px;
             border: 1px solid rgba(108,92,231,0.1);
         }
         
         .summary-card h6 {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--gray);
             margin-bottom: 8px;
         }
         
         .summary-card .summary-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--dark);
         }
         
-        /* Switch */
+        /* Premium Switch */
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 50px;
+            height: 28px;
         }
         
         .switch input {
@@ -1359,10 +1375,10 @@
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
@@ -1374,12 +1390,293 @@
         }
         
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(22px);
+        }
+        
+        /* Premium Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-action {
+            background: white;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .quick-action i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .quick-action span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        
+        /* Mobile Bottom Navigation */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            z-index: 1000;
+            padding: 8px 16px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-bottom-nav.active {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+        }
+        
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 4px;
+        }
+        
+        .mobile-nav-item:hover {
+            background: var(--light);
+        }
+        
+        .mobile-nav-item.active {
+            background: rgba(108,92,231,0.1);
+            color: var(--primary);
+        }
+        
+        .mobile-nav-item i {
+            font-size: 20px;
+            color: var(--gray);
+        }
+        
+        .mobile-nav-item.active i {
+            color: var(--primary);
+        }
+        
+        .mobile-nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        
+        .mobile-nav-item.active span {
+            color: var(--primary);
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .header-center {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                background: var(--light);
+                padding: 4px;
+                border-radius: 12px;
+            }
+            
+            .quick-nav-btn {
+                background: transparent;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--gray);
+            }
+            
+            .quick-nav-btn:hover {
+                background: white;
+                color: var(--primary);
+                box-shadow: var(--shadow-sm);
+            }
+            
+            .quick-nav-btn.active {
+                background: var(--primary-gradient);
+                color: white;
+                box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+            }
+            
+            .user-name {
+                display: block;
+            }
+            
+            .payment-methods {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-title {
+                display: none;
+            }
+            
+            .main-content {
+                padding-left: 12px;
+                padding-right: 12px;
+                padding-bottom: 80px;
+            }
+            
+            .mobile-bottom-nav.active {
+                display: grid;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .stat-card {
+                padding: 16px;
+            }
+            
+            .stat-value {
+                font-size: 20px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .header-right {
+                gap: 4px;
+            }
+            
+            .header-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            
+            .user-profile {
+                padding: 2px;
+            }
+            
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            
+            .logout-btn {
+                font-size: 16px;
+            }
+        }
+        
+        /* Print */
+        @media print {
+            .main-header,
+            .main-sidebar,
+            .sidebar-overlay,
+            .btn,
+            .search-box,
+            .notification-container,
+            .mobile-bottom-nav,
+            .quick-actions {
+                display: none !important;
+            }
+            
+            .main-content {
+                padding-top: 0;
+                margin-left: 0;
+                padding: 0;
+            }
+            
+            .content-section {
+                display: block !important;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid var(--border);
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-light);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray);
         }
     </style>
 </head>
 <body>
-    <!-- Enhanced Loading -->
+    <!-- Premium Loading -->
     <div id="loading" class="loading">
         <div class="loading-content">
             <div class="spinner"></div>
@@ -1387,7 +1684,7 @@
         </div>
     </div>
     
-    <!-- Enhanced Login Page -->
+    <!-- Premium Login Page -->
     <div id="login-page" class="login-wrapper">
         <div class="login-bg"></div>
         <div class="login-card">
@@ -1411,6 +1708,7 @@
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="password" class="form-control" placeholder="আপনার পাসওয়ার্ড" required>
+                        <i class="fas fa-eye password-toggle" id="password-toggle" onclick="togglePassword()"></i>
                     </div>
                 </div>
                 
@@ -1427,8 +1725,9 @@
                 </a>
             </div>
             
-            <div class="forgot-password">
-                <span style="font-size: 12px; color: var(--gray);">ডেমো অ্যাকাউন্ট: demo@bosnishe.com / demo123</span>
+            <div class="login-demo">
+                <span>ডেমো অ্যাকাউন্ট</span>
+                <strong>demo@bosnishe.com</strong> / <strong>demo123</strong>
             </div>
         </div>
     </div>
@@ -1463,9 +1762,9 @@
         </div>
     </div>
     
-    <!-- Enhanced Dashboard -->
+    <!-- Premium Dashboard -->
     <div id="dashboard" class="dashboard-wrapper">
-        <!-- Advanced Header -->
+        <!-- Premium Header -->
         <header class="main-header">
             <div class="header-left">
                 <button class="menu-toggle" onclick="toggleSidebar()">
@@ -1524,7 +1823,7 @@
         <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
         
-        <!-- Enhanced Sidebar -->
+        <!-- Premium Sidebar -->
         <aside class="main-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
@@ -1594,15 +1893,43 @@
         <main class="main-content" id="main-content">
             <!-- Dashboard Section -->
             <div id="dashboard-section" class="content-section active">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 4px;">স্বাগতম! 👋</h2>
-                        <p style="color: var(--gray);">আজকের ব্যবসার সারসংক্ষেপ দেখুন</p>
+                        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px;">স্বাগতম! 👋</h2>
+                        <p style="color: var(--gray); font-size: 13px;">আজকের ব্যবসার সারসংক্ষেপ</p>
                     </div>
                     <button class="btn btn-primary" onclick="openSaleModal()">
                         <i class="fas fa-plus"></i>
-                        নতুন বিক্রি
+                        <span style="display: none;">নতুন বিক্রি</span>
                     </button>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="quick-action" onclick="openProductModal()">
+                        <i class="fas fa-box"></i>
+                        <span>পণ্য যোগ</span>
+                    </div>
+                    <div class="quick-action" onclick="openSaleModal()">
+                        <i class="fas fa-cart-plus"></i>
+                        <span>বিক্রি</span>
+                    </div>
+                    <div class="quick-action" onclick="openPurchaseModal()">
+                        <i class="fas fa-cart-arrow-down"></i>
+                        <span>ক্রয়</span>
+                    </div>
+                    <div class="quick-action" onclick="openCustomerModal()">
+                        <i class="fas fa-user-plus"></i>
+                        <span>কাস্টমার</span>
+                    </div>
+                    <div class="quick-action" onclick="openExpenseModal()">
+                        <i class="fas fa-wallet"></i>
+                        <span>খরচ</span>
+                    </div>
+                    <div class="quick-action" onclick="showSection('reports')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>রিপোর্ট</span>
+                    </div>
                 </div>
                 
                 <div class="stats-grid">
@@ -1659,7 +1986,7 @@
                         </div>
                         <button class="btn btn-secondary btn-sm" onclick="window.print()">
                             <i class="fas fa-print"></i>
-                            প্রিন্ট
+                            <span style="display: none;">প্রিন্ট</span>
                         </button>
                     </div>
                     <div class="chart-container">
@@ -1667,7 +1994,7 @@
                     </div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
                     <div class="card">
                         <div class="card-header">
                             <div>
@@ -1698,25 +2025,26 @@
             
             <!-- Products Section -->
             <div id="products-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 24px; font-weight: 800;">
+                        <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-boxes"></i> পণ্য ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); margin-top: 4px;">আপনার দোকানের পণ্য পরিচালনা করুন</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">আপনার দোকানের পণ্য পরিচালনা করুন</p>
                     </div>
                     <button class="btn btn-primary" onclick="openProductModal()">
-                        <i class="fas fa-plus"></i> নতুন পণ্য
+                        <i class="fas fa-plus"></i>
+                        <span style="display: none;">নতুন পণ্য</span>
                     </button>
                 </div>
                 
-                <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-                    <div class="search-box" style="flex: 1; min-width: 250px; margin-bottom: 0;">
+                <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <div class="search-box" style="flex: 1; min-width: 200px; margin-bottom: 0;">
                         <i class="fas fa-search"></i>
                         <input type="text" id="product-search" placeholder="পণ্য খুঁজুন..." oninput="filterProducts()">
                     </div>
                     
-                    <select class="form-control" style="width: auto; min-width: 150px;" onchange="filterProductsByCategory(this.value)">
+                    <select class="form-control" style="width: auto; min-width: 130px;" onchange="filterProductsByCategory(this.value)">
                         <option value="">সব ক্যাটাগরি</option>
                         <option value="কাঁচামাল">কাঁচামাল</option>
                         <option value="মুদি">মুদি</option>
@@ -1732,8 +2060,8 @@
                                 <tr>
                                     <th>পণ্য</th>
                                     <th>ক্যাটাগরি</th>
-                                    <th>ক্রয় মূল্য</th>
-                                    <th>বিক্রয় মূল্য</th>
+                                    <th>ক্রয়</th>
+                                    <th>বিক্রয়</th>
                                     <th>স্টক</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
@@ -1746,15 +2074,16 @@
             
             <!-- Sales Section -->
             <div id="sales-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 24px; font-weight: 800;">
+                        <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-cart-plus"></i> বিক্রি ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); margin-top: 4px;">সকল বিক্রির হিসাব রাখুন</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">সকল বিক্রির হিসাব রাখুন</p>
                     </div>
                     <button class="btn btn-primary" onclick="openSaleModal()">
-                        <i class="fas fa-plus"></i> নতুন বিক্রি
+                        <i class="fas fa-plus"></i>
+                        <span style="display: none;">নতুন বিক্রি</span>
                     </button>
                 </div>
                 
@@ -1784,15 +2113,16 @@
             
             <!-- Purchases Section -->
             <div id="purchases-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 24px; font-weight: 800;">
+                        <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-cart-arrow-down"></i> ক্রয় ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); margin-top: 4px;">নতুন পণ্য ক্রয়ের হিসাব</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">নতুন পণ্য ক্রয়ের হিসাব</p>
                     </div>
                     <button class="btn btn-primary" onclick="openPurchaseModal()">
-                        <i class="fas fa-plus"></i> নতুন ক্রয়
+                        <i class="fas fa-plus"></i>
+                        <span style="display: none;">নতুন ক্রয়</span>
                     </button>
                 </div>
                 
@@ -1822,15 +2152,16 @@
             
             <!-- Customers Section -->
             <div id="customers-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 24px; font-weight: 800;">
+                        <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-users"></i> কাস্টমার ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); margin-top: 4px;">আপনার কাস্টমারদের তথ্য</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">আপনার কাস্টমারদের তথ্য</p>
                     </div>
                     <button class="btn btn-primary" onclick="openCustomerModal()">
-                        <i class="fas fa-plus"></i> নতুন কাস্টমার
+                        <i class="fas fa-plus"></i>
+                        <span style="display: none;">নতুন কাস্টমার</span>
                     </button>
                 </div>
                 
@@ -1858,15 +2189,16 @@
             
             <!-- Expenses Section -->
             <div id="expenses-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 24px; font-weight: 800;">
+                        <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-wallet"></i> খরচ ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); margin-top: 4px;">দোকানের খরচের হিসাব</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">দোকানের খরচের হিসাব</p>
                     </div>
                     <button class="btn btn-primary" onclick="openExpenseModal()">
-                        <i class="fas fa-plus"></i> নতুন খরচ
+                        <i class="fas fa-plus"></i>
+                        <span style="display: none;">নতুন খরচ</span>
                     </button>
                 </div>
                 
@@ -1895,17 +2227,17 @@
             
             <!-- Reports Section -->
             <div id="reports-section" class="content-section">
-                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
                     <i class="fas fa-chart-line"></i> রিপোর্ট ও বিশ্লেষণ
                 </h2>
                 
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px;">
                     <button class="date-picker-btn active" onclick="filterByPeriod('today', this)">আজ</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('this_week', this)">এই সপ্তাহ</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('this_month', this)">এই মাস</button>
+                    <button class="date-picker-btn" onclick="filterByPeriod('this_week', this)">সপ্তাহ</button>
+                    <button class="date-picker-btn" onclick="filterByPeriod('this_month', this)">মাস</button>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px;">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">বিক্রি রিপোর্ট</h3>
@@ -1929,25 +2261,28 @@
                     <div class="card-header">
                         <h3 class="card-title">ব্যবসার সারসংক্ষেপ</h3>
                     </div>
-                    <div id="report-summary" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;"></div>
+                    <div id="report-summary" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
                 </div>
                 
-                <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="printReport()">
-                        <i class="fas fa-print"></i> প্রিন্ট
+                        <i class="fas fa-print"></i>
+                        <span style="display: none;">প্রিন্ট</span>
                     </button>
                     <button class="btn btn-success" onclick="downloadReport()">
-                        <i class="fas fa-download"></i> CSV ডাউনলোড
+                        <i class="fas fa-download"></i>
+                        <span style="display: none;">CSV</span>
                     </button>
                     <button class="btn btn-info" onclick="downloadExcelReport()">
-                        <i class="fas fa-file-excel"></i> Excel
+                        <i class="fas fa-file-excel"></i>
+                        <span style="display: none;">Excel</span>
                     </button>
                 </div>
             </div>
             
             <!-- Recycle Bin Section -->
             <div id="recycle-section" class="content-section">
-                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
                     <i class="fas fa-recycle"></i> রিসাইকেল বিন
                 </h2>
                 
@@ -1958,7 +2293,8 @@
                             <p class="card-subtitle">আপনি যেকোনো সময় পুনরুদ্ধার করতে পারবেন</p>
                         </div>
                         <button class="btn btn-danger btn-sm" onclick="emptyRecycleBin()">
-                            <i class="fas fa-trash-alt"></i> সব মুছুন
+                            <i class="fas fa-trash-alt"></i>
+                            <span style="display: none;">সব মুছুন</span>
                         </button>
                     </div>
                     
@@ -1982,7 +2318,7 @@
             
             <!-- Settings Section -->
             <div id="settings-section" class="content-section">
-                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
                     <i class="fas fa-cog"></i> সেটিংস
                 </h2>
                 
@@ -1991,7 +2327,7 @@
                         <h3 class="card-title">প্রোফাইল সেটিংস</h3>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 16px;">
                         <label class="form-label">দোকানের নাম</label>
                         <div style="display: flex; gap: 8px;">
                             <input type="text" id="shop-name" class="form-control" placeholder="দোকানের নাম">
@@ -1999,7 +2335,7 @@
                         </div>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 16px;">
                         <label class="form-label">মুদ্রা</label>
                         <select id="currency" class="form-control" onchange="updateCurrency()">
                             <option value="BDT">টাকা (BDT)</option>
@@ -2019,9 +2355,9 @@
                         <h3 class="card-title">নোটিফিকেশন</h3>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                         <div>
-                            <div style="font-weight: 600;">ইমেইল নোটিফিকেশন</div>
+                            <div style="font-weight: 600; font-size: 14px;">ইমেইল নোটিফিকেশন</div>
                             <div style="font-size: 12px; color: var(--gray);">প্রতিটি লেনদেনে ইমেইল</div>
                         </div>
                         <label class="switch">
@@ -2030,9 +2366,9 @@
                         </label>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                         <div>
-                            <div style="font-weight: 600;">পুশ নোটিফিকেশন</div>
+                            <div style="font-weight: 600; font-size: 14px;">পুশ নোটিফিকেশন</div>
                             <div style="font-size: 12px; color: var(--gray);">রিয়েল-টাইম নোটিফিকেশন</div>
                         </div>
                         <label class="switch">
@@ -2043,7 +2379,7 @@
                     
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div style="font-weight: 600;">স্টক অ্যালার্ট</div>
+                            <div style="font-weight: 600; font-size: 14px;">স্টক অ্যালার্ট</div>
                             <div style="font-size: 12px; color: var(--gray);">স্টক কম হলে সতর্কতা</div>
                         </div>
                         <label class="switch">
@@ -2058,20 +2394,47 @@
                         <h3 class="card-title">ডেটা ব্যবস্থাপনা</h3>
                     </div>
                     
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="backupData()">
-                            <i class="fas fa-database"></i> ডেটা ব্যাকআপ
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-primary btn-sm" onclick="backupData()">
+                            <i class="fas fa-database"></i>
+                            <span style="display: none;">ব্যাকআপ</span>
                         </button>
-                        <button class="btn btn-success" onclick="exportData()">
-                            <i class="fas fa-file-export"></i> এক্সপোর্ট
+                        <button class="btn btn-success btn-sm" onclick="exportData()">
+                            <i class="fas fa-file-export"></i>
+                            <span style="display: none;">এক্সপোর্ট</span>
                         </button>
-                        <button class="btn btn-danger" onclick="clearAllData()">
-                            <i class="fas fa-trash-alt"></i> সব মুছুন
+                        <button class="btn btn-danger btn-sm" onclick="clearAllData()">
+                            <i class="fas fa-trash-alt"></i>
+                            <span style="display: none;">সব মুছুন</span>
                         </button>
                     </div>
                 </div>
             </div>
         </main>
+        
+        <!-- Mobile Bottom Navigation -->
+        <div class="mobile-bottom-nav" id="mobile-bottom-nav">
+            <div class="mobile-nav-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-home"></i>
+                <span>হোম</span>
+            </div>
+            <div class="mobile-nav-item" onclick="openProductModal()">
+                <i class="fas fa-plus-circle"></i>
+                <span>পণ্য</span>
+            </div>
+            <div class="mobile-nav-item" onclick="openSaleModal()">
+                <i class="fas fa-cart-plus"></i>
+                <span>বিক্রি</span>
+            </div>
+            <div class="mobile-nav-item" onclick="showSection('reports')">
+                <i class="fas fa-chart-line"></i>
+                <span>রিপোর্ট</span>
+            </div>
+            <div class="mobile-nav-item" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>
+                <span>সেটিংস</span>
+            </div>
+        </div>
     </div>
     
     <!-- Modals -->
@@ -2189,9 +2552,9 @@
                     </div>
                 </div>
                 
-                <div id="due-amount-box" style="background: #ECFDF5; border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 600;">অবশিষ্ট</span>
-                    <span style="font-weight: 700; font-size: 20px;" id="due-amount-display">৳0</span>
+                <div id="due-amount-box" style="background: #ECFDF5; border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600; font-size: 13px;">অবশিষ্ট</span>
+                    <span style="font-weight: 700; font-size: 18px;" id="due-amount-display">৳0</span>
                 </div>
                 
                 <div class="form-group">
@@ -2396,7 +2759,7 @@
                 <input type="text" id="quick-search-input" placeholder="যেকোনো কিছু খুঁজুন..." oninput="performQuickSearch()">
             </div>
             
-            <div id="quick-search-results"></div>
+            <div id="quick-search-results" style="max-height: 400px; overflow-y: auto;"></div>
         </div>
     </div>
     
@@ -2429,6 +2792,22 @@
         let salesReportChart = null;
         let expenseReportChart = null;
         let currentCurrency = 'BDT';
+
+        // Password toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.getElementById('password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.classList.remove('fa-eye');
+                toggleBtn.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.classList.remove('fa-eye-slash');
+                toggleBtn.classList.add('fa-eye');
+            }
+        }
 
         // Sidebar functions
         function toggleSidebar() {
@@ -2489,18 +2868,18 @@
                 });
                 
                 // Display results
-                resultsDiv.innerHTML = results.map(result => `
+                resultsDiv.innerHTML = results.length > 0 ? results.map(result => `
                     <div style="padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; gap: 12px;" 
                          onclick="navigateToResult('${result.type}', '${result.id}')">
                         <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(108,92,231,0.1); display: flex; align-items: center; justify-content: center;">
                             <i class="fas ${result.icon}" style="color: var(--primary);"></i>
                         </div>
                         <div>
-                            <div style="font-weight: 600;">${result.name}</div>
+                            <div style="font-weight: 600; font-size: 14px;">${result.name}</div>
                             <div style="font-size: 12px; color: var(--gray);">${result.type}</div>
                         </div>
                     </div>
-                `).join('');
+                `).join('') : '<div class="empty-state"><i class="fas fa-search"></i><p>কোনো ফলাফল পাওয়া যায়নি</p></div>';
             });
         }
 
@@ -2679,6 +3058,20 @@
                 if (quickBtn) quickBtn.classList.add('active');
             }
             
+            // Update mobile nav
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+            mobileNavItems.forEach((item, index) => {
+                if ((index === 0 && section === 'dashboard') || 
+                    (index === 3 && section === 'reports') || 
+                    (index === 4 && section === 'settings')) {
+                    item.classList.add('active');
+                }
+            });
+            
             if (section === 'dashboard') loadDashboardData();
             if (section === 'products') loadProducts();
             if (section === 'sales') loadSales();
@@ -2722,8 +3115,8 @@
             };
             
             notification.innerHTML = `
-                <i class="fas ${icons[type] || icons.info}" style="font-size: 20px;"></i>
-                <span style="flex: 1;">${message}</span>
+                <i class="fas ${icons[type] || icons.info}" style="font-size: 18px;"></i>
+                <span style="flex: 1; font-size: 13px;">${message}</span>
                 <button class="notification-close" onclick="this.parentElement.remove()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2810,7 +3203,7 @@
                     recentSalesDiv.innerHTML = '';
                     
                     if (snapshot.numChildren() === 0) {
-                        recentSalesDiv.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>কোনো বিক্রি নেই</h4></div>';
+                        recentSalesDiv.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>কোনো বিক্রি নেই</h4><p>আজকের বিক্রি এখানে দেখা যাবে</p></div>';
                         return;
                     }
                     
@@ -2820,13 +3213,13 @@
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
                         recentSalesDiv.innerHTML += `
-                            <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+                            <div style="padding: 10px; border-bottom: 1px solid var(--border);">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div>
-                                        <div style="font-weight: 600; font-size: 14px;">${sale.productName}</div>
-                                        <div style="font-size: 12px; color: var(--gray);">${dateStr}</div>
+                                        <div style="font-weight: 600; font-size: 13px;">${sale.productName}</div>
+                                        <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
                                     </div>
-                                    <div style="font-weight: 700; color: var(--success);">${formatCurrency(sale.total)}</div>
+                                    <div style="font-weight: 700; color: var(--success); font-size: 14px;">${formatCurrency(sale.total)}</div>
                                 </div>
                             </div>
                         `;
@@ -2841,7 +3234,7 @@
                     recentExpensesDiv.innerHTML = '';
                     
                     if (snapshot.numChildren() === 0) {
-                        recentExpensesDiv.innerHTML = '<div class="empty-state"><i class="fas fa-wallet"></i><h4>কোনো খরচ নেই</h4></div>';
+                        recentExpensesDiv.innerHTML = '<div class="empty-state"><i class="fas fa-wallet"></i><h4>কোনো খরচ নেই</h4><p>আজকের খরচ এখানে দেখা যাবে</p></div>';
                         return;
                     }
                     
@@ -2851,13 +3244,13 @@
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
                         recentExpensesDiv.innerHTML += `
-                            <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+                            <div style="padding: 10px; border-bottom: 1px solid var(--border);">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div>
-                                        <div style="font-weight: 600; font-size: 14px;">${expense.type}</div>
-                                        <div style="font-size: 12px; color: var(--gray);">${dateStr}</div>
+                                        <div style="font-weight: 600; font-size: 13px;">${expense.type}</div>
+                                        <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
                                     </div>
-                                    <div style="font-weight: 700; color: var(--danger);">${formatCurrency(expense.amount)}</div>
+                                    <div style="font-weight: 700; color: var(--danger); font-size: 14px;">${formatCurrency(expense.amount)}</div>
                                 </div>
                             </div>
                         `;
@@ -2979,7 +3372,7 @@
                 productsBody.innerHTML = '';
                 
                 if (snapshot.numChildren() === 0) {
-                    productsBody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-boxes"></i><h4>কোনো পণ্য নেই</h4></div></td></tr>';
+                    productsBody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-boxes"></i><h4>কোনো পণ্য নেই</h4><p>নতুন পণ্য যোগ করুন</p></div></td></tr>';
                     return;
                 }
                 
@@ -2992,7 +3385,7 @@
                     productsBody.innerHTML += `
                         <tr>
                             <td>
-                                <div style="font-weight: 600;">${product.name}</div>
+                                <div style="font-weight: 600; font-size: 13px;">${product.name}</div>
                                 <div style="font-size: 11px; color: var(--gray);">${product.createdAt ? new Date(product.createdAt).toLocaleDateString('bn-BD') : ''}</div>
                             </td>
                             <td>
@@ -3002,7 +3395,7 @@
                             <td style="font-weight: 600;">${formatCurrency(product.salePrice)}</td>
                             <td>
                                 <span style="${stockColor}; font-weight: 700;">${product.stock}</span>
-                                ${product.stock <= 5 ? '<span style="color: var(--danger); font-size: 11px;"> (কম)</span>' : ''}
+                                ${product.stock <= 5 ? '<span style="color: var(--danger); font-size: 10px;"> (কম)</span>' : ''}
                             </td>
                             <td>
                                 <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm" title="সম্পাদনা">
@@ -3097,6 +3490,7 @@
         function deleteProduct(productId) {
             Swal.fire({
                 title: 'পণ্য রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3196,7 +3590,7 @@
                     salesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
-                            <td style="font-weight: 600;">${sale.productName}</td>
+                            <td style="font-weight: 600; font-size: 13px;">${sale.productName}</td>
                             <td>${sale.quantity}</td>
                             <td>${formatCurrency(sale.total)}</td>
                             <td>${paymentBadge}</td>
@@ -3259,6 +3653,7 @@
             
             document.getElementById('sale-modal').style.display = 'flex';
             document.getElementById('sale-form').reset();
+            document.getElementById('sale-total-display').textContent = formatCurrency(0);
         }
 
         function updateSaleProductDetails() {
@@ -3374,6 +3769,7 @@
         function deleteSale(saleId) {
             Swal.fire({
                 title: 'বিক্রি রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3457,7 +3853,7 @@
                     purchasesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
-                            <td style="font-weight: 600;">${purchase.productName}</td>
+                            <td style="font-weight: 600; font-size: 13px;">${purchase.productName}</td>
                             <td>${purchase.quantity}</td>
                             <td>${formatCurrency(purchase.total)}</td>
                             <td>${purchase.supplier || 'নেই'}</td>
@@ -3495,6 +3891,7 @@
             
             document.getElementById('purchase-modal').style.display = 'flex';
             document.getElementById('purchase-form').reset();
+            document.getElementById('purchase-total-display').textContent = formatCurrency(0);
         }
 
         function updatePurchaseProductDetails() {
@@ -3568,6 +3965,7 @@
         function deletePurchase(purchaseId) {
             Swal.fire({
                 title: 'ক্রয় রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3635,7 +4033,7 @@
                     customersBody.innerHTML += `
                         <tr>
                             <td>
-                                <div style="font-weight: 600;">${customer.name}</div>
+                                <div style="font-weight: 600; font-size: 13px;">${customer.name}</div>
                                 <div style="font-size: 11px; color: var(--gray);">${customer.address || ''}</div>
                             </td>
                             <td>${customer.phone}</td>
@@ -3699,6 +4097,7 @@
         function deleteCustomer(customerId) {
             Swal.fire({
                 title: 'কাস্টমার রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3880,6 +4279,7 @@
         function deleteExpense(expenseId) {
             Swal.fire({
                 title: 'খরচ রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -4498,28 +4898,89 @@
 
         function clearAllData() {
             Swal.fire({
-                title: 'সব ডেটা মুছবেন?',
-                text: 'এই কাজটি ফিরিয়ে আনা যাবে না!',
+                title: 'সব ডেটা রিসাইকেলে যাবে?',
+                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, মুছুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     showLoading('ডেটা মুছে ফেলা হচ্ছে...');
                     
                     try {
+                        // Move all data to recycle bin instead of deleting
+                        const productsSnapshot = await db.ref('products').once('value');
+                        productsSnapshot.forEach(async (child) => {
+                            const product = child.val();
+                            const recycleData = {
+                                type: 'product',
+                                data: product,
+                                originalId: child.key,
+                                deletedAt: new Date().toISOString()
+                            };
+                            await db.ref('recycle').push(recycleData);
+                        });
+                        
+                        const salesSnapshot = await db.ref('sales').once('value');
+                        salesSnapshot.forEach(async (child) => {
+                            const sale = child.val();
+                            const recycleData = {
+                                type: 'sale',
+                                data: sale,
+                                originalId: child.key,
+                                deletedAt: new Date().toISOString()
+                            };
+                            await db.ref('recycle').push(recycleData);
+                        });
+                        
+                        const customersSnapshot = await db.ref('customers').once('value');
+                        customersSnapshot.forEach(async (child) => {
+                            const customer = child.val();
+                            const recycleData = {
+                                type: 'customer',
+                                data: customer,
+                                originalId: child.key,
+                                deletedAt: new Date().toISOString()
+                            };
+                            await db.ref('recycle').push(recycleData);
+                        });
+                        
+                        const expensesSnapshot = await db.ref('expenses').once('value');
+                        expensesSnapshot.forEach(async (child) => {
+                            const expense = child.val();
+                            const recycleData = {
+                                type: 'expense',
+                                data: expense,
+                                originalId: child.key,
+                                deletedAt: new Date().toISOString()
+                            };
+                            await db.ref('recycle').push(recycleData);
+                        });
+                        
+                        const purchasesSnapshot = await db.ref('purchases').once('value');
+                        purchasesSnapshot.forEach(async (child) => {
+                            const purchase = child.val();
+                            const recycleData = {
+                                type: 'purchase',
+                                data: purchase,
+                                originalId: child.key,
+                                deletedAt: new Date().toISOString()
+                            };
+                            await db.ref('recycle').push(recycleData);
+                        });
+                        
+                        // Now clear the original data
                         await db.ref('products').remove();
                         await db.ref('sales').remove();
                         await db.ref('customers').remove();
                         await db.ref('expenses').remove();
                         await db.ref('purchases').remove();
-                        await db.ref('recycle').remove();
                         
                         hideLoading();
-                        Swal.fire({ icon: 'success', title: 'সব ডেটা মুছে ফেলা হয়েছে!', timer: 3000, showConfirmButton: false });
+                        Swal.fire({ icon: 'success', title: 'সব ডেটা রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                         
                         loadProducts();
                         loadSales();
@@ -4590,7 +5051,7 @@
                                     html += `
                                         <div style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
                                             <div>
-                                                <div style="font-weight: 600;">${product.name}</div>
+                                                <div style="font-weight: 600; font-size: 13px;">${product.name}</div>
                                                 <div style="font-size: 12px; color: var(--danger);">স্টক কম!</div>
                                             </div>
                                             <span class="status-badge danger">${product.stock} পিস</span>
@@ -4620,19 +5081,8 @@
                     showDashboard();
                 }
             });
-            
-            // Demo account creation (optional - remove in production)
-            /* auth.createUserWithEmailAndPassword('demo@bosnishe.com', 'demo123')
-                .then((userCredential) => {
-                    console.log('Demo account created');
-                })
-                .catch((error) => {
-                    if (error.code !== 'email-already-in-use') {
-                        console.error('Error creating demo account:', error);
-                    }
-                }); */
         });
     </script>
 </body>
 </html>
-    
+                

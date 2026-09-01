@@ -46,8 +46,6 @@
             --light-color: #F8FAFC;
             --gray-color: #6B7280;
             --gray-light: #E5E7EB;
-            --sidebar-width: 280px;
-            --header-height: 70px;
         }
         
         body {
@@ -68,23 +66,6 @@
             margin: 60px auto;
             position: relative;
             overflow: hidden;
-        }
-        
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(79, 70, 229, 0.1), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
         }
         
         .login-logo {
@@ -168,23 +149,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .login-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-        }
-        
-        .login-btn:hover::before {
-            left: 100%;
         }
         
         .login-btn:hover {
@@ -205,27 +169,26 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--gray-light);
-            height: var(--header-height);
+            height: 70px;
             position: fixed;
             top: 0;
             right: 0;
-            left: var(--sidebar-width);
+            left: 0;
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
         
-        .mobile-menu-btn {
-            display: none;
+        .menu-btn {
             background: none;
             border: none;
             font-size: 24px;
@@ -236,76 +199,87 @@
             transition: all 0.3s;
         }
         
-        .mobile-menu-btn:hover {
+        .menu-btn:hover {
             background: var(--light-color);
         }
         
-        .header-title {
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header-logo i {
             font-size: 20px;
+            color: white;
+        }
+        
+        .header-title {
+            font-size: 18px;
             font-weight: 700;
             color: var(--dark-color);
+            display: none;
         }
         
         .header-right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
         
-        .notification-btn {
+        .header-action-btn {
             position: relative;
-            background: none;
+            background: var(--light-color);
             border: none;
-            font-size: 22px;
+            font-size: 16px;
             color: var(--dark-color);
             cursor: pointer;
             padding: 10px;
-            border-radius: 50%;
+            border-radius: 12px;
             transition: all 0.3s;
         }
         
-        .notification-btn:hover {
-            background: var(--light-color);
-            transform: scale(1.1);
+        .header-action-btn:hover {
+            background: var(--gray-light);
+            transform: scale(1.05);
         }
         
         .notification-badge {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: -4px;
+            right: -4px;
             background: var(--danger-color);
             color: white;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
         
         .language-switch {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             background: var(--light-color);
-            padding: 6px;
-            border-radius: 20px;
+            padding: 4px;
+            border-radius: 12px;
         }
         
         .language-btn {
-            padding: 6px 12px;
+            padding: 4px 8px;
             border: none;
-            border-radius: 15px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             transition: all 0.3s;
         }
@@ -313,26 +287,21 @@
         .language-btn.active {
             background: var(--primary-color);
             color: white;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
         }
         
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             cursor: pointer;
-            padding: 8px;
+            padding: 4px;
             border-radius: 12px;
             transition: all 0.3s;
         }
         
-        .user-profile:hover {
-            background: var(--light-color);
-        }
-        
         .user-avatar {
-            width: 42px;
-            height: 42px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
@@ -340,31 +309,14 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
-        }
-        
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .user-name {
             font-size: 14px;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-        
-        .user-role {
-            font-size: 12px;
-            color: var(--gray-color);
         }
         
         .logout-btn {
             background: none;
             border: none;
             color: var(--danger-color);
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
@@ -373,51 +325,56 @@
         
         .logout-btn:hover {
             background: #FEF2F2;
-            transform: scale(1.1);
         }
         
         /* Sidebar */
-        .main-sidebar {
-            background: linear-gradient(180deg, #1E293B 0%, #334155 100%);
-            width: var(--sidebar-width);
-            height: 100vh;
+        .sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 100;
-            padding: 24px 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+        
+        .sidebar-overlay.active {
+            display: block;
+        }
+        
+        .main-sidebar {
+            background: linear-gradient(180deg, #1E293B 0%, #334155 100%);
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -280px;
+            z-index: 200;
+            padding: 20px 0;
             transition: all 0.3s ease;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: var(--dark-light) transparent;
         }
         
-        .main-sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .main-sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .main-sidebar::-webkit-scrollbar-thumb {
-            background: var(--dark-light);
-            border-radius: 3px;
+        .main-sidebar.active {
+            left: 0;
         }
         
         .sidebar-brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 0 24px;
-            margin-bottom: 40px;
+            padding: 0 20px;
+            margin-bottom: 30px;
         }
         
         .sidebar-brand-icon {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -431,14 +388,31 @@
         
         .sidebar-brand-text {
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             line-height: 1.2;
         }
         
         .sidebar-brand-subtext {
             color: #94A3B8;
-            font-size: 12px;
+            font-size: 11px;
+        }
+        
+        .sidebar-close-btn {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+        
+        .sidebar-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
         
         .sidebar-menu {
@@ -452,26 +426,25 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             padding: 0 12px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .sidebar-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             border-radius: 12px;
             color: #CBD5E1;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 4px;
-            position: relative;
         }
         
         .sidebar-item:hover {
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
         
         .sidebar-item.active {
@@ -480,28 +453,15 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
         
-        .sidebar-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 60%;
-            background: white;
-            border-radius: 0 4px 4px 0;
-        }
-        
         .sidebar-item-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+            border-radius: 8px;
             background: rgba(255, 255, 255, 0.1);
-            font-size: 16px;
-            transition: all 0.3s;
+            font-size: 14px;
         }
         
         .sidebar-item.active .sidebar-item-icon {
@@ -510,7 +470,7 @@
         
         .sidebar-item-text {
             flex: 1;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
         }
         
@@ -519,21 +479,20 @@
             color: white;
             font-size: 10px;
             font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 10px;
-            animation: pulse 2s infinite;
+            padding: 2px 6px;
+            border-radius: 8px;
         }
         
         /* Main Content */
         .main-content {
-            margin-left: var(--sidebar-width);
-            padding-top: var(--header-height);
+            margin-left: 0;
+            padding-top: 70px;
             min-height: 100vh;
             transition: all 0.3s ease;
         }
         
         .content-section {
-            padding: 24px;
+            padding: 16px;
             display: none;
             animation: fadeInUp 0.3s ease;
         }
@@ -556,15 +515,15 @@
         /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .stat-card {
             background: white;
-            border-radius: 20px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             position: relative;
@@ -572,62 +531,26 @@
             cursor: pointer;
         }
         
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            transition: all 0.3s;
-        }
-        
-        .stat-card:nth-child(1)::before {
-            background: linear-gradient(180deg, var(--primary-color), transparent);
-        }
-        
-        .stat-card:nth-child(2)::before {
-            background: linear-gradient(180deg, var(--secondary-color), transparent);
-        }
-        
-        .stat-card:nth-child(3)::before {
-            background: linear-gradient(180deg, var(--warning-color), transparent);
-        }
-        
-        .stat-card:nth-child(4)::before {
-            background: linear-gradient(180deg, var(--danger-color), transparent);
-        }
-        
         .stat-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
-        }
-        
-        .stat-card:hover::before {
-            width: 100%;
-            opacity: 0.1;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
         }
         
         .stat-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            transition: all 0.3s;
-        }
-        
-        .stat-card:hover .stat-icon {
-            transform: scale(1.1) rotate(-5deg);
+            font-size: 18px;
         }
         
         .stat-icon.primary {
@@ -652,91 +575,51 @@
         
         .stat-label {
             color: var(--gray-color);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
         }
         
         .stat-value {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--dark-color);
-            margin-top: 8px;
-        }
-        
-        .stat-change {
-            font-size: 12px;
-            color: var(--secondary-color);
-            background: #ECFDF5;
-            padding: 2px 8px;
-            border-radius: 10px;
-            display: inline-block;
+            margin-top: 4px;
         }
         
         /* Cards */
         .card {
             background: white;
-            border-radius: 20px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 24px;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
         }
         
         .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--dark-color);
         }
         
-        .card-subtitle {
-            font-size: 14px;
-            color: var(--gray-color);
-        }
-        
-        .card-body {
-            padding: 0;
-        }
-        
         /* Buttons */
         .btn {
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
+            gap: 6px;
         }
         
         .btn-primary {
@@ -750,16 +633,6 @@
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
         
-        .btn-secondary {
-            background: var(--light-color);
-            color: var(--dark-color);
-            border: 1px solid var(--gray-light);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--gray-light);
-        }
-        
         .btn-success {
             background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             color: white;
@@ -770,28 +643,22 @@
             color: white;
         }
         
-        .btn-warning {
-            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-            color: white;
-        }
-        
         .btn-sm {
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 6px 10px;
+            font-size: 11px;
             border-radius: 8px;
         }
         
         /* Tables */
         .table-container {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
         .table-wrapper {
             overflow-x: auto;
-            scrollbar-width: thin;
         }
         
         table {
@@ -800,54 +667,42 @@
         }
         
         thead {
-            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+            background: var(--light-color);
         }
         
         th {
-            padding: 16px;
+            padding: 12px;
             text-align: left;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--gray-color);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            position: sticky;
-            top: 0;
-            background: inherit;
         }
         
         td {
-            padding: 14px 16px;
+            padding: 12px;
             border-bottom: 1px solid #F3F4F6;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--dark-color);
-        }
-        
-        tbody tr {
-            transition: all 0.2s;
         }
         
         tbody tr:hover {
             background: var(--light-color);
-            transform: scale(0.99);
-        }
-        
-        tbody tr:last-child td {
-            border-bottom: none;
         }
         
         /* Search Input */
         .search-box {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
         
         .search-box input {
             width: 100%;
-            padding: 14px 16px 14px 48px;
+            padding: 12px 16px 12px 40px;
             border: 2px solid var(--gray-light);
-            border-radius: 14px;
-            font-size: 14px;
+            border-radius: 12px;
+            font-size: 13px;
             transition: all 0.3s;
             background: white;
         }
@@ -855,12 +710,11 @@
         .search-box input:focus {
             border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
         
         .search-box i {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray-color);
@@ -883,14 +737,13 @@
         
         .modal-content {
             background: white;
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 600px;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
             animation: slideIn 0.3s ease;
-            scrollbar-width: thin;
         }
         
         @keyframes slideIn {
@@ -908,11 +761,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .modal-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--dark-color);
         }
@@ -920,7 +773,7 @@
         .modal-close {
             background: var(--light-color);
             border: none;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--gray-color);
             cursor: pointer;
             padding: 8px;
@@ -931,38 +784,36 @@
         .modal-close:hover {
             background: var(--danger-color);
             color: white;
-            transform: scale(1.1);
         }
         
         .modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
-            margin-top: 24px;
+            margin-top: 20px;
         }
         
         /* Notification */
         .notification-container {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 80px;
+            right: 16px;
             z-index: 3000;
-            max-width: 400px;
-            width: calc(100% - 40px);
+            max-width: 350px;
+            width: calc(100% - 32px);
         }
         
         .notification {
             background: white;
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 14px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
             animation: slideInRight 0.3s ease;
             border-left: 4px solid var(--primary-color);
-            transition: all 0.3s;
         }
         
         .notification.success {
@@ -981,11 +832,6 @@
             border-left-color: var(--info-color);
         }
         
-        .notification:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
         @keyframes slideInRight {
             from {
                 transform: translateX(100px);
@@ -995,87 +841,6 @@
                 transform: translateX(0);
                 opacity: 1;
             }
-        }
-        
-        /* Switch */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 52px;
-            height: 28px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #CCC;
-            transition: 0.4s;
-            border-radius: 28px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        input:checked + .slider {
-            background-color: var(--primary-color);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-        
-        /* Date Picker */
-        .date-picker-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .date-picker-btn {
-            padding: 14px;
-            border: 2px solid var(--gray-light);
-            border-radius: 14px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .date-picker-btn:hover {
-            border-color: var(--primary-color);
-            background: #EEF2FF;
-            transform: translateY(-2px);
-        }
-        
-        .date-picker-btn.active {
-            border-color: var(--primary-color);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
         }
         
         /* Loading */
@@ -1094,10 +859,10 @@
         }
         
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid var(--light-color);
-            border-top: 6px solid var(--primary-color);
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-color);
+            border-top: 5px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -1107,202 +872,29 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Charts */
-        .chart-container {
-            position: relative;
-            height: 350px;
-            padding: 20px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-header {
-                left: 0;
-            }
-            
-            .main-sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .main-sidebar.active {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-title {
-                display: none;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-            
-            .content-section {
-                padding: 16px;
-            }
-            
-            .card {
-                padding: 16px;
-            }
-            
-            .modal-content {
-                padding: 20px;
-            }
-            
-            .user-info {
-                display: none;
-            }
-            
-            .language-switch {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .date-picker-group {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .login-container {
-                margin: 20px;
-                padding: 30px;
-            }
-        }
-        
-        /* Print Styles */
-        @media print {
-            .main-header,
-            .main-sidebar,
-            .mobile-menu-btn,
-            .btn,
-            .search-box,
-            .notification-container {
-                display: none !important;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding-top: 0;
-            }
-            
-            .content-section {
-                display: block !important;
-                padding: 0;
-            }
-            
-            .card {
-                box-shadow: none;
-                border: 1px solid var(--gray-light);
-            }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--light-color);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray-light);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-color);
-        }
-        
-        /* Date Time Input */
-        .datetime-input {
-            position: relative;
-        }
-        
-        .datetime-input input {
-            padding-left: 40px;
-        }
-        
-        .datetime-input i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-color);
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--gray-color);
-        }
-        
-        .empty-state i {
-            font-size: 48px;
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
             margin-bottom: 16px;
         }
         
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--dark-color);
-            color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 4000;
-            transform: translateY(100px);
-            transition: all 0.3s;
-        }
-        
-        .toast.show {
-            transform: translateY(0);
-        }
-        
-        /* Payment Method Styles */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
         .payment-method-btn {
-            padding: 15px;
+            padding: 12px;
             border: 2px solid var(--gray-light);
             border-radius: 12px;
             background: white;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            position: relative;
-            overflow: hidden;
         }
         
         .payment-method-btn:hover {
             border-color: var(--primary-color);
             background: #EEF2FF;
-            transform: translateY(-2px);
         }
         
         .payment-method-btn.active {
@@ -1313,27 +905,71 @@
         
         .payment-method-btn i {
             display: block;
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 20px;
+            margin-bottom: 4px;
         }
         
-        /* Due Amount */
-        .due-amount-box {
-            background: #FEF3C7;
-            border: 2px solid var(--warning-color);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header-title {
+                display: none;
+            }
+            
+            .user-profile {
+                display: none;
+            }
+            
+            .language-switch {
+                display: none;
+            }
+            
+            .content-section {
+                padding: 12px;
+            }
+            
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
-        .due-amount-box.due {
-            background: #FEF2F2;
-            border-color: var(--danger-color);
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .card {
+                padding: 12px;
+            }
+            
+            .modal-content {
+                padding: 16px;
+            }
         }
         
-        .due-amount-box.paid {
-            background: #ECFDF5;
-            border-color: var(--secondary-color);
+        /* Print Styles */
+        @media print {
+            .main-header,
+            .main-sidebar,
+            .sidebar-overlay,
+            .btn,
+            .search-box,
+            .notification-container {
+                display: none !important;
+            }
+            
+            .main-content {
+                padding-top: 0;
+                margin-left: 0;
+            }
+            
+            .content-section {
+                display: block !important;
+            }
         }
     </style>
 </head>
@@ -1399,7 +1035,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('forgot-password-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('forgot-password-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-paper-plane"></i>
                         রিসেট লিংক পাঠান
@@ -1414,40 +1050,39 @@
         <!-- Header -->
         <header class="main-header">
             <div class="header-left">
-                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <button class="menu-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h2 class="header-title" id="header-title">
-                    <i class="fas fa-chart-pie mr-2"></i>
-                    ড্যাশবোর্ড
-                </h2>
+                <div class="header-logo">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h2 class="header-title" id="header-title">ড্যাশবোর্ড</h2>
             </div>
             
             <div class="header-right">
-                <div class="notification-btn" onclick="showNotifications()">
+                <button class="header-action-btn" onclick="showNotifications()">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge" id="notification-badge">3</span>
-                </div>
+                </button>
                 
                 <div class="language-switch">
-                    <button class="language-btn active" onclick="changeLanguage('bn')" id="lang-bn">বাংলা</button>
-                    <button class="language-btn" onclick="changeLanguage('en')" id="lang-en">ENG</button>
+                    <button class="language-btn active" onclick="changeLanguage('bn')">বাং</button>
+                    <button class="language-btn" onclick="changeLanguage('en')">EN</button>
                 </div>
                 
-                <div class="user-profile" onclick="showUserMenu()">
+                <div class="user-profile">
                     <div class="user-avatar" id="user-avatar">A</div>
-                    <div class="user-info">
-                        <span class="user-name" id="user-name">Admin</span>
-                        <span class="user-role">প্রশাসক</span>
-                    </div>
-                    <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--gray-color);"></i>
+                    <span class="user-name" id="user-name">Admin</span>
                 </div>
                 
-                <button class="logout-btn" onclick="logout()" title="লগআউট">
+                <button class="logout-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </header>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
         
         <!-- Sidebar -->
         <aside class="main-sidebar" id="sidebar">
@@ -1455,10 +1090,13 @@
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-store"></i>
                 </div>
-                <div>
+                <div style="flex: 1;">
                     <div class="sidebar-brand-text">বসনীসে</div>
                     <div class="sidebar-brand-subtext">হেসাব খাতা</div>
                 </div>
+                <button class="sidebar-close-btn" onclick="closeSidebar()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
             <div class="sidebar-menu">
@@ -1525,7 +1163,6 @@
                             <div class="stat-icon primary">
                                 <i class="fas fa-chart-line"></i>
                             </div>
-                            <span class="stat-change">+12%</span>
                         </div>
                         <div class="stat-label">আজকের বিক্রি</div>
                         <div class="stat-value" id="today-sales">৳0</div>
@@ -1536,7 +1173,6 @@
                             <div class="stat-icon success">
                                 <i class="fas fa-boxes"></i>
                             </div>
-                            <span class="stat-change">+8%</span>
                         </div>
                         <div class="stat-label">মোট পণ্য</div>
                         <div class="stat-value" id="total-products">0</div>
@@ -1547,7 +1183,6 @@
                             <div class="stat-icon warning">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <span class="stat-change">+5%</span>
                         </div>
                         <div class="stat-label">কাস্টমার</div>
                         <div class="stat-value" id="total-customers">0</div>
@@ -1558,7 +1193,6 @@
                             <div class="stat-icon danger">
                                 <i class="fas fa-wallet"></i>
                             </div>
-                            <span class="stat-change">-3%</span>
                         </div>
                         <div class="stat-label">আজকের খরচ</div>
                         <div class="stat-value" id="today-expenses">৳0</div>
@@ -1569,60 +1203,41 @@
                     <div class="card-header">
                         <div>
                             <h3 class="card-title">বিক্রির চার্ট</h3>
-                            <p class="card-subtitle">গত ৭ দিনের বিক্রির পরিসংখ্যান</p>
+                            <p style="font-size: 12px; color: var(--gray-color);">গত ৭ দিন</p>
                         </div>
-                        <button class="btn btn-secondary btn-sm">
-                            <i class="fas fa-calendar"></i>
-                            সাপ্তাহিক
-                        </button>
                     </div>
-                    <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="salesChart"></canvas>
-                        </div>
+                    <div style="height: 200px;">
+                        <canvas id="salesChart"></canvas>
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">সাম্প্রতিক বিক্রি</h3>
-                            <button class="btn btn-primary btn-sm" onclick="showSection('sales')">
-                                সব দেখুন
-                            </button>
                         </div>
-                        <div class="card-body">
-                            <div id="recent-sales"></div>
-                        </div>
+                        <div id="recent-sales"></div>
                     </div>
                     
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">সাম্প্রতিক খরচ</h3>
-                            <button class="btn btn-primary btn-sm" onclick="showSection('expenses')">
-                                সব দেখুন
-                            </button>
                         </div>
-                        <div class="card-body">
-                            <div id="recent-expenses"></div>
-                        </div>
+                        <div id="recent-expenses"></div>
                     </div>
                 </div>
             </div>
             
             <!-- Products Section -->
             <div id="products-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-boxes mr-2"></i>
-                            পণ্য ব্যবস্থাপনা
+                        <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                            <i class="fas fa-boxes"></i> পণ্য ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray-color);">আপনার সকল পণ্যের হিসাব</p>
                     </div>
                     <button class="btn btn-primary" onclick="openProductModal()">
-                        <i class="fas fa-plus"></i>
-                        নতুন পণ্য
+                        <i class="fas fa-plus"></i> নতুন পণ্য
                     </button>
                 </div>
                 
@@ -1636,17 +1251,14 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>পণ্যের নাম</th>
-                                    <th>ক্যাটাগরি</th>
-                                    <th>ক্রয় মূল্য</th>
-                                    <th>বিক্রয় মূল্য</th>
+                                    <th>পণ্য</th>
+                                    <th>ক্রয়</th>
+                                    <th>বিক্রয়</th>
                                     <th>স্টক</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="products-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="products-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1654,17 +1266,12 @@
             
             <!-- Sales Section -->
             <div id="sales-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-shopping-cart mr-2"></i>
-                            বিক্রি ব্যবস্থাপনা
-                        </h2>
-                        <p style="color: var(--gray-color);">আপনার সকল বিক্রির হিসাব</p>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                        <i class="fas fa-shopping-cart"></i> বিক্রি ব্যবস্থাপনা
+                    </h2>
                     <button class="btn btn-primary" onclick="openSaleModal()">
-                        <i class="fas fa-plus"></i>
-                        নতুন বিক্রি
+                        <i class="fas fa-plus"></i> নতুন বিক্রি
                     </button>
                 </div>
                 
@@ -1678,18 +1285,15 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>তারিখ ও সময়</th>
+                                    <th>তারিখ</th>
                                     <th>পণ্য</th>
                                     <th>পরিমাণ</th>
                                     <th>মূল্য</th>
-                                    <th>কাস্টমার</th>
                                     <th>পেমেন্ট</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="sales-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="sales-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1697,17 +1301,12 @@
             
             <!-- Purchases Section -->
             <div id="purchases-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-shopping-bag mr-2"></i>
-                            ক্রয় ব্যবস্থাপনা
-                        </h2>
-                        <p style="color: var(--gray-color);">আপনার সকল ক্রয়ের হিসাব</p>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                        <i class="fas fa-shopping-bag"></i> ক্রয় ব্যবস্থাপনা
+                    </h2>
                     <button class="btn btn-primary" onclick="openPurchaseModal()">
-                        <i class="fas fa-plus"></i>
-                        নতুন ক্রয়
+                        <i class="fas fa-plus"></i> নতুন ক্রয়
                     </button>
                 </div>
                 
@@ -1721,7 +1320,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>তারিখ ও সময়</th>
+                                    <th>তারিখ</th>
                                     <th>পণ্য</th>
                                     <th>পরিমাণ</th>
                                     <th>মূল্য</th>
@@ -1729,9 +1328,7 @@
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="purchases-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="purchases-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1739,17 +1336,12 @@
             
             <!-- Customers Section -->
             <div id="customers-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-users mr-2"></i>
-                            কাস্টমার ব্যবস্থাপনা
-                        </h2>
-                        <p style="color: var(--gray-color);">আপনার সকল কাস্টমারের তথ্য</p>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                        <i class="fas fa-users"></i> কাস্টমার ব্যবস্থাপনা
+                    </h2>
                     <button class="btn btn-primary" onclick="openCustomerModal()">
-                        <i class="fas fa-plus"></i>
-                        নতুন কাস্টমার
+                        <i class="fas fa-plus"></i> নতুন কাস্টমার
                     </button>
                 </div>
                 
@@ -1765,14 +1357,11 @@
                                 <tr>
                                     <th>নাম</th>
                                     <th>ফোন</th>
-                                    <th>ঠিকানা</th>
                                     <th>বাকি</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="customers-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="customers-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1780,17 +1369,12 @@
             
             <!-- Expenses Section -->
             <div id="expenses-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-wallet mr-2"></i>
-                            খরচ ব্যবস্থাপনা
-                        </h2>
-                        <p style="color: var(--gray-color);">আপনার সকল খরচের হিসাব</p>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                        <i class="fas fa-wallet"></i> খরচ ব্যবস্থাপনা
+                    </h2>
                     <button class="btn btn-primary" onclick="openExpenseModal()">
-                        <i class="fas fa-plus"></i>
-                        নতুন খরচ
+                        <i class="fas fa-plus"></i> নতুন খরচ
                     </button>
                 </div>
                 
@@ -1804,16 +1388,14 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>তারিখ ও সময়</th>
-                                    <th>খরচের ধরন</th>
+                                    <th>তারিখ</th>
+                                    <th>ধরন</th>
                                     <th>বিবরণ</th>
                                     <th>পরিমাণ</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="expenses-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="expenses-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1821,102 +1403,65 @@
             
             <!-- Reports Section -->
             <div id="reports-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-chart-line mr-2"></i>
-                            রিপোর্ট
-                        </h2>
-                        <p style="color: var(--gray-color);">আপনার দোকানের সম্পূর্ণ রিপোর্ট</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="btn btn-primary" onclick="printReport()">
-                            <i class="fas fa-print"></i>
-                            প্রিন্ট
-                        </button>
-                        <button class="btn btn-secondary" onclick="downloadReport()">
-                            <i class="fas fa-download"></i>
-                            ডাউনলোড
-                        </button>
-                    </div>
+                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                    <i class="fas fa-chart-line"></i> রিপোর্ট
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
+                    <button class="btn btn-secondary date-picker-btn" onclick="filterByPeriod('today', this)">আজ</button>
+                    <button class="btn btn-secondary date-picker-btn" onclick="filterByPeriod('this_week', this)">সপ্তাহ</button>
+                    <button class="btn btn-secondary date-picker-btn" onclick="filterByPeriod('this_month', this)">মাস</button>
                 </div>
                 
-                <div class="date-picker-group">
-                    <button class="date-picker-btn active" onclick="filterByPeriod('today', this)">আজ</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('yesterday', this)">গতকাল</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('this_week', this)">এই সপ্তাহ</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('this_month', this)">এই মাস</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('this_year', this)">এই বছর</button>
-                    <button class="date-picker-btn" onclick="filterByPeriod('last_year', this)">গত বছর</button>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">বিক্রি রিপোর্ট</h3>
-                            <button class="btn btn-secondary btn-sm">চার্ট</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="salesReportChart"></canvas>
-                            </div>
+                        <h3 class="card-title">বিক্রি রিপোর্ট</h3>
+                        <div style="height: 200px;">
+                            <canvas id="salesReportChart"></canvas>
                         </div>
                     </div>
                     
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">খরচ রিপোর্ট</h3>
-                            <button class="btn btn-secondary btn-sm">চার্ট</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="expenseReportChart"></canvas>
-                            </div>
+                        <h3 class="card-title">খরচ রিপোর্ট</h3>
+                        <div style="height: 200px;">
+                            <canvas id="expenseReportChart"></canvas>
                         </div>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">সারসংক্ষেপ</h3>
-                    </div>
-                    <div class="card-body">
-                        <div id="report-summary" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-                    </div>
+                    <h3 class="card-title">সারসংক্ষেপ</h3>
+                    <div id="report-summary" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
+                </div>
+                
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button class="btn btn-primary" onclick="printReport()">
+                        <i class="fas fa-print"></i> প্রিন্ট
+                    </button>
+                    <button class="btn btn-success" onclick="downloadReport()">
+                        <i class="fas fa-download"></i> ডাউনলোড
+                    </button>
                 </div>
             </div>
             
             <!-- Recycle Bin Section -->
             <div id="recycle-section" class="content-section">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-recycle mr-2"></i>
-                            রিসাইকেল বিন
-                        </h2>
-                        <p style="color: var(--gray-color);">ডিলিট হওয়া আইটেমসমূহ (ডিলিট করা যাবে না)</p>
-                    </div>
-                </div>
-                
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="recycle-search" placeholder="ডিলিট হওয়া আইটেম খুঁজুন..." oninput="filterRecycle()">
-                </div>
+                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                    <i class="fas fa-recycle"></i> রিসাইকেল বিন
+                </h2>
                 
                 <div class="table-container">
                     <div class="table-wrapper">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>আইটেম টাইপ</th>
-                                    <th>আইটেম নাম</th>
-                                    <th>ডিলিট তারিখ</th>
+                                    <th>আইটেম</th>
+                                    <th>নাম</th>
+                                    <th>তারিখ</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
-                            <tbody id="recycle-body">
-                                <!-- Dynamically populated -->
-                            </tbody>
+                            <tbody id="recycle-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1924,106 +1469,60 @@
             
             <!-- Settings Section -->
             <div id="settings-section" class="content-section">
-                <div class="settings-section">
-                    <h2 style="font-size: 28px; font-weight: 800; color: var(--dark-color); margin-bottom: 24px;">
-                        <i class="fas fa-cog mr-2"></i>
-                        সেটিংস
-                    </h2>
+                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                    <i class="fas fa-cog"></i> সেটিংস
+                </h2>
+                
+                <div class="card">
+                    <h3 class="card-title">প্রোফাইল সেটিংস</h3>
                     
-                    <div class="card">
-                        <h3 class="card-title mb-4">প্রোফাইল সেটিংস</h3>
-                        
-                        <div class="settings-item flex justify-between items-center border-b py-4">
-                            <div>
-                                <div class="font-medium">দোকানের নাম</div>
-                                <div class="text-sm text-gray-500">আপনার দোকানের নাম পরিবর্তন করুন</div>
-                            </div>
-                            <div class="flex gap-2">
-                                <input type="text" id="shop-name" class="form-control" style="width: 200px;" placeholder="দোকানের নাম">
-                                <button class="btn btn-primary btn-sm" onclick="updateShopName()">সংরক্ষণ</button>
-                            </div>
-                        </div>
-                        
-                        <div class="settings-item flex justify-between items-center py-4">
-                            <div>
-                                <div class="font-medium">মুদ্রা</div>
-                                <div class="text-sm text-gray-500">আপনার মুদ্রা নির্বাচন করুন</div>
-                            </div>
-                            <select id="currency" class="form-control" style="width: 150px;">
-                                <option value="BDT">টাকা (BDT)</option>
-                                <option value="USD">ডলার (USD)</option>
-                                <option value="EUR">ইউরো (EUR)</option>
-                            </select>
+                    <div style="margin-bottom: 16px;">
+                        <label class="form-label">দোকানের নাম</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="shop-name" class="form-control" placeholder="দোকানের নাম">
+                            <button class="btn btn-primary btn-sm" onclick="updateShopName()">সংরক্ষণ</button>
                         </div>
                     </div>
                     
-                    <div class="card">
-                        <h3 class="card-title mb-4">নোটিফিকেশন সেটিংস</h3>
-                        
-                        <div class="settings-item flex justify-between items-center border-b py-4">
-                            <div>
-                                <div class="font-medium">ইমেইল নোটিফিকেশন</div>
-                                <div class="text-sm text-gray-500">প্রতিটি লেনদেনে ইমেইল পাঠান</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="email-notification" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        
-                        <div class="settings-item flex justify-between items-center py-4">
-                            <div>
-                                <div class="font-medium">পুশ নোটিফিকেশন</div>
-                                <div class="text-sm text-gray-500">রিয়েল-টাইম নোটিফিকেশন গ্রহণ করুন</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="push-notification" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title mb-4">ভাষা সেটিংস</h3>
-                        
-                        <div class="settings-item flex justify-between items-center py-4">
-                            <div>
-                                <div class="font-medium">ইন্টারফেস ভাষা</div>
-                                <div class="text-sm text-gray-500">অ্যাপ্লিকেশনের ভাষা পরিবর্তন করুন</div>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="btn btn-primary btn-sm" onclick="changeLanguage('bn')">বাংলা</button>
-                                <button class="btn btn-secondary btn-sm" onclick="changeLanguage('en')">English</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title mb-4">ডেটা ব্যাকআপ</h3>
-                        
-                        <div class="settings-item flex justify-between items-center border-b py-4">
-                            <div>
-                                <div class="font-medium">স্বয়ংক্রিয় ব্যাকআপ</div>
-                                <div class="text-sm text-gray-500">প্রতিদিন স্বয়ংক্রিয়ভাবে ব্যাকআপ নিন</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="auto-backup" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        
-                        <div class="settings-item flex justify-between items-center py-4">
-                            <div>
-                                <div class="font-medium">ম্যানুয়াল ব্যাকআপ</div>
-                                <div class="text-sm text-gray-500">এখনই ডেটা ব্যাকআপ নিন</div>
-                            </div>
-                            <button class="btn btn-primary btn-sm" onclick="backupData()">
-                                <i class="fas fa-database"></i>
-                                ব্যাকআপ নিন
-                            </button>
-                        </div>
+                    <div>
+                        <label class="form-label">মুদ্রা</label>
+                        <select id="currency" class="form-control">
+                            <option value="BDT">টাকা (BDT)</option>
+                            <option value="USD">ডলার (USD)</option>
+                            <option value="EUR">ইউরো (EUR)</option>
+                        </select>
                     </div>
                 </div>
+                
+                <div class="card">
+                    <h3 class="card-title">নোটিফিকেশন</h3>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div>
+                            <div class="font-medium">ইমেইল নোটিফিকেশন</div>
+                            <div class="text-sm text-gray-500">প্রতিটি লেনদেনে ইমেইল পাঠান</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="email-notification" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="font-medium">পুশ নোটিফিকেশন</div>
+                            <div class="text-sm text-gray-500">রিয়েল-টাইম নোটিফিকেশন</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="push-notification" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="backupData()" style="width: 100%;">
+                    <i class="fas fa-database"></i> ডেটা ব্যাকআপ নিন
+                </button>
             </div>
         </main>
     </div>
@@ -2040,31 +1539,35 @@
             </div>
             
             <form id="product-form">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="form-group">
-                        <label class="form-label">পণ্যের নাম</label>
-                        <input type="text" id="product-name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">ক্যাটাগরি</label>
-                        <input type="text" id="product-category" class="form-control" required>
-                    </div>
+                <div class="form-group">
+                    <label class="form-label">পণ্যের নাম</label>
+                    <input type="text" id="product-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">ক্যাটাগরি</label>
+                    <input type="text" id="product-category" class="form-control" required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="form-group">
                         <label class="form-label">ক্রয় মূল্য</label>
                         <input type="number" id="product-purchase-price" class="form-control" required>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">বিক্রয় মূল্য</label>
                         <input type="number" id="product-sale-price" class="form-control" required>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">স্টক পরিমাণ</label>
-                        <input type="number" id="product-stock" class="form-control" required>
-                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">স্টক পরিমাণ</label>
+                    <input type="number" id="product-stock" class="form-control" required>
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('product-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('product-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">সংরক্ষণ করুন</button>
                 </div>
             </form>
@@ -2089,14 +1592,16 @@
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">পরিমাণ</label>
-                    <input type="number" id="sale-quantity" class="form-control" required oninput="calculateSaleTotal()">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">প্রতি পিস মূল্য</label>
-                    <input type="number" id="sale-price" class="form-control" required value="0" oninput="calculateSaleTotal()">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label class="form-label">পরিমাণ</label>
+                        <input type="number" id="sale-quantity" class="form-control" required oninput="calculateSaleTotal()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">প্রতি পিস মূল্য</label>
+                        <input type="number" id="sale-price" class="form-control" required value="0" oninput="calculateSaleTotal()">
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -2104,7 +1609,6 @@
                     <input type="number" id="sale-total" class="form-control" readonly>
                 </div>
                 
-                <!-- Payment Methods -->
                 <div class="form-group">
                     <label class="form-label">পেমেন্ট পদ্ধতি</label>
                     <div class="payment-methods">
@@ -2127,12 +1631,9 @@
                     </div>
                 </div>
                 
-                <!-- Due Amount Box -->
-                <div id="due-amount-box" class="due-amount-box paid">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium">অবশিষ্ট থাকবে</span>
-                        <span class="font-bold" id="due-amount-display">৳0</span>
-                    </div>
+                <div id="due-amount-box" style="background: #ECFDF5; border-radius: 12px; padding: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <span class="font-medium">অবশিষ্ট</span>
+                    <span class="font-bold" id="due-amount-display">৳0</span>
                 </div>
                 
                 <div class="form-group">
@@ -2143,7 +1644,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('sale-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('sale-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">বিক্রি সম্পন্ন করুন</button>
                 </div>
             </form>
@@ -2168,14 +1669,16 @@
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">পরিমাণ</label>
-                    <input type="number" id="purchase-quantity" class="form-control" required oninput="calculatePurchaseTotal()">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">প্রতি পিস মূল্য</label>
-                    <input type="number" id="purchase-price" class="form-control" required value="0" oninput="calculatePurchaseTotal()">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label class="form-label">পরিমাণ</label>
+                        <input type="number" id="purchase-quantity" class="form-control" required oninput="calculatePurchaseTotal()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">প্রতি পিস মূল্য</label>
+                        <input type="number" id="purchase-price" class="form-control" required value="0" oninput="calculatePurchaseTotal()">
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -2189,7 +1692,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('purchase-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('purchase-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">ক্রয় সম্পন্ন করুন</button>
                 </div>
             </form>
@@ -2223,7 +1726,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('customer-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('customer-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">সংরক্ষণ করুন</button>
                 </div>
             </form>
@@ -2264,7 +1767,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('expense-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('expense-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">সংরক্ষণ করুন</button>
                 </div>
             </form>
@@ -2298,7 +1801,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('due-payment-modal')">বাতিল</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModal('due-payment-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">পরিশোধ করুন</button>
                 </div>
             </form>
@@ -2340,25 +1843,40 @@
         function selectPaymentMethod(method, btn) {
             selectedPaymentMethod = method;
             
-            // Update active state
             document.querySelectorAll('.payment-method-btn').forEach(button => {
                 button.classList.remove('active');
             });
             btn.classList.add('active');
             
-            // Update due amount box
             const dueBox = document.getElementById('due-amount-box');
             const total = parseFloat(document.getElementById('sale-total').value) || 0;
             
             if (method === 'due') {
-                dueBox.className = 'due-amount-box due';
+                dueBox.style.background = '#FEF2F2';
                 document.getElementById('due-amount-display').textContent = '৳' + total.toFixed(2);
                 document.getElementById('sale-customer').required = true;
             } else {
-                dueBox.className = 'due-amount-box paid';
+                dueBox.style.background = '#ECFDF5';
                 document.getElementById('due-amount-display').textContent = '৳0';
                 document.getElementById('sale-customer').required = false;
             }
+        }
+
+        // Sidebar functions
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
         }
 
         // Auth functions
@@ -2432,7 +1950,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, লগআউট করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -2474,31 +1992,25 @@
         function showSection(section) {
             currentSection = section;
             
-            // Hide all sections
             document.querySelectorAll('.content-section').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Show selected section
             document.getElementById(section + '-section').classList.add('active');
             
-            // Update sidebar
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Find and activate the correct sidebar item
             const sidebarItems = document.querySelectorAll('.sidebar-item');
             sidebarItems.forEach(item => {
-                if (item.querySelector('.sidebar-item-text').textContent.includes(section)) {
+                if (item.querySelector('.sidebar-item-text').textContent.includes(getSectionName(section))) {
                     item.classList.add('active');
                 }
             });
             
-            // Update header title
-            document.getElementById('header-title').innerHTML = `<i class="fas fa-${getSectionIcon(section)} mr-2"></i>${getSectionName(section)}`;
+            document.getElementById('header-title').textContent = getSectionName(section);
             
-            // Load data for the section
             if (section === 'dashboard') loadDashboardData();
             if (section === 'products') loadProducts();
             if (section === 'sales') loadSales();
@@ -2509,56 +2021,38 @@
             if (section === 'recycle') loadRecycleBin();
             if (section === 'settings') loadSettings();
             
-            // Close sidebar on mobile
-            if (window.innerWidth <= 1024) {
-                document.getElementById('sidebar').classList.remove('active');
-            }
-        }
-
-        // Get section icon
-        function getSectionIcon(section) {
-            const icons = {
-                dashboard: 'chart-pie',
-                products: 'boxes',
-                sales: 'shopping-cart',
-                purchases: 'shopping-bag',
-                customers: 'users',
-                expenses: 'wallet',
-                reports: 'chart-line',
-                recycle: 'recycle',
-                settings: 'cog'
-            };
-            return icons[section] || 'chart-pie';
+            closeSidebar();
         }
 
         // Get section name
         function getSectionName(section) {
             const names = {
                 dashboard: 'ড্যাশবোর্ড',
-                products: 'পণ্য ব্যবস্থাপনা',
-                sales: 'বিক্রি ব্যবস্থাপনা',
-                purchases: 'ক্রয় ব্যবস্থাপনা',
-                customers: 'কাস্টমার ব্যবস্থাপনা',
-                expenses: 'খরচ ব্যবস্থাপনা',
+                products: 'পণ্য',
+                sales: 'বিক্রি',
+                purchases: 'ক্রয়',
+                customers: 'কাস্টমার',
+                expenses: 'খরচ',
                 reports: 'রিপোর্ট',
-                recycle: 'রিসাইকেল বিন',
+                recycle: 'রিসাইকেল',
                 settings: 'সেটিংস'
             };
             return names[section] || section;
-        }
-
-        // Toggle sidebar
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
         }
 
         // Language functions
         function changeLanguage(lang) {
             currentLanguage = lang;
             
-            // Update language buttons
-            document.getElementById('lang-bn').classList.toggle('active', lang === 'bn');
-            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (lang === 'bn') {
+                document.querySelector('.language-btn').classList.add('active');
+            } else {
+                document.querySelectorAll('.language-btn')[1].classList.add('active');
+            }
             
             showNotification('ভাষা পরিবর্তন হয়েছে!', 'success');
         }
@@ -2626,6 +2120,9 @@
                         todaySales += child.val().total;
                     });
                     document.getElementById('today-sales').textContent = '৳' + todaySales.toFixed(2);
+                })
+                .catch((error) => {
+                    console.error('Error loading sales:', error);
                 });
             
             // Load total products
@@ -2633,12 +2130,18 @@
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
                     document.getElementById('product-badge').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    console.error('Error loading products:', error);
                 });
             
             // Load total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    console.error('Error loading customers:', error);
                 });
             
             // Load today's expenses
@@ -2649,10 +2152,13 @@
                         todayExpenses += child.val().amount;
                     });
                     document.getElementById('today-expenses').textContent = '৳' + todayExpenses.toFixed(2);
+                })
+                .catch((error) => {
+                    console.error('Error loading expenses:', error);
                 });
             
             // Load recent sales
-            db.ref('sales').orderByChild('timestamp').limitToLast(5).on('value')
+            db.ref('sales').orderByChild('timestamp').limitToLast(5).once('value')
                 .then((snapshot) => {
                     const recentSalesDiv = document.getElementById('recent-sales');
                     recentSalesDiv.innerHTML = '';
@@ -2663,20 +2169,25 @@
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
                         const html = `
-                            <div class="flex items-center justify-between mb-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                                <div>
-                                    <div class="font-medium text-gray-800">${sale.productName}</div>
-                                    <div class="text-sm text-gray-500">${dateStr}</div>
+                            <div style="padding: 8px; border-bottom: 1px solid #f3f4f6;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 13px;">${sale.productName}</div>
+                                        <div style="font-size: 11px; color: var(--gray-color);">${dateStr}</div>
+                                    </div>
+                                    <div style="font-weight: 700; color: var(--secondary-color);">৳${sale.total.toFixed(2)}</div>
                                 </div>
-                                <div class="font-bold text-green-600">৳${sale.total.toFixed(2)}</div>
                             </div>
                         `;
                         recentSalesDiv.innerHTML += html;
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading recent sales:', error);
                 });
             
             // Load recent expenses
-            db.ref('expenses').orderByChild('timestamp').limitToLast(5).on('value')
+            db.ref('expenses').orderByChild('timestamp').limitToLast(5).once('value')
                 .then((snapshot) => {
                     const recentExpensesDiv = document.getElementById('recent-expenses');
                     recentExpensesDiv.innerHTML = '';
@@ -2687,16 +2198,21 @@
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
                         const html = `
-                            <div class="flex items-center justify-between mb-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                                <div>
-                                    <div class="font-medium text-gray-800">${expense.type}</div>
-                                    <div class="text-sm text-gray-500">${dateStr}</div>
+                            <div style="padding: 8px; border-bottom: 1px solid #f3f4f6;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 13px;">${expense.type}</div>
+                                        <div style="font-size: 11px; color: var(--gray-color);">${dateStr}</div>
+                                    </div>
+                                    <div style="font-weight: 700; color: var(--danger-color);">৳${expense.amount.toFixed(2)}</div>
                                 </div>
-                                <div class="font-bold text-red-600">৳${expense.amount.toFixed(2)}</div>
                             </div>
                         `;
                         recentExpensesDiv.innerHTML += html;
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading recent expenses:', error);
                 });
             
             // Load sales chart
@@ -2711,6 +2227,9 @@
             db.ref('recycle').once('value')
                 .then((snapshot) => {
                     document.getElementById('recycle-badge').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    console.error('Error loading recycle count:', error);
                 });
         }
 
@@ -2755,13 +2274,12 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'বিক্রি (টাকা)',
+                                label: 'বিক্রি',
                                 data: salesData,
                                 backgroundColor: 'rgba(79, 70, 229, 0.7)',
                                 borderColor: 'rgba(79, 70, 229, 1)',
                                 borderWidth: 1,
-                                borderRadius: 8,
-                                barPercentage: 0.6
+                                borderRadius: 4
                             }]
                         },
                         options: {
@@ -2787,6 +2305,9 @@
                             }
                         }
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading sales chart:', error);
                 });
         }
 
@@ -2803,25 +2324,23 @@
                     const productId = child.key;
                     
                     const stockColor = product.stock <= 5 ? 'text-red-600' : 'text-green-600';
-                    const stockBadge = product.stock <= 5 ? '<span class="badge bg-red-100 text-red-600 px-2 py-1 rounded text-xs ml-2">কম স্টক</span>' : '';
                     
                     const html = `
                         <tr>
                             <td>
-                                <div class="font-medium text-gray-800">${product.name}</div>
-                                <div class="text-sm text-gray-500">${product.category}</div>
+                                <div style="font-weight: 600;">${product.name}</div>
+                                <div style="font-size: 11px; color: var(--gray-color);">${product.category}</div>
                             </td>
                             <td>৳${product.purchasePrice}</td>
                             <td>৳${product.salePrice}</td>
                             <td>
                                 <span class="${stockColor} font-bold">${product.stock}</span>
-                                ${stockBadge}
                             </td>
                             <td>
-                                <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm mr-2" title="সম্পাদনা">
+                                <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button onclick="deleteProduct('${productId}')" class="btn btn-danger btn-sm" title="রিসাইকেলে যাবে">
+                                <button onclick="deleteProduct('${productId}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2830,6 +2349,8 @@
                     
                     productsBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading products:', error);
             });
         }
 
@@ -2908,6 +2429,9 @@
                     document.getElementById('product-form').dataset.editId = productId;
                     
                     document.getElementById('product-modal').style.display = 'flex';
+                })
+                .catch((error) => {
+                    console.error('Error editing product:', error);
                 });
         }
 
@@ -2915,12 +2439,12 @@
         function deleteProduct(productId) {
             Swal.fire({
                 title: 'পণ্য রিসাইকেলে যাবে?',
-                text: 'পণ্যটি রিসাইকেল বিনে স্থানান্তরিত হবে, ডিলিট হবে না',
+                text: 'পণ্যটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, স্থানান্তর করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -2928,7 +2452,6 @@
                         .then(async (snapshot) => {
                             const product = snapshot.val();
                             
-                            // Save to recycle bin
                             const recycleData = {
                                 type: 'product',
                                 data: product,
@@ -2943,7 +2466,6 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                text: 'পণ্যটি রিসাইকেল বিনে সংরক্ষিত আছে',
                                 timer: 3000,
                                 showConfirmButton: false
                             });
@@ -2952,6 +2474,9 @@
                             updateProductDropdowns();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting product:', error);
                         });
                 }
             });
@@ -2990,35 +2515,33 @@
                     const date = new Date(sale.timestamp);
                     const dateStr = date.toLocaleString('bn-BD');
                     
-                    // Payment badge
                     let paymentBadge = '';
                     switch(sale.paymentMethod) {
                         case 'cash':
-                            paymentBadge = '<span class="badge bg-green-100 text-green-600 px-2 py-1 rounded text-xs">ক্যাশ</span>';
+                            paymentBadge = '<span style="background: #ECFDF5; color: var(--secondary-color); padding: 2px 6px; border-radius: 4px; font-size: 11px;">ক্যাশ</span>';
                             break;
                         case 'nagad':
-                            paymentBadge = '<span class="badge bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs">নগদ</span>';
+                            paymentBadge = '<span style="background: #FFF7ED; color: #F97316; padding: 2px 6px; border-radius: 4px; font-size: 11px;">নগদ</span>';
                             break;
                         case 'bikash':
-                            paymentBadge = '<span class="badge bg-pink-100 text-pink-600 px-2 py-1 rounded text-xs">বিকাশ</span>';
+                            paymentBadge = '<span style="background: #FDF2F8; color: #EC4899; padding: 2px 6px; border-radius: 4px; font-size: 11px;">বিকাশ</span>';
                             break;
                         case 'due':
-                            paymentBadge = '<span class="badge bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">বাকি</span>';
+                            paymentBadge = '<span style="background: #FEF3C7; color: #D97706; padding: 2px 6px; border-radius: 4px; font-size: 11px;">বাকি</span>';
                             break;
                         default:
-                            paymentBadge = '<span class="badge bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">অন্যান্য</span>';
+                            paymentBadge = '<span style="background: #F3F4F6; color: var(--gray-color); padding: 2px 6px; border-radius: 4px; font-size: 11px;">অন্যান্য</span>';
                     }
                     
                     const html = `
                         <tr>
                             <td>${dateStr}</td>
-                            <td class="font-medium">${sale.productName}</td>
+                            <td style="font-weight: 600;">${sale.productName}</td>
                             <td>${sale.quantity}</td>
                             <td>৳${sale.total.toFixed(2)}</td>
-                            <td>${sale.customerName || 'নেই'}</td>
                             <td>${paymentBadge}</td>
                             <td>
-                                <button onclick="deleteSale('${sale.id}')" class="btn btn-danger btn-sm" title="রিসাইকেলে স্থানান্তর">
+                                <button onclick="deleteSale('${sale.id}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -3027,19 +2550,20 @@
                     
                     salesBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading sales:', error);
             });
         }
 
         // Sale Modal
         function openSaleModal() {
-            // Reset payment method
             selectedPaymentMethod = 'cash';
+            
             document.querySelectorAll('.payment-method-btn').forEach(button => {
                 button.classList.remove('active');
             });
             document.querySelector('.payment-method-btn').classList.add('active');
             
-            // Load products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('sale-product');
@@ -3057,9 +2581,11 @@
                             productSelect.appendChild(option);
                         }
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading products for sale:', error);
                 });
             
-            // Load customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     const customerSelect = document.getElementById('sale-customer');
@@ -3072,6 +2598,9 @@
                         option.textContent = customer.name;
                         customerSelect.appendChild(option);
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading customers for sale:', error);
                 });
             
             document.getElementById('sale-modal').style.display = 'flex';
@@ -3095,7 +2624,6 @@
             const total = quantity * price;
             document.getElementById('sale-total').value = total.toFixed(2);
             
-            // Update due amount
             updateDueAmount();
         }
 
@@ -3105,10 +2633,10 @@
             const dueBox = document.getElementById('due-amount-box');
             
             if (selectedPaymentMethod === 'due') {
-                dueBox.className = 'due-amount-box due';
+                dueBox.style.background = '#FEF2F2';
                 document.getElementById('due-amount-display').textContent = '৳' + total.toFixed(2);
             } else {
-                dueBox.className = 'due-amount-box paid';
+                dueBox.style.background = '#ECFDF5';
                 document.getElementById('due-amount-display').textContent = '৳0';
             }
         }
@@ -3128,7 +2656,6 @@
                 return;
             }
             
-            // Validate customer for due payment
             if (selectedPaymentMethod === 'due' && !customerId) {
                 showNotification('বাকি বিক্রির জন্য কাস্টমার নির্বাচন করুন!', 'error');
                 return;
@@ -3152,7 +2679,6 @@
                     return;
                 }
                 
-                // Get customer details
                 let customerName = '';
                 
                 if (customerId) {
@@ -3160,7 +2686,6 @@
                     const customer = customerSnapshot.val();
                     customerName = customer.name;
                     
-                    // Update customer due if payment is due
                     if (selectedPaymentMethod === 'due') {
                         const newDue = (customer.due || 0) + total;
                         await db.ref('customers/' + customerId).update({
@@ -3185,7 +2710,6 @@
                 
                 await db.ref('sales').push(saleData);
                 
-                // Update product stock
                 const newStock = product.stock - quantity;
                 await db.ref('products/' + productId).update({
                     stock: newStock,
@@ -3218,12 +2742,12 @@
         function deleteSale(saleId) {
             Swal.fire({
                 title: 'বিক্রি রিসাইকেলে যাবে?',
-                text: 'বিক্রিটি রিসাইকেল বিনে স্থানান্তরিত হবে, ডিলিট হবে না',
+                text: 'বিক্রিটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, স্থানান্তর করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -3231,7 +2755,6 @@
                         .then(async (snapshot) => {
                             const sale = snapshot.val();
                             
-                            // Save to recycle bin
                             const recycleData = {
                                 type: 'sale',
                                 data: sale,
@@ -3242,7 +2765,6 @@
                             
                             await db.ref('recycle').push(recycleData);
                             
-                            // Restore product stock
                             const productSnapshot = await db.ref('products/' + sale.productId).once('value');
                             const product = productSnapshot.val();
                             if (product) {
@@ -3253,7 +2775,6 @@
                                 });
                             }
                             
-                            // Remove due from customer if payment was due
                             if (sale.paymentMethod === 'due' && sale.customerId) {
                                 const customerSnapshot = await db.ref('customers/' + sale.customerId).once('value');
                                 const customer = customerSnapshot.val();
@@ -3271,7 +2792,6 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                text: 'বিক্রিটি রিসাইকেল বিনে সংরক্ষিত আছে',
                                 timer: 3000,
                                 showConfirmButton: false
                             });
@@ -3281,6 +2801,9 @@
                             loadCustomers();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting sale:', error);
                         });
                 }
             });
@@ -3322,12 +2845,12 @@
                     const html = `
                         <tr>
                             <td>${dateStr}</td>
-                            <td class="font-medium">${purchase.productName}</td>
+                            <td style="font-weight: 600;">${purchase.productName}</td>
                             <td>${purchase.quantity}</td>
                             <td>৳${purchase.total.toFixed(2)}</td>
                             <td>${purchase.supplier || 'নেই'}</td>
                             <td>
-                                <button onclick="deletePurchase('${purchase.id}')" class="btn btn-danger btn-sm" title="রিসাইকেলে স্থানান্তর">
+                                <button onclick="deletePurchase('${purchase.id}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -3336,12 +2859,13 @@
                     
                     purchasesBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading purchases:', error);
             });
         }
 
         // Purchase Modal
         function openPurchaseModal() {
-            // Load products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('purchase-product');
@@ -3356,6 +2880,9 @@
                         option.dataset.name = product.name;
                         productSelect.appendChild(option);
                     });
+                })
+                .catch((error) => {
+                    console.error('Error loading products for purchase:', error);
                 });
             
             document.getElementById('purchase-modal').style.display = 'flex';
@@ -3414,7 +2941,6 @@
                 
                 await db.ref('purchases').push(purchaseData);
                 
-                // Update product stock
                 const newStock = product.stock + quantity;
                 await db.ref('products/' + productId).update({
                     stock: newStock,
@@ -3447,12 +2973,12 @@
         function deletePurchase(purchaseId) {
             Swal.fire({
                 title: 'ক্রয় রিসাইকেলে যাবে?',
-                text: 'ক্রয়টি রিসাইকেল বিনে স্থানান্তরিত হবে, ডিলিট হবে না',
+                text: 'ক্রয়টি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, স্থানান্তর করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -3460,7 +2986,6 @@
                         .then(async (snapshot) => {
                             const purchase = snapshot.val();
                             
-                            // Save to recycle bin
                             const recycleData = {
                                 type: 'purchase',
                                 data: purchase,
@@ -3471,7 +2996,6 @@
                             
                             await db.ref('recycle').push(recycleData);
                             
-                            // Update product stock
                             const productSnapshot = await db.ref('products/' + purchase.productId).once('value');
                             const product = productSnapshot.val();
                             if (product) {
@@ -3487,7 +3011,6 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                text: 'ক্রয়টি রিসাইকেল বিনে সংরক্ষিত আছে',
                                 timer: 3000,
                                 showConfirmButton: false
                             });
@@ -3495,6 +3018,9 @@
                             loadPurchases();
                             loadProducts();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting purchase:', error);
                         });
                 }
             });
@@ -3528,19 +3054,18 @@
                     const html = `
                         <tr>
                             <td>
-                                <div class="font-medium text-gray-800">${customer.name}</div>
-                                <div class="text-sm text-gray-500">${customer.phone}</div>
+                                <div style="font-weight: 600;">${customer.name}</div>
+                                <div style="font-size: 11px; color: var(--gray-color);">${customer.phone}</div>
                             </td>
                             <td>${customer.phone}</td>
-                            <td>${customer.address || 'নেই'}</td>
                             <td>
                                 <span class="${dueColor} font-bold">৳${customer.due || 0}</span>
                             </td>
                             <td>
-                                <button onclick="openDuePaymentModal('${customerId}')" class="btn btn-success btn-sm mr-2" title="বাকি পরিশোধ">
+                                <button onclick="openDuePaymentModal('${customerId}')" class="btn btn-success btn-sm">
                                     <i class="fas fa-money-bill-wave"></i>
                                 </button>
-                                <button onclick="deleteCustomer('${customerId}')" class="btn btn-danger btn-sm" title="রিসাইকেলে স্থানান্তর">
+                                <button onclick="deleteCustomer('${customerId}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -3549,6 +3074,8 @@
                     
                     customersBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading customers:', error);
             });
         }
 
@@ -3601,12 +3128,12 @@
         function deleteCustomer(customerId) {
             Swal.fire({
                 title: 'কাস্টমার রিসাইকেলে যাবে?',
-                text: 'কাস্টমারটি রিসাইকেল বিনে স্থানান্তরিত হবে, ডিলিট হবে না',
+                text: 'কাস্টমারটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, স্থানান্তর করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -3614,7 +3141,6 @@
                         .then(async (snapshot) => {
                             const customer = snapshot.val();
                             
-                            // Save to recycle bin
                             const recycleData = {
                                 type: 'customer',
                                 data: customer,
@@ -3629,13 +3155,15 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                text: 'কাস্টমারটি রিসাইকেল বিনে সংরক্ষিত আছে',
                                 timer: 3000,
                                 showConfirmButton: false
                             });
                             
                             loadCustomers();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting customer:', error);
                         });
                 }
             });
@@ -3663,6 +3191,9 @@
                     document.getElementById('due-payment-form').dataset.customerId = customerId;
                     
                     document.getElementById('due-payment-modal').style.display = 'flex';
+                })
+                .catch((error) => {
+                    console.error('Error loading customer for due payment:', error);
                 });
         }
 
@@ -3747,7 +3278,7 @@
                             <td>${expense.description || 'নেই'}</td>
                             <td>৳${expense.amount.toFixed(2)}</td>
                             <td>
-                                <button onclick="deleteExpense('${expense.id}')" class="btn btn-danger btn-sm" title="রিসাইকেলে স্থানান্তর">
+                                <button onclick="deleteExpense('${expense.id}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -3756,6 +3287,8 @@
                     
                     expensesBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading expenses:', error);
             });
         }
 
@@ -3806,12 +3339,12 @@
         function deleteExpense(expenseId) {
             Swal.fire({
                 title: 'খরচ রিসাইকেলে যাবে?',
-                text: 'খরচটি রিসাইকেল বিনে স্থানান্তরিত হবে, ডিলিট হবে না',
+                text: 'খরচটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ, স্থানান্তর করুন',
+                confirmButtonText: 'হ্যাঁ',
                 cancelButtonText: 'বাতিল'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -3819,7 +3352,6 @@
                         .then(async (snapshot) => {
                             const expense = snapshot.val();
                             
-                            // Save to recycle bin
                             const recycleData = {
                                 type: 'expense',
                                 data: expense,
@@ -3834,7 +3366,6 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                text: 'খরচটি রিসাইকেল বিনে সংরক্ষিত আছে',
                                 timer: 3000,
                                 showConfirmButton: false
                             });
@@ -3842,6 +3373,9 @@
                             loadExpenses();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting expense:', error);
                         });
                 }
             });
@@ -3933,6 +3467,8 @@
                         }
                     }
                 });
+            }, (error) => {
+                console.error('Error loading sales report:', error);
             });
         }
 
@@ -4004,6 +3540,8 @@
                         }
                     }
                 });
+            }, (error) => {
+                console.error('Error loading expense report:', error);
             });
         }
 
@@ -4037,43 +3575,26 @@
                     });
                     
                     document.getElementById('report-summary').innerHTML = `
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon primary">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">আজকের বিক্রি</div>
-                            <div class="stat-value">৳${todaySales.toFixed(2)}</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">আজকের বিক্রি</div>
+                            <div style="font-size: 20px; font-weight: 800;">৳${todaySales.toFixed(2)}</div>
                         </div>
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon success">
-                                    <i class="fas fa-chart-bar"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">এই সপ্তাহের বিক্রি</div>
-                            <div class="stat-value">৳${weekSales.toFixed(2)}</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">এই সপ্তাহ</div>
+                            <div style="font-size: 20px; font-weight: 800;">৳${weekSales.toFixed(2)}</div>
                         </div>
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon warning">
-                                    <i class="fas fa-chart-area"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">এই মাসের বিক্রি</div>
-                            <div class="stat-value">৳${monthSales.toFixed(2)}</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">এই মাস</div>
+                            <div style="font-size: 20px; font-weight: 800;">৳${monthSales.toFixed(2)}</div>
                         </div>
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon danger">
-                                    <i class="fas fa-chart-pie"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">এই বছরের বিক্রি</div>
-                            <div class="stat-value">৳${yearSales.toFixed(2)}</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">এই বছর</div>
+                            <div style="font-size: 20px; font-weight: 800;">৳${yearSales.toFixed(2)}</div>
                         </div>
                     `;
+                })
+                .catch((error) => {
+                    console.error('Error loading report summary:', error);
                 });
         }
 
@@ -4086,24 +3607,14 @@
                 case 'today':
                     startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
                     break;
-                case 'yesterday':
-                    startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
-                    break;
                 case 'this_week':
                     startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
                     break;
                 case 'this_month':
                     startDate = new Date(today.getFullYear(), today.getMonth(), 1);
                     break;
-                case 'this_year':
-                    startDate = new Date(today.getFullYear(), 0, 1);
-                    break;
-                case 'last_year':
-                    startDate = new Date(today.getFullYear() - 1, 0, 1);
-                    break;
             }
             
-            // Update active button
             document.querySelectorAll('.date-picker-btn').forEach(button => {
                 button.classList.remove('active');
             });
@@ -4128,25 +3639,18 @@
                     
                     const summaryDiv = document.getElementById('report-summary');
                     summaryDiv.innerHTML = `
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon primary">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">মোট বিক্রি</div>
-                            <div class="stat-value">৳${totalSales.toFixed(2)}</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">মোট বিক্রি</div>
+                            <div style="font-size: 20px; font-weight: 800;">৳${totalSales.toFixed(2)}</div>
                         </div>
-                        <div class="card">
-                            <div class="stat-header">
-                                <div class="stat-icon success">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                            </div>
-                            <div class="stat-label">মোট বিক্রি সংখ্যা</div>
-                            <div class="stat-value">${filteredSales.length} টি</div>
+                        <div class="card" style="padding: 12px;">
+                            <div style="font-size: 12px; color: var(--gray-color);">মোট বিক্রি সংখ্যা</div>
+                            <div style="font-size: 20px; font-weight: 800;">${filteredSales.length} টি</div>
                         </div>
                     `;
+                })
+                .catch((error) => {
+                    console.error('Error loading filtered data:', error);
                 });
         }
 
@@ -4175,6 +3679,9 @@
                     a.click();
                     
                     showNotification('রিপোর্ট ডাউনলোড হয়েছে!', 'success');
+                })
+                .catch((error) => {
+                    console.error('Error downloading report:', error);
                 });
         }
 
@@ -4203,12 +3710,12 @@
                     const html = `
                         <tr>
                             <td>
-                                <span class="badge bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs">${item.type}</span>
+                                <span style="background: #DBEAFE; color: #2563EB; padding: 2px 6px; border-radius: 4px; font-size: 11px;">${item.type}</span>
                             </td>
                             <td>${item.data.name || item.data.productName || item.data.customerName || 'নেই'}</td>
                             <td>${dateStr}</td>
                             <td>
-                                <button onclick="restoreItem('${item.id}')" class="btn btn-success btn-sm mr-2" title="পুনরুদ্ধার">
+                                <button onclick="restoreItem('${item.id}')" class="btn btn-success btn-sm">
                                     <i class="fas fa-undo"></i>
                                 </button>
                             </td>
@@ -4217,6 +3724,8 @@
                     
                     recycleBody.innerHTML += html;
                 });
+            }, (error) => {
+                console.error('Error loading recycle bin:', error);
             });
         }
 
@@ -4226,7 +3735,6 @@
                 .then(async (snapshot) => {
                     const item = snapshot.val();
                     
-                    // Restore based on type
                     if (item.type === 'product') {
                         await db.ref('products/' + item.originalId).set(item.data);
                     } else if (item.type === 'sale') {
@@ -4239,7 +3747,6 @@
                         await db.ref('expenses/' + item.originalId).set(item.data);
                     }
                     
-                    // Remove from recycle bin (but data preserved in original location)
                     await db.ref('recycle/' + recycleId).remove();
                     
                     Swal.fire({
@@ -4252,29 +3759,19 @@
                     loadRecycleBin();
                     loadRecycleBadge();
                     
-                    // Refresh relevant sections
                     if (item.type === 'product') loadProducts();
                     if (item.type === 'sale') loadSales();
                     if (item.type === 'purchase') loadPurchases();
                     if (item.type === 'customer') loadCustomers();
                     if (item.type === 'expense') loadExpenses();
+                })
+                .catch((error) => {
+                    console.error('Error restoring item:', error);
                 });
-        }
-
-        // Filter recycle bin
-        function filterRecycle() {
-            const searchTerm = document.getElementById('recycle-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#recycle-body tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
         }
 
         // Settings Management
         function loadSettings() {
-            // Load shop settings
             if (currentUser) {
                 db.ref('settings/' + currentUser.uid).once('value')
                     .then((snapshot) => {
@@ -4285,8 +3782,10 @@
                             document.getElementById('currency').value = settings.currency || 'BDT';
                             document.getElementById('email-notification').checked = settings.emailNotification !== false;
                             document.getElementById('push-notification').checked = settings.pushNotification !== false;
-                            document.getElementById('auto-backup').checked = settings.autoBackup !== false;
                         }
+                    })
+                    .catch((error) => {
+                        console.error('Error loading settings:', error);
                     });
             }
         }
@@ -4305,7 +3804,7 @@
                 showNotification('দোকানের নাম আপডেট হয়েছে!', 'success');
             })
             .catch((error) => {
-                showNotification('দোকানের নাম আপডেট করা যায়নি! ' + error.message, 'error');
+                showNotification('আপডেট করা যায়নি! ' + error.message, 'error');
             });
         }
 
@@ -4388,6 +3887,9 @@
                         purchaseOption.dataset.name = product.name;
                         purchaseProductSelect.appendChild(purchaseOption);
                     });
+                })
+                .catch((error) => {
+                    console.error('Error updating product dropdowns:', error);
                 });
         }
 
@@ -4409,4 +3911,4 @@
     </script>
 </body>
 </html>
-    
+                                    

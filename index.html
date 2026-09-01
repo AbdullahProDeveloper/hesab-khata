@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#6C5CE7">
-    <title>বসনীসে হেসাব খাতা - প্রিমিয়াম দোকান ব্যবস্থাপনা</title>
+    <title>বসনীসে হেসাব খাতা - প্রিমিয়াম এন্টারপ্রাইজ সিস্টেম</title>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -22,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -37,28 +37,48 @@
             --primary-dark: #5A4BD1;
             --primary-light: #A29BFE;
             --primary-gradient: linear-gradient(135deg, #6C5CE7 0%, #5A4BD1 100%);
+            --primary-gradient-light: linear-gradient(135deg, rgba(108,92,231,0.1) 0%, rgba(90,75,209,0.1) 100%);
+            
             --success: #00B894;
             --success-gradient: linear-gradient(135deg, #00B894 0%, #00A381 100%);
+            --success-light: rgba(0,184,148,0.1);
+            
             --danger: #E17055;
             --danger-gradient: linear-gradient(135deg, #E17055 0%, #D63031 100%);
+            --danger-light: rgba(225,112,85,0.1);
+            
             --warning: #FDCB6E;
             --warning-gradient: linear-gradient(135deg, #FDCB6E 0%, #F39C12 100%);
+            --warning-light: rgba(253,203,110,0.1);
+            
             --info: #0984E3;
             --info-gradient: linear-gradient(135deg, #0984E3 0%, #0366D6 100%);
+            --info-light: rgba(9,132,227,0.1);
+            
             --dark: #2D3436;
+            --dark-secondary: #636E72;
             --gray: #636E72;
             --gray-light: #B2BEC3;
             --light: #F8F9FA;
             --white: #FFFFFF;
             --border: #E9ECEF;
+            
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-primary: 0 8px 30px rgba(108,92,231,0.15);
+            --shadow-success: 0 8px 30px rgba(0,184,148,0.15);
+            --shadow-danger: 0 8px 30px rgba(225,112,85,0.15);
+            
             --radius-sm: 8px;
             --radius: 12px;
             --radius-lg: 16px;
             --radius-xl: 20px;
-            --header-height: 70px;
+            --radius-2xl: 24px;
+            --radius-3xl: 32px;
+            
+            --header-height: 72px;
+            --sidebar-width: 280px;
         }
         
         html {
@@ -66,15 +86,16 @@
         }
         
         body {
-            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            font-family: 'Inter', 'Noto Sans Bengali', 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
             color: var(--dark);
             font-size: 14px;
+            line-height: 1.6;
         }
         
-        /* === PREMIUM LOGIN PAGE === */
+        /* === PREMIUM LOGIN === */
         .login-wrapper {
             min-height: 100vh;
             display: flex;
@@ -83,34 +104,64 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6C5CE7 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
         }
         
-        .login-bg {
+        .login-particles {
             position: absolute;
-            top: -50%;
-            right: -50%;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+            overflow: hidden;
         }
         
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { width: 10px; height: 10px; background: rgba(255,255,255,0.3); top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 15px; height: 15px; background: rgba(255,255,255,0.2); top: 60%; right: 15%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { width: 8px; height: 8px; background: rgba(255,255,255,0.4); top: 30%; right: 30%; animation-delay: 1s; }
+        .particle:nth-child(4) { width: 12px; height: 12px; background: rgba(255,255,255,0.25); top: 70%; left: 20%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { width: 6px; height: 6px; background: rgba(255,255,255,0.35); top: 50%; left: 50%; animation-delay: 2s; }
+        
+        .login-bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+        }
+        
+        .login-bg-shape-1 {
+            width: 400px;
+            height: 400px;
+            background: #6C5CE7;
+            top: -100px;
+            left: -100px;
+        }
+        
+        .login-bg-shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #00B894;
+            bottom: -50px;
+            right: -50px;
         }
         
         .login-card {
-            background: rgba(255,255,255,0.98);
+            background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
             padding: 40px;
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
         }
         
         .login-card::before {
@@ -120,16 +171,18 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, #6C5CE7, #00B894, #FDCB6E, #E17055);
+            background: linear-gradient(90deg, #6C5CE7, #00B894, #FDCB6E, #E17055, #0984E3);
             border-radius: 24px 24px 0 0;
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
         }
         
         .login-logo {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 20px;
             background: var(--primary-gradient);
-            border-radius: 20px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -150,31 +203,22 @@
             animation: shine 3s ease-in-out infinite;
         }
         
-        @keyframes shine {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-        
         .login-logo i {
-            font-size: 40px;
+            font-size: 42px;
             color: white;
             z-index: 1;
         }
         
         .login-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 800;
             text-align: center;
             margin-bottom: 8px;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #6C5CE7, #5A4BD1, #0984E3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.3;
+            letter-spacing: -0.5px;
         }
         
         .login-subtitle {
@@ -182,7 +226,7 @@
             color: var(--gray);
             font-size: 14px;
             margin-bottom: 30px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .form-group {
@@ -195,6 +239,7 @@
             font-weight: 600;
             font-size: 14px;
             color: var(--dark);
+            letter-spacing: -0.2px;
         }
         
         .input-group {
@@ -214,12 +259,18 @@
         
         .input-group:focus-within i {
             color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
         }
         
         .input-group .password-toggle {
             left: auto;
             right: 14px;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .input-group .password-toggle:hover {
+            color: var(--primary);
         }
         
         .form-control {
@@ -246,8 +297,10 @@
         
         .btn-login {
             width: 100%;
-            padding: 15px;
-            background: var(--primary-gradient);
+            padding: 16px;
+            background: linear-gradient(135deg, #6C5CE7, #5A4BD1, #0984E3);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
             color: white;
             border: none;
             border-radius: 12px;
@@ -258,6 +311,7 @@
             margin-top: 10px;
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.5px;
         }
         
         .btn-login::before {
@@ -299,14 +353,16 @@
         
         .forgot-password a:hover {
             color: var(--primary-dark);
+            text-decoration: underline;
         }
         
         .login-demo {
             margin-top: 24px;
-            padding: 12px;
-            background: var(--light);
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(9,132,227,0.05));
             border-radius: 12px;
             text-align: center;
+            border: 1px solid rgba(108,92,231,0.1);
         }
         
         .login-demo span {
@@ -314,6 +370,10 @@
             color: var(--gray);
             display: block;
             margin-bottom: 4px;
+        }
+        
+        .login-demo strong {
+            color: var(--primary);
         }
         
         /* === DASHBOARD === */
@@ -330,31 +390,31 @@
             left: 0;
             right: 0;
             height: var(--header-height);
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 20px;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         .menu-toggle {
-            background: none;
+            background: var(--light);
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--dark);
             transition: all 0.3s;
             display: flex;
@@ -363,24 +423,39 @@
         }
         
         .menu-toggle:hover {
-            background: var(--light);
-            transform: scale(1.1);
+            background: var(--border);
+            transform: scale(1.05);
+            color: var(--primary);
         }
         
         .header-logo {
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background: var(--primary-gradient);
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(108,92,231,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 3s ease-in-out infinite;
         }
         
         .header-logo i {
-            font-size: 20px;
+            font-size: 22px;
             color: white;
+            z-index: 1;
         }
         
         .header-title {
@@ -392,6 +467,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 200px;
+            letter-spacing: -0.3px;
         }
         
         .header-center {
@@ -401,14 +477,14 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         
         .header-btn {
             background: var(--light);
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -430,7 +506,7 @@
             position: absolute;
             top: -4px;
             right: -4px;
-            background: var(--danger);
+            background: var(--danger-gradient);
             color: white;
             font-size: 9px;
             font-weight: 700;
@@ -441,11 +517,7 @@
             align-items: center;
             justify-content: center;
             animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            box-shadow: 0 2px 8px rgba(225,112,85,0.4);
         }
         
         .user-profile {
@@ -464,17 +536,30 @@
         }
         
         .user-avatar {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #6C5CE7, #00B894);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            animation: shine 2s ease-in-out infinite;
         }
         
         .user-name {
@@ -496,7 +581,7 @@
         }
         
         .logout-btn:hover {
-            background: rgba(225,112,85,0.1);
+            background: var(--danger-light);
             transform: scale(1.1);
         }
         
@@ -520,14 +605,29 @@
         .main-sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -300px;
+            width: 300px;
             height: 100vh;
             background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
             z-index: 1001;
             transition: all 0.3s ease;
             overflow-y: auto;
             padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
+        }
+        
+        .main-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .main-sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .main-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
         }
         
         .main-sidebar.active {
@@ -551,11 +651,25 @@
             justify-content: center;
             margin-right: 12px;
             box-shadow: 0 4px 12px rgba(108,92,231,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 3s ease-in-out infinite;
         }
         
         .sidebar-logo i {
             font-size: 24px;
             color: white;
+            z-index: 1;
         }
         
         .sidebar-brand {
@@ -563,6 +677,7 @@
             font-size: 17px;
             font-weight: 700;
             flex: 1;
+            letter-spacing: -0.3px;
         }
         
         .sidebar-close {
@@ -579,6 +694,7 @@
         .sidebar-close:hover {
             background: rgba(255,255,255,0.1);
             color: white;
+            transform: rotate(90deg);
         }
         
         .sidebar-menu {
@@ -619,6 +735,7 @@
             background: var(--primary-gradient);
             transform: scaleY(0);
             transition: transform 0.3s;
+            border-radius: 0 3px 3px 0;
         }
         
         .sidebar-item:hover::before {
@@ -665,12 +782,13 @@
         }
         
         .sidebar-badge {
-            background: var(--danger);
+            background: var(--danger-gradient);
             color: white;
             font-size: 9px;
             font-weight: 700;
             padding: 2px 8px;
             border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(225,112,85,0.3);
         }
         
         /* Main Content */
@@ -686,22 +804,11 @@
         
         .content-section {
             display: none;
-            animation: fadeInUp 0.3s ease;
+            animation: fadeInUp 0.4s ease;
         }
         
         .content-section.active {
             display: block;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         /* Stats */
@@ -717,42 +824,59 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             cursor: pointer;
             border: 1px solid transparent;
         }
         
-        .stat-card::after {
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             opacity: 0.05;
-            transform: translate(20px, -20px);
             background: var(--primary);
         }
         
         .stat-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary);
         }
         
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+        
         .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            margin-bottom: 12px;
+            font-size: 20px;
+            margin-bottom: 14px;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .stat-card:hover .stat-icon {
@@ -760,23 +884,28 @@
         }
         
         .stat-icon.primary {
-            background: rgba(108,92,231,0.1);
+            background: var(--primary-gradient-light);
             color: var(--primary);
         }
         
         .stat-icon.success {
-            background: rgba(0,184,148,0.1);
+            background: var(--success-light);
             color: var(--success);
         }
         
         .stat-icon.warning {
-            background: rgba(253,203,110,0.1);
+            background: var(--warning-light);
             color: #e17055;
         }
         
         .stat-icon.danger {
-            background: rgba(225,112,85,0.1);
+            background: var(--danger-light);
             color: var(--danger);
+        }
+        
+        .stat-icon.info {
+            background: var(--info-light);
+            color: var(--info);
         }
         
         .stat-label {
@@ -784,41 +913,89 @@
             color: var(--gray);
             font-weight: 500;
             margin-bottom: 4px;
+            letter-spacing: 0.2px;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--dark);
             line-height: 1.2;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--dark), var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-trend {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .stat-trend.up {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        
+        .stat-trend.down {
+            background: var(--danger-light);
+            color: var(--danger);
         }
         
         /* Cards */
         .card {
             background: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
             border: 1px solid transparent;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
         }
         
         .card:hover {
             border-color: var(--border);
+            box-shadow: var(--shadow-lg);
         }
         
         .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         
         .card-title {
             font-size: 16px;
             font-weight: 700;
             color: var(--dark);
+            letter-spacing: -0.3px;
         }
         
         .card-subtitle {
@@ -829,7 +1006,7 @@
         
         /* Buttons */
         .btn {
-            padding: 10px 16px;
+            padding: 10px 18px;
             border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
@@ -838,10 +1015,11 @@
             border: none;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.3px;
         }
         
         .btn::before {
@@ -862,7 +1040,7 @@
         .btn-primary {
             background: var(--primary-gradient);
             color: white;
-            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+            box-shadow: 0 4px 15px rgba(108,92,231,0.3);
         }
         
         .btn-primary:hover {
@@ -873,27 +1051,39 @@
         .btn-success {
             background: var(--success-gradient);
             color: white;
-            box-shadow: 0 4px 12px rgba(0,184,148,0.3);
+            box-shadow: 0 4px 15px rgba(0,184,148,0.3);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,184,148,0.4);
         }
         
         .btn-danger {
             background: var(--danger-gradient);
             color: white;
-            box-shadow: 0 4px 12px rgba(225,112,85,0.3);
+            box-shadow: 0 4px 15px rgba(225,112,85,0.3);
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(225,112,85,0.4);
         }
         
         .btn-info {
             background: var(--info-gradient);
             color: white;
+            box-shadow: 0 4px 15px rgba(9,132,227,0.3);
         }
         
         .btn-warning {
             background: var(--warning-gradient);
             color: white;
+            box-shadow: 0 4px 15px rgba(253,203,110,0.3);
         }
         
         .btn-sm {
-            padding: 6px 10px;
+            padding: 6px 12px;
             font-size: 11px;
             border-radius: 8px;
         }
@@ -933,14 +1123,14 @@
         }
         
         thead {
-            background: var(--light);
+            background: linear-gradient(135deg, var(--light), #f0f2f5);
         }
         
         th {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -948,7 +1138,7 @@
         }
         
         td {
-            padding: 12px;
+            padding: 14px;
             border-bottom: 1px solid var(--border);
             font-size: 13px;
             color: var(--dark);
@@ -974,7 +1164,7 @@
         
         .search-box input {
             width: 100%;
-            padding: 12px 16px 12px 44px;
+            padding: 14px 16px 14px 48px;
             border: 2px solid var(--border);
             border-radius: 12px;
             font-size: 14px;
@@ -990,7 +1180,7 @@
         
         .search-box i {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
@@ -1018,22 +1208,25 @@
             border-radius: 20px;
             padding: 24px;
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+            position: relative;
         }
         
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--success), var(--warning), var(--danger));
+            border-radius: 20px 20px 0 0;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
         
         .modal-header {
@@ -1049,13 +1242,14 @@
             font-size: 20px;
             font-weight: 700;
             color: var(--dark);
+            letter-spacing: -0.3px;
         }
         
         .modal-close {
             background: var(--light);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -1066,7 +1260,7 @@
         }
         
         .modal-close:hover {
-            background: var(--danger);
+            background: var(--danger-gradient);
             color: white;
             transform: rotate(90deg);
         }
@@ -1084,12 +1278,12 @@
         .payment-methods {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 16px;
         }
         
         .payment-method {
-            padding: 12px;
+            padding: 14px;
             border: 2px solid var(--border);
             border-radius: 12px;
             background: white;
@@ -1100,21 +1294,27 @@
         
         .payment-method:hover {
             border-color: var(--primary);
-            background: rgba(108,92,231,0.05);
+            background: var(--primary-gradient-light);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
         }
         
         .payment-method.active {
             border-color: var(--primary);
-            background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(108,92,231,0.05));
+            background: var(--primary-gradient-light);
             color: var(--primary);
-            box-shadow: 0 4px 12px rgba(108,92,231,0.1);
+            box-shadow: 0 4px 15px rgba(108,92,231,0.2);
         }
         
         .payment-method i {
             display: block;
-            font-size: 20px;
-            margin-bottom: 6px;
+            font-size: 22px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        
+        .payment-method.active i {
+            transform: scale(1.2);
         }
         
         .payment-method span {
@@ -1126,24 +1326,37 @@
         /* Notification */
         .notification-container {
             position: fixed;
-            top: 85px;
+            top: 90px;
             right: 16px;
             z-index: 3000;
-            max-width: 360px;
+            max-width: 380px;
             width: calc(100% - 32px);
         }
         
         .notification {
             background: white;
-            border-radius: 14px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 16px;
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 10px;
             animation: slideInRight 0.3s ease;
             border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .notification::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shine 2s ease-in-out infinite;
         }
         
         .notification.success {
@@ -1162,17 +1375,6 @@
             border-left-color: var(--info);
         }
         
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
         .notification-close {
             margin-left: auto;
             background: none;
@@ -1181,10 +1383,13 @@
             cursor: pointer;
             font-size: 14px;
             padding: 4px;
+            border-radius: 50%;
+            transition: all 0.3s;
         }
         
         .notification-close:hover {
             color: var(--danger);
+            background: var(--danger-light);
         }
         
         /* Loading */
@@ -1207,48 +1412,54 @@
         }
         
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--light);
-            border-top: 4px solid var(--primary);
+            width: 55px;
+            height: 55px;
+            border: 5px solid var(--light);
+            border-top: 5px solid var(--primary);
+            border-right: 5px solid var(--success);
+            border-bottom: 5px solid var(--warning);
+            border-left: 5px solid var(--danger);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         .loading-text {
             font-size: 14px;
             font-weight: 600;
             color: var(--gray);
+            letter-spacing: 0.5px;
         }
         
         /* Charts */
         .chart-container {
             position: relative;
-            height: 250px;
+            height: 300px;
         }
         
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             color: var(--gray);
         }
         
         .empty-state i {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 64px;
+            margin-bottom: 20px;
             color: var(--border);
+            transition: all 0.3s;
+        }
+        
+        .empty-state:hover i {
+            color: var(--primary);
+            transform: scale(1.1);
         }
         
         .empty-state h4 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             margin-bottom: 8px;
             color: var(--dark);
         }
@@ -1260,39 +1471,59 @@
         
         /* Status Badge */
         .status-badge {
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 11px;
             font-weight: 600;
             display: inline-block;
+            letter-spacing: 0.3px;
         }
         
         .status-badge.success {
-            background: rgba(0,184,148,0.1);
+            background: var(--success-light);
             color: var(--success);
         }
         
         .status-badge.warning {
-            background: rgba(253,203,110,0.1);
+            background: var(--warning-light);
             color: #e17055;
         }
         
         .status-badge.danger {
-            background: rgba(225,112,85,0.1);
+            background: var(--danger-light);
             color: var(--danger);
         }
         
         .status-badge.info {
-            background: rgba(9,132,227,0.1);
+            background: var(--info-light);
             color: var(--info);
         }
         
         /* Summary Cards */
         .summary-card {
-            background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(108,92,231,0.02));
-            border-radius: 14px;
-            padding: 16px;
+            background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(9,132,227,0.05));
+            border-radius: 16px;
+            padding: 20px;
             border: 1px solid rgba(108,92,231,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .summary-card::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(108,92,231,0.05);
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .summary-card h6 {
@@ -1300,19 +1531,21 @@
             font-weight: 600;
             color: var(--gray);
             margin-bottom: 8px;
+            letter-spacing: 0.3px;
         }
         
         .summary-card .summary-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--dark);
+            letter-spacing: -1px;
         }
         
         /* Switch */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
+            width: 52px;
             height: 28px;
         }
         
@@ -1332,6 +1565,7 @@
             background-color: var(--border);
             transition: .4s;
             border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .slider:before {
@@ -1344,15 +1578,15 @@
             background-color: white;
             transition: .4s;
             border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         input:checked + .slider {
-            background-color: var(--primary);
+            background: var(--primary-gradient);
         }
         
         input:checked + .slider:before {
-            transform: translateX(22px);
+            transform: translateX(24px);
         }
         
         /* Quick Actions */
@@ -1365,25 +1599,43 @@
         
         .quick-action {
             background: white;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quick-action::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(108,92,231,0.05);
         }
         
         .quick-action:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow);
             border-color: var(--primary);
         }
         
         .quick-action i {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 26px;
+            margin-bottom: 10px;
             color: var(--primary);
             display: block;
+            transition: all 0.3s;
+        }
+        
+        .quick-action:hover i {
+            transform: scale(1.2) rotate(5deg);
         }
         
         .quick-action span {
@@ -1399,13 +1651,13 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 65px;
+            height: 70px;
             background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border-top: 1px solid var(--border);
             z-index: 1000;
             padding: 8px 16px;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.1);
         }
         
         .mobile-bottom-nav.active {
@@ -1420,7 +1672,7 @@
             align-items: center;
             justify-content: center;
             padding: 8px;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             gap: 4px;
@@ -1431,17 +1683,19 @@
         }
         
         .mobile-nav-item.active {
-            background: rgba(108,92,231,0.1);
+            background: var(--primary-gradient-light);
             color: var(--primary);
         }
         
         .mobile-nav-item i {
             font-size: 20px;
             color: var(--gray);
+            transition: all 0.3s;
         }
         
         .mobile-nav-item.active i {
             color: var(--primary);
+            transform: scale(1.1);
         }
         
         .mobile-nav-item span {
@@ -1472,6 +1726,7 @@
                 background: var(--light);
                 padding: 4px;
                 border-radius: 12px;
+                box-shadow: var(--shadow-sm);
             }
             
             .quick-nav-btn {
@@ -1498,7 +1753,7 @@
             .quick-nav-btn.active {
                 background: var(--primary-gradient);
                 color: white;
-                box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+                box-shadow: 0 4px 15px rgba(108,92,231,0.3);
             }
             
             .user-name {
@@ -1537,7 +1792,7 @@
             }
             
             .stat-value {
-                font-size: 20px;
+                font-size: 22px;
             }
             
             .modal-content {
@@ -1606,17 +1861,6 @@
             }
         }
         
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
@@ -1628,49 +1872,318 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--gray-light);
+            background: linear-gradient(135deg, var(--primary), var(--success));
             border-radius: 10px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--gray);
+            background: linear-gradient(135deg, var(--primary-dark), var(--success));
         }
         
-        /* Recycle Bin Specific Styles */
-        .recycle-info {
-            background: linear-gradient(135deg, rgba(9,132,227,0.05), rgba(9,132,227,0.02));
-            border: 1px solid rgba(9,132,227,0.1);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+        /* Custom Select */
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23636E72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--light) 25%, var(--border) 50%, var(--light) 75%);
+            background-size: 200% 100%;
+            animation: skeleton 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes skeleton {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Investment Summary Styles */
+        .investment-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+            margin-bottom: 20px;
         }
         
-        .recycle-info i {
-            font-size: 28px;
-            color: var(--info);
-        }
-        
-        .recycle-info-text h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-        
-        .recycle-info-text p {
-            font-size: 12px;
-            color: var(--gray);
-        }
-        
-        .recycle-item {
+        .investment-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
             transition: all 0.3s;
         }
         
-        .recycle-item:hover {
-            background: rgba(9,132,227,0.02);
+        .investment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .investment-card i {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .investment-card .investment-value {
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+        
+        .investment-card .investment-label {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        /* Form Progress */
+        .form-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+        
+        .form-progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 8px;
+        }
+        
+        .form-progress-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: var(--border);
+        }
+        
+        .form-progress-step:last-child::after {
+            display: none;
+        }
+        
+        .form-progress-step.active {
+            color: var(--primary);
+        }
+        
+        .form-progress-step.active::after {
+            background: var(--primary);
+        }
+        
+        .form-progress-step i {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        .form-progress-step span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        /* Live Indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--success-light);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--success);
+        }
+        
+        .live-indicator::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        /* Customer Card Styles */
+        .customer-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .customer-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        
+        .customer-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .customer-card:hover::before {
+            opacity: 1;
+        }
+        
+        .customer-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .customer-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .customer-avatar.green {
+            background: var(--success-gradient);
+        }
+        
+        .customer-avatar.orange {
+            background: var(--warning-gradient);
+        }
+        
+        .customer-avatar.red {
+            background: var(--danger-gradient);
+        }
+        
+        .customer-info {
+            flex: 1;
+            margin-left: 16px;
+        }
+        
+        .customer-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .customer-phone {
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        
+        .customer-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .customer-status.good {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        
+        .customer-status.warning {
+            background: var(--warning-light);
+            color: #e17055;
+        }
+        
+        .customer-status.danger {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+        
+        .customer-card-body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .customer-metric {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .customer-metric-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+        
+        .customer-metric-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .customer-card-footer {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        
+        /* Form Validation Styles */
+        .form-control.error {
+            border-color: var(--danger);
+            background: var(--danger-light);
+        }
+        
+        .form-control.success {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+        
+        .form-error-message {
+            font-size: 11px;
+            color: var(--danger);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .form-success-message {
+            font-size: 11px;
+            color: var(--success);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
     </style>
 </head>
@@ -1685,7 +2198,16 @@
     
     <!-- Login Page -->
     <div id="login-page" class="login-wrapper">
-        <div class="login-bg"></div>
+        <div class="login-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="login-bg-shape login-bg-shape-1"></div>
+        <div class="login-bg-shape login-bg-shape-2"></div>
+        
         <div class="login-card">
             <div class="login-logo">
                 <i class="fas fa-store"></i>
@@ -1894,13 +2416,38 @@
             <div id="dashboard-section" class="content-section active">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px;">স্বাগতম! 👋</h2>
+                        <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 4px;">স্বাগতম! 👋</h2>
                         <p style="color: var(--gray); font-size: 13px;">আজকের ব্যবসার সারসংক্ষেপ</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openSaleModal()">
-                        <i class="fas fa-plus"></i>
-                        <span style="display: none;">নতুন বিক্রি</span>
-                    </button>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="live-indicator">
+                            <i class="fas fa-circle"></i>
+                            লাইভ
+                        </div>
+                        <button class="btn btn-primary" onclick="openSaleModal()">
+                            <i class="fas fa-plus"></i>
+                            <span style="display: none;">নতুন বিক্রি</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Investment Summary -->
+                <div class="investment-summary">
+                    <div class="investment-card">
+                        <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                        <div class="investment-label">মোট ইনভেস্ট</div>
+                        <div class="investment-value" id="total-investment">৳0</div>
+                    </div>
+                    <div class="investment-card">
+                        <i class="fas fa-coins" style="color: var(--success);"></i>
+                        <div class="investment-label">মোট লাভ</div>
+                        <div class="investment-value" id="total-profit">৳0</div>
+                    </div>
+                    <div class="investment-card">
+                        <i class="fas fa-chart-bar" style="color: var(--danger);"></i>
+                        <div class="investment-label">মোট বিক্রি</div>
+                        <div class="investment-value" id="total-sales-value">৳0</div>
+                    </div>
                 </div>
                 
                 <!-- Quick Actions -->
@@ -1931,6 +2478,7 @@
                     </div>
                 </div>
                 
+                <!-- Stats Cards -->
                 <div class="stats-grid">
                     <div class="stat-card" onclick="showSection('sales')">
                         <div class="stat-icon primary">
@@ -1977,6 +2525,7 @@
                     </div>
                 </div>
                 
+                <!-- Sales Chart -->
                 <div class="card">
                     <div class="card-header">
                         <div>
@@ -1993,6 +2542,7 @@
                     </div>
                 </div>
                 
+                <!-- Recent Transactions -->
                 <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
                     <div class="card">
                         <div class="card-header">
@@ -2010,14 +2560,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div>
-                                <h3 class="card-title">সাম্প্রতিক খরচ</h3>
-                                <p class="card-subtitle">শেষ ৫টি খরচ</p>
+                                <h3 class="card-title">সাম্প্রতিক ক্রয়</h3>
+                                <p class="card-subtitle">শেষ ৫টি ক্রয়</p>
                             </div>
-                            <button class="btn btn-primary btn-sm" onclick="showSection('expenses')">
+                            <button class="btn btn-primary btn-sm" onclick="showSection('purchases')">
                                 সব দেখুন
                             </button>
                         </div>
-                        <div id="recent-expenses"></div>
+                        <div id="recent-purchases"></div>
                     </div>
                 </div>
             </div>
@@ -2100,6 +2650,7 @@
                                     <th>পণ্য</th>
                                     <th>পরিমাণ</th>
                                     <th>মূল্য</th>
+                                    <th>লাভ</th>
                                     <th>পেমেন্ট</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
@@ -2265,7 +2816,7 @@
                 </div>
             </div>
             
-            <!-- Recycle Bin Section - UPDATED -->
+            <!-- Recycle Bin Section -->
             <div id="recycle-section" class="content-section">
                 <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
                     <i class="fas fa-recycle"></i> রিসাইকেল বিন
@@ -2423,7 +2974,7 @@
     </div>
     
     <!-- Modals -->
-    <!-- Product Modal -->
+    <!-- Product Modal - ENHANCED -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2467,6 +3018,14 @@
                     <input type="number" id="product-stock" class="form-control" placeholder="স্টক" required>
                 </div>
                 
+                <!-- Investment Calculator -->
+                <div style="background: var(--light); border-radius: 12px; padding: 12px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; color: var(--gray);">মোট ইনভেস্ট হবে</span>
+                        <span style="font-size: 16px; font-weight: 700; color: var(--primary);" id="product-investment-calc">৳0</span>
+                    </div>
+                </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="closeModal('product-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">
@@ -2477,7 +3036,7 @@
         </div>
     </div>
     
-    <!-- Sale Modal -->
+    <!-- Sale Modal - ENHANCED -->
     <div id="sale-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2513,6 +3072,14 @@
                         <span style="font-size: 24px; font-weight: 800; color: var(--primary);" id="sale-total-display">৳0</span>
                     </div>
                     <input type="hidden" id="sale-total">
+                </div>
+                
+                <!-- Profit Calculator -->
+                <div style="background: var(--success-light); border-radius: 12px; padding: 12px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; color: var(--gray);">লাভ হবে</span>
+                        <span style="font-size: 18px; font-weight: 700; color: var(--success);" id="sale-profit-display">৳0</span>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -2559,7 +3126,7 @@
         </div>
     </div>
     
-    <!-- Purchase Modal -->
+    <!-- Purchase Modal - ENHANCED -->
     <div id="purchase-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2595,6 +3162,14 @@
                         <span style="font-size: 24px; font-weight: 800; color: var(--success);" id="purchase-total-display">৳0</span>
                     </div>
                     <input type="hidden" id="purchase-total">
+                </div>
+                
+                <!-- Investment Calculator -->
+                <div style="background: var(--warning-light); border-radius: 12px; padding: 12px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; color: var(--gray);">মোট ইনভেস্ট হবে</span>
+                        <span style="font-size: 18px; font-weight: 700; color: var(--warning);" id="purchase-investment-display">৳0</span>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -3110,6 +3685,7 @@
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             
+            // Today's sales
             db.ref('sales').orderByChild('timestamp').startAt(today.getTime()).once('value')
                 .then((snapshot) => {
                     let todaySales = 0;
@@ -3120,6 +3696,7 @@
                 })
                 .catch((error) => console.error('Error:', error));
             
+            // Total products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
@@ -3127,12 +3704,14 @@
                 })
                 .catch((error) => console.error('Error:', error));
             
+            // Total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
                 })
                 .catch((error) => console.error('Error:', error));
             
+            // Today's expenses
             db.ref('expenses').orderByChild('timestamp').startAt(today.getTime()).once('value')
                 .then((snapshot) => {
                     let todayExpenses = 0;
@@ -3142,6 +3721,9 @@
                     document.getElementById('today-expenses').textContent = formatCurrency(todayExpenses);
                 })
                 .catch((error) => console.error('Error:', error));
+            
+            // Load investment and profit summary
+            loadInvestmentSummary();
             
             // Recent sales
             db.ref('sales').orderByChild('timestamp').limitToLast(5).once('value')
@@ -3167,6 +3749,37 @@
                                         <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
                                     </div>
                                     <div style="font-weight: 700; color: var(--success); font-size: 14px;">${formatCurrency(sale.total)}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                })
+                .catch((error) => console.error('Error:', error));
+            
+            // Recent purchases
+            db.ref('purchases').orderByChild('timestamp').limitToLast(5).once('value')
+                .then((snapshot) => {
+                    const recentPurchasesDiv = document.getElementById('recent-purchases');
+                    recentPurchasesDiv.innerHTML = '';
+                    
+                    if (snapshot.numChildren() === 0) {
+                        recentPurchasesDiv.innerHTML = '<div class="empty-state"><i class="fas fa-cart-arrow-down"></i><h4>কোনো ক্রয় নেই</h4><p>আজকের ক্রয় এখানে দেখা যাবে</p></div>';
+                        return;
+                    }
+                    
+                    snapshot.forEach((child) => {
+                        const purchase = child.val();
+                        const date = new Date(purchase.timestamp);
+                        const dateStr = date.toLocaleDateString('bn-BD');
+                        
+                        recentPurchasesDiv.innerHTML += `
+                            <div style="padding: 10px; border-bottom: 1px solid var(--border);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 13px;">${purchase.productName}</div>
+                                        <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
+                                    </div>
+                                    <div style="font-weight: 700; color: var(--warning); font-size: 14px;">${formatCurrency(purchase.total)}</div>
                                 </div>
                             </div>
                         `;
@@ -3208,6 +3821,44 @@
             loadSalesChart();
             loadRecycleBadge();
             loadNotificationBadge();
+        }
+
+        // Load Investment Summary
+        function loadInvestmentSummary() {
+            // Calculate total investment (from purchases)
+            db.ref('purchases').once('value')
+                .then((snapshot) => {
+                    let totalInvestment = 0;
+                    snapshot.forEach((child) => {
+                        totalInvestment += child.val().total;
+                    });
+                    document.getElementById('total-investment').textContent = formatCurrency(totalInvestment);
+                })
+                .catch((error) => console.error('Error:', error));
+            
+            // Calculate total sales
+            db.ref('sales').once('value')
+                .then((snapshot) => {
+                    let totalSales = 0;
+                    snapshot.forEach((child) => {
+                        totalSales += child.val().total;
+                    });
+                    document.getElementById('total-sales-value').textContent = formatCurrency(totalSales);
+                })
+                .catch((error) => console.error('Error:', error));
+            
+            // Calculate total profit
+            db.ref('sales').once('value')
+                .then((snapshot) => {
+                    let totalProfit = 0;
+                    snapshot.forEach((child) => {
+                        const sale = child.val();
+                        const profit = sale.profit || 0;
+                        totalProfit += profit;
+                    });
+                    document.getElementById('total-profit').textContent = formatCurrency(totalProfit);
+                })
+                .catch((error) => console.error('Error:', error));
         }
 
         function loadNotificationBadge() {
@@ -3366,7 +4017,20 @@
             document.getElementById('product-form').reset();
             delete document.getElementById('product-form').dataset.editId;
             document.getElementById('product-modal').style.display = 'flex';
+            calculateProductInvestment();
         }
+
+        // Calculate product investment
+        function calculateProductInvestment() {
+            const price = parseFloat(document.getElementById('product-purchase-price').value) || 0;
+            const stock = parseInt(document.getElementById('product-stock').value) || 0;
+            const total = price * stock;
+            document.getElementById('product-investment-calc').textContent = formatCurrency(total);
+        }
+
+        // Add event listeners for product form
+        document.getElementById('product-purchase-price').addEventListener('input', calculateProductInvestment);
+        document.getElementById('product-stock').addEventListener('input', calculateProductInvestment);
 
         document.getElementById('product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -3430,6 +4094,7 @@
                     document.getElementById('product-form').dataset.editId = productId;
                     
                     document.getElementById('product-modal').style.display = 'flex';
+                    calculateProductInvestment();
                 })
                 .catch((error) => console.error('Error:', error));
         }
@@ -3503,7 +4168,7 @@
                 salesBody.innerHTML = '';
                 
                 if (snapshot.numChildren() === 0) {
-                    salesBody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>কোনো বিক্রি নেই</h4></div></td></tr>';
+                    salesBody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-shopping-cart"></i><h4>কোনো বিক্রি নেই</h4></div></td></tr>';
                     return;
                 }
                 
@@ -3534,12 +4199,15 @@
                             break;
                     }
                     
+                    const profit = sale.profit || 0;
+                    
                     salesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
                             <td style="font-weight: 600; font-size: 13px;">${sale.productName}</td>
                             <td>${sale.quantity}</td>
                             <td>${formatCurrency(sale.total)}</td>
+                            <td style="font-weight: 700; color: var(--success);">${formatCurrency(profit)}</td>
                             <td>${paymentBadge}</td>
                             <td>
                                 <button onclick="deleteSale('${sale.id}')" class="btn btn-danger btn-sm" title="মুছুন">
@@ -3575,6 +4243,7 @@
                             option.value = child.key;
                             option.textContent = `${product.name} (স্টক: ${product.stock})`;
                             option.dataset.price = product.salePrice;
+                            option.dataset.purchasePrice = product.purchasePrice;
                             option.dataset.stock = product.stock;
                             option.dataset.name = product.name;
                             productSelect.appendChild(option);
@@ -3601,6 +4270,7 @@
             document.getElementById('sale-modal').style.display = 'flex';
             document.getElementById('sale-form').reset();
             document.getElementById('sale-total-display').textContent = formatCurrency(0);
+            document.getElementById('sale-profit-display').textContent = formatCurrency(0);
         }
 
         function updateSaleProductDetails() {
@@ -3619,6 +4289,13 @@
             const total = quantity * price;
             document.getElementById('sale-total').value = total.toFixed(2);
             document.getElementById('sale-total-display').textContent = formatCurrency(total);
+            
+            // Calculate profit
+            const select = document.getElementById('sale-product');
+            const selectedOption = select.options[select.selectedIndex];
+            const purchasePrice = selectedOption ? parseFloat(selectedOption.dataset.purchasePrice) || 0 : 0;
+            const profit = (price - purchasePrice) * quantity;
+            document.getElementById('sale-profit-display').textContent = formatCurrency(profit);
             
             updateDueAmount();
         }
@@ -3680,12 +4357,17 @@
                     }
                 }
                 
+                // Calculate profit
+                const profit = (price - product.purchasePrice) * quantity;
+                
                 const saleData = {
                     productId: productId,
                     productName: product.name,
                     quantity: quantity,
                     price: price,
+                    purchasePrice: product.purchasePrice,
                     total: total,
+                    profit: profit,
                     customerId: customerId,
                     customerName: customerName,
                     paymentMethod: selectedPaymentMethod,
@@ -3700,7 +4382,7 @@
                 hideLoading();
                 closeModal('sale-modal');
                 document.getElementById('sale-form').reset();
-                Swal.fire({ icon: 'success', title: 'বিক্রি সফল!', text: `বিক্রি: ${formatCurrency(total)}`, timer: 2000, showConfirmButton: false });
+                Swal.fire({ icon: 'success', title: 'বিক্রি সফল!', text: `বিক্রি: ${formatCurrency(total)}\nলাভ: ${formatCurrency(profit)}`, timer: 2000, showConfirmButton: false });
                 
                 loadSales();
                 loadProducts();
@@ -3839,6 +4521,7 @@
             document.getElementById('purchase-modal').style.display = 'flex';
             document.getElementById('purchase-form').reset();
             document.getElementById('purchase-total-display').textContent = formatCurrency(0);
+            document.getElementById('purchase-investment-display').textContent = formatCurrency(0);
         }
 
         function updatePurchaseProductDetails() {
@@ -3857,6 +4540,7 @@
             const total = quantity * price;
             document.getElementById('purchase-total').value = total.toFixed(2);
             document.getElementById('purchase-total-display').textContent = formatCurrency(total);
+            document.getElementById('purchase-investment-display').textContent = formatCurrency(total);
         }
 
         document.getElementById('purchase-form').addEventListener('submit', async (e) => {
@@ -3897,7 +4581,7 @@
                 hideLoading();
                 closeModal('purchase-modal');
                 document.getElementById('purchase-form').reset();
-                Swal.fire({ icon: 'success', title: 'ক্রয় সফল!', text: `ক্রয়: ${formatCurrency(total)}`, timer: 2000, showConfirmButton: false });
+                Swal.fire({ icon: 'success', title: 'ক্রয় সফল!', text: `ক্রয়: ${formatCurrency(total)}\nইনভেস্ট: ${formatCurrency(total)}`, timer: 2000, showConfirmButton: false });
                 
                 loadPurchases();
                 loadProducts();
@@ -4535,12 +5219,12 @@
         function downloadReport() {
             db.ref('sales').once('value')
                 .then((snapshot) => {
-                    let csv = 'Date,Product,Quantity,Price,Total,Customer,Payment\n';
+                    let csv = 'Date,Product,Quantity,Price,Total,Profit,Customer,Payment\n';
                     
                     snapshot.forEach((child) => {
                         const sale = child.val();
                         const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
-                        csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.customerName || ''},${sale.paymentMethod || ''}\n`;
+                        csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.profit || 0},${sale.customerName || ''},${sale.paymentMethod || ''}\n`;
                     });
                     
                     const blob = new Blob([csv], { type: 'text/csv' });
@@ -4559,12 +5243,12 @@
             db.ref('sales').once('value')
                 .then((snapshot) => {
                     let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sales Report</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
-                    html += '<table border="1"><tr><th>Date</th><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th><th>Customer</th><th>Payment</th></tr>';
+                    html += '<table border="1"><tr><th>Date</th><th>Product</th><th>Quantity</th><th>Price</th><th>Total</th><th>Profit</th><th>Customer</th><th>Payment</th></tr>';
                     
                     snapshot.forEach((child) => {
                         const sale = child.val();
                         const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
-                        html += `<tr><td>${date}</td><td>${sale.productName}</td><td>${sale.quantity}</td><td>${sale.price}</td><td>${sale.total}</td><td>${sale.customerName || ''}</td><td>${sale.paymentMethod || ''}</td></tr>`;
+                        html += `<tr><td>${date}</td><td>${sale.productName}</td><td>${sale.quantity}</td><td>${sale.price}</td><td>${sale.total}</td><td>${sale.profit || 0}</td><td>${sale.customerName || ''}</td><td>${sale.paymentMethod || ''}</td></tr>`;
                     });
                     
                     html += '</table></body></html>';
@@ -4581,7 +5265,7 @@
                 .catch((error) => console.error('Error:', error));
         }
 
-        // Recycle Bin - UPDATED (No delete, only restore)
+        // Recycle Bin
         function loadRecycleBin() {
             const recycleBody = document.getElementById('recycle-body');
             recycleBody.innerHTML = '';
@@ -4645,11 +5329,8 @@
                     }
                     
                     // Keep the item in recycle bin for history
-                    // Only restore to original location
-                    
                     Swal.fire({ icon: 'success', title: 'আইটেম রিস্টোর হয়েছে!', timer: 2000, showConfirmButton: false });
                     
-                    // Reload all sections
                     loadRecycleBin();
                     loadRecycleBadge();
                     
@@ -4816,6 +5497,7 @@
                             saleOption.value = child.key;
                             saleOption.textContent = `${product.name} (স্টক: ${product.stock})`;
                             saleOption.dataset.price = product.salePrice;
+                            saleOption.dataset.purchasePrice = product.purchasePrice;
                             saleOption.dataset.stock = product.stock;
                             saleOption.dataset.name = product.name;
                             saleProductSelect.appendChild(saleOption);

@@ -316,14 +316,14 @@
             margin-bottom: 4px;
         }
         
-        /* === PREMIUM DASHBOARD === */
+        /* === DASHBOARD === */
         .dashboard-wrapper {
             display: none;
             min-height: 100vh;
             background: #f0f2f5;
         }
         
-        /* Premium Header */
+        /* Header */
         .main-header {
             position: fixed;
             top: 0;
@@ -500,7 +500,7 @@
             transform: scale(1.1);
         }
         
-        /* Premium Sidebar */
+        /* Sidebar */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -528,21 +528,6 @@
             transition: all 0.3s ease;
             overflow-y: auto;
             padding: 20px 0;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.2) transparent;
-        }
-        
-        .main-sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .main-sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .main-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
         }
         
         .main-sidebar.active {
@@ -688,7 +673,7 @@
             border-radius: 10px;
         }
         
-        /* Premium Main Content */
+        /* Main Content */
         .main-content {
             margin-left: 0;
             padding-top: calc(var(--header-height) + 20px);
@@ -719,7 +704,7 @@
             }
         }
         
-        /* Premium Stats */
+        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -808,30 +793,7 @@
             line-height: 1.2;
         }
         
-        .stat-trend {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .stat-trend.up {
-            background: rgba(0,184,148,0.1);
-            color: var(--success);
-        }
-        
-        .stat-trend.down {
-            background: rgba(225,112,85,0.1);
-            color: var(--danger);
-        }
-        
-        /* Premium Cards */
+        /* Cards */
         .card {
             background: white;
             border-radius: 16px;
@@ -865,7 +827,7 @@
             margin-top: 4px;
         }
         
-        /* Premium Buttons */
+        /* Buttons */
         .btn {
             padding: 10px 16px;
             border-radius: 10px;
@@ -951,7 +913,7 @@
             color: var(--primary);
         }
         
-        /* Premium Tables */
+        /* Tables */
         .table-container {
             background: white;
             border-radius: 16px;
@@ -1004,7 +966,7 @@
             border-bottom: none;
         }
         
-        /* Premium Search */
+        /* Search */
         .search-box {
             position: relative;
             margin-bottom: 16px;
@@ -1035,7 +997,7 @@
             font-size: 16px;
         }
         
-        /* Premium Modal */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -1118,7 +1080,7 @@
             border-top: 1px solid var(--border);
         }
         
-        /* Premium Payment Methods */
+        /* Payment Methods */
         .payment-methods {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1161,7 +1123,7 @@
             display: block;
         }
         
-        /* Premium Notification */
+        /* Notification */
         .notification-container {
             position: fixed;
             top: 85px;
@@ -1225,7 +1187,7 @@
             color: var(--danger);
         }
         
-        /* Premium Loading */
+        /* Loading */
         .loading {
             display: none;
             position: fixed;
@@ -1265,13 +1227,13 @@
             color: var(--gray);
         }
         
-        /* Premium Charts */
+        /* Charts */
         .chart-container {
             position: relative;
             height: 250px;
         }
         
-        /* Premium Empty State */
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -1296,7 +1258,7 @@
             color: var(--gray);
         }
         
-        /* Premium Status Badge */
+        /* Status Badge */
         .status-badge {
             padding: 4px 8px;
             border-radius: 8px;
@@ -1325,7 +1287,7 @@
             color: var(--info);
         }
         
-        /* Premium Summary Cards */
+        /* Summary Cards */
         .summary-card {
             background: linear-gradient(135deg, rgba(108,92,231,0.05), rgba(108,92,231,0.02));
             border-radius: 14px;
@@ -1346,7 +1308,7 @@
             color: var(--dark);
         }
         
-        /* Premium Switch */
+        /* Switch */
         .switch {
             position: relative;
             display: inline-block;
@@ -1393,10 +1355,10 @@
             transform: translateX(22px);
         }
         
-        /* Premium Quick Actions */
+        /* Quick Actions */
         .quick-actions {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
@@ -1673,10 +1635,47 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gray);
         }
+        
+        /* Recycle Bin Specific Styles */
+        .recycle-info {
+            background: linear-gradient(135deg, rgba(9,132,227,0.05), rgba(9,132,227,0.02));
+            border: 1px solid rgba(9,132,227,0.1);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .recycle-info i {
+            font-size: 28px;
+            color: var(--info);
+        }
+        
+        .recycle-info-text h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .recycle-info-text p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .recycle-item {
+            transition: all 0.3s;
+        }
+        
+        .recycle-item:hover {
+            background: rgba(9,132,227,0.02);
+        }
     </style>
 </head>
 <body>
-    <!-- Premium Loading -->
+    <!-- Loading -->
     <div id="loading" class="loading">
         <div class="loading-content">
             <div class="spinner"></div>
@@ -1684,7 +1683,7 @@
         </div>
     </div>
     
-    <!-- Premium Login Page -->
+    <!-- Login Page -->
     <div id="login-page" class="login-wrapper">
         <div class="login-bg"></div>
         <div class="login-card">
@@ -1762,9 +1761,9 @@
         </div>
     </div>
     
-    <!-- Premium Dashboard -->
+    <!-- Dashboard -->
     <div id="dashboard" class="dashboard-wrapper">
-        <!-- Premium Header -->
+        <!-- Header -->
         <header class="main-header">
             <div class="header-left">
                 <button class="menu-toggle" onclick="toggleSidebar()">
@@ -1823,7 +1822,7 @@
         <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
         
-        <!-- Premium Sidebar -->
+        <!-- Sidebar -->
         <aside class="main-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
@@ -2157,7 +2156,7 @@
                         <h2 style="font-size: 20px; font-weight: 800;">
                             <i class="fas fa-users"></i> কাস্টমার ব্যবস্থাপনা
                         </h2>
-                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">আপনার কাস্টমারদের তথ্য</p>
+                        <p style="color: var(--gray); font-size: 13px; margin-top: 4px;">আপনার কাস্টমারদের সম্পূর্ণ তথ্য</p>
                     </div>
                     <button class="btn btn-primary" onclick="openCustomerModal()">
                         <i class="fas fa-plus"></i>
@@ -2167,24 +2166,10 @@
                 
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="customer-search" placeholder="কাস্টমার খুঁজুন..." oninput="filterCustomers()">
+                    <input type="text" id="customer-search" placeholder="নাম বা ফোন দিয়ে খুঁজুন..." oninput="filterCustomers()">
                 </div>
                 
-                <div class="table-container">
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>নাম</th>
-                                    <th>ফোন</th>
-                                    <th>বাকি</th>
-                                    <th>অ্যাকশন</th>
-                                </tr>
-                            </thead>
-                            <tbody id="customers-body"></tbody>
-                        </table>
-                    </div>
-                </div>
+                <div id="customers-list"></div>
             </div>
             
             <!-- Expenses Section -->
@@ -2280,22 +2265,26 @@
                 </div>
             </div>
             
-            <!-- Recycle Bin Section -->
+            <!-- Recycle Bin Section - UPDATED -->
             <div id="recycle-section" class="content-section">
                 <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
                     <i class="fas fa-recycle"></i> রিসাইকেল বিন
                 </h2>
                 
+                <div class="recycle-info">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="recycle-info-text">
+                        <h4>সুরক্ষিত সিস্টেম</h4>
+                        <p>এই বিন থেকে কোনো ডেটা ডিলিট করা যাবে না। শুধুমাত্র রিস্টোর করা যাবে। সব তথ্য চিরকাল সংরক্ষিত থাকবে।</p>
+                    </div>
+                </div>
+                
                 <div class="card">
                     <div class="card-header">
                         <div>
                             <h3 class="card-title">মুছে ফেলা আইটেমসমূহ</h3>
-                            <p class="card-subtitle">আপনি যেকোনো সময় পুনরুদ্ধার করতে পারবেন</p>
+                            <p class="card-subtitle">রিস্টোর করে মূল তালিকায় ফিরিয়ে আনুন</p>
                         </div>
-                        <button class="btn btn-danger btn-sm" onclick="emptyRecycleBin()">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="display: none;">সব মুছুন</span>
-                        </button>
                     </div>
                     
                     <div class="table-container">
@@ -2402,10 +2391,6 @@
                         <button class="btn btn-success btn-sm" onclick="exportData()">
                             <i class="fas fa-file-export"></i>
                             <span style="display: none;">এক্সপোর্ট</span>
-                        </button>
-                        <button class="btn btn-danger btn-sm" onclick="clearAllData()">
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="display: none;">সব মুছুন</span>
                         </button>
                     </div>
                 </div>
@@ -2700,44 +2685,6 @@
                     <button type="button" class="btn btn-danger" onclick="closeModal('expense-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-check"></i> সংরক্ষণ করুন
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Due Payment Modal -->
-    <div id="due-payment-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">বাকি পরিশোধ</h3>
-                <button class="modal-close" onclick="closeModal('due-payment-modal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <form id="due-payment-form">
-                <div class="form-group">
-                    <label class="form-label">কাস্টমার</label>
-                    <input type="text" id="due-customer-name" class="form-control" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">বর্তমান বাকি</label>
-                    <div style="background: #FEF2F2; border-radius: 10px; padding: 12px; text-align: center;">
-                        <span style="font-size: 24px; font-weight: 800; color: var(--danger);" id="due-current-amount">৳0</span>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">পরিশোধের পরিমাণ</label>
-                    <input type="number" id="due-payment-amount" class="form-control" required min="1">
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('due-payment-modal')">বাতিল</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-check"></i> পরিশোধ করুন
                     </button>
                 </div>
             </form>
@@ -3490,7 +3437,7 @@
         function deleteProduct(productId) {
             Swal.fire({
                 title: 'পণ্য রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
+                text: 'আপনি পরে রিস্টোর করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3769,7 +3716,7 @@
         function deleteSale(saleId) {
             Swal.fire({
                 title: 'বিক্রি রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
+                text: 'আপনি পরে রিস্টোর করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3965,7 +3912,7 @@
         function deletePurchase(purchaseId) {
             Swal.fire({
                 title: 'ক্রয় রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
+                text: 'আপনি পরে রিস্টোর করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -4013,42 +3960,90 @@
 
         // Customers
         function loadCustomers() {
-            const customersBody = document.getElementById('customers-body');
-            customersBody.innerHTML = '';
+            const customersList = document.getElementById('customers-list');
+            customersList.innerHTML = '';
             
             db.ref('customers').on('value', (snapshot) => {
-                customersBody.innerHTML = '';
+                customersList.innerHTML = '';
                 
                 if (snapshot.numChildren() === 0) {
-                    customersBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-users"></i><h4>কোনো কাস্টমার নেই</h4></div></td></tr>';
+                    customersList.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><h4>কোনো কাস্টমার নেই</h4><p>নতুন কাস্টমার যোগ করুন</p></div>';
                     return;
                 }
                 
+                const customers = [];
                 snapshot.forEach((child) => {
-                    const customer = child.val();
-                    const customerId = child.key;
+                    customers.push({ id: child.key, ...child.val() });
+                });
+                
+                customers.sort((a, b) => (b.due || 0) - (a.due || 0));
+                
+                customers.forEach((customer) => {
+                    const customerId = customer.id;
+                    const due = customer.due || 0;
                     
-                    const dueColor = customer.due > 0 ? 'color: var(--danger)' : 'color: var(--success)';
+                    // Determine status
+                    let status = 'good';
+                    let statusText = 'ভালো';
+                    let avatarClass = 'green';
                     
-                    customersBody.innerHTML += `
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600; font-size: 13px;">${customer.name}</div>
-                                <div style="font-size: 11px; color: var(--gray);">${customer.address || ''}</div>
-                            </td>
-                            <td>${customer.phone}</td>
-                            <td>
-                                <span style="${dueColor}; font-weight: 700;">${formatCurrency(customer.due || 0)}</span>
-                            </td>
-                            <td>
-                                <button onclick="openDuePaymentModal('${customerId}')" class="btn btn-success btn-sm" title="বাকি পরিশোধ">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                </button>
-                                <button onclick="deleteCustomer('${customerId}')" class="btn btn-danger btn-sm" title="মুছুন">
+                    if (due > 5000) {
+                        status = 'danger';
+                        statusText = 'সতর্ক';
+                        avatarClass = 'red';
+                    } else if (due > 1000) {
+                        status = 'warning';
+                        statusText = 'মাঝারি';
+                        avatarClass = 'orange';
+                    }
+                    
+                    const initial = customer.name.charAt(0).toUpperCase();
+                    
+                    customersList.innerHTML += `
+                        <div class="customer-card">
+                            <div class="customer-card-header">
+                                <div style="display: flex; align-items: center; flex: 1;">
+                                    <div class="customer-avatar ${avatarClass}">${initial}</div>
+                                    <div class="customer-info">
+                                        <div class="customer-name">${customer.name}</div>
+                                        <div class="customer-phone"><i class="fas fa-phone"></i> ${customer.phone}</div>
+                                    </div>
+                                </div>
+                                <div class="customer-status ${status}">${statusText}</div>
+                            </div>
+                            
+                            <div class="customer-card-body">
+                                <div class="customer-metric">
+                                    <div class="customer-metric-label">বাকি</div>
+                                    <div class="customer-metric-value" style="color: ${due > 0 ? 'var(--danger)' : 'var(--success)'};">${formatCurrency(due)}</div>
+                                </div>
+                                <div class="customer-metric">
+                                    <div class="customer-metric-label">মোট ক্রয়</div>
+                                    <div class="customer-metric-value">${formatCurrency(customer.totalPurchases || 0)}</div>
+                                </div>
+                                <div class="customer-metric">
+                                    <div class="customer-metric-label">লেনদেন</div>
+                                    <div class="customer-metric-value">${customer.totalSales || 0}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="customer-card-footer">
+                                ${due > 0 ? `
+                                    <button onclick="openDuePaymentModal('${customerId}')" class="btn btn-success btn-sm">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        বাকি পরিশোধ
+                                    </button>
+                                ` : `
+                                    <button class="btn btn-success btn-sm" disabled style="opacity: 0.5;">
+                                        <i class="fas fa-check"></i>
+                                        বাকি নেই
+                                    </button>
+                                `}
+                                <button onclick="deleteCustomer('${customerId}')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </button>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     `;
                 });
             }, (error) => {
@@ -4074,6 +4069,8 @@
                 phone: phone,
                 address: address,
                 due: 0,
+                totalPurchases: 0,
+                totalSales: 0,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
@@ -4097,7 +4094,7 @@
         function deleteCustomer(customerId) {
             Swal.fire({
                 title: 'কাস্টমার রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
+                text: 'আপনি পরে রিস্টোর করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -4126,68 +4123,13 @@
 
         function filterCustomers() {
             const searchTerm = document.getElementById('customer-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#customers-body tr');
+            const cards = document.querySelectorAll('.customer-card');
             
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
             });
         }
-
-        function openDuePaymentModal(customerId) {
-            db.ref('customers/' + customerId).once('value')
-                .then((snapshot) => {
-                    const customer = snapshot.val();
-                    
-                    document.getElementById('due-customer-name').value = customer.name;
-                    document.getElementById('due-current-amount').textContent = formatCurrency(customer.due || 0);
-                    document.getElementById('due-payment-form').dataset.customerId = customerId;
-                    
-                    document.getElementById('due-payment-modal').style.display = 'flex';
-                })
-                .catch((error) => console.error('Error:', error));
-        }
-
-        document.getElementById('due-payment-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const customerId = document.getElementById('due-payment-form').dataset.customerId;
-            const paymentAmount = parseFloat(document.getElementById('due-payment-amount').value);
-            
-            if (paymentAmount <= 0) {
-                showNotification('সঠিক পরিমাণ দিন!', 'error');
-                return;
-            }
-            
-            showLoading('পরিশোধ হচ্ছে...');
-            
-            try {
-                const customerSnapshot = await db.ref('customers/' + customerId).once('value');
-                const customer = customerSnapshot.val();
-                const currentDue = customer.due || 0;
-                const newDue = Math.max(0, currentDue - paymentAmount);
-                
-                await db.ref('customers/' + customerId).update({ due: newDue, updatedAt: new Date().toISOString() });
-                
-                const paymentData = {
-                    customerId: customerId,
-                    customerName: customer.name,
-                    amount: paymentAmount,
-                    timestamp: Date.now()
-                };
-                
-                await db.ref('payments').push(paymentData);
-                
-                hideLoading();
-                closeModal('due-payment-modal');
-                document.getElementById('due-payment-form').reset();
-                Swal.fire({ icon: 'success', title: 'বাকি পরিশোধ সফল!', text: `পরিশোধ: ${formatCurrency(paymentAmount)}`, timer: 2000, showConfirmButton: false });
-                loadCustomers();
-            } catch (error) {
-                hideLoading();
-                showNotification('পরিশোধ করা যায়নি! ' + error.message, 'error');
-            }
-        });
 
         // Expenses
         function loadExpenses() {
@@ -4279,7 +4221,7 @@
         function deleteExpense(expenseId) {
             Swal.fire({
                 title: 'খরচ রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
+                text: 'আপনি পরে রিস্টোর করতে পারবেন',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -4639,7 +4581,7 @@
                 .catch((error) => console.error('Error:', error));
         }
 
-        // Recycle Bin
+        // Recycle Bin - UPDATED (No delete, only restore)
         function loadRecycleBin() {
             const recycleBody = document.getElementById('recycle-body');
             recycleBody.innerHTML = '';
@@ -4648,7 +4590,7 @@
                 recycleBody.innerHTML = '';
                 
                 if (snapshot.numChildren() === 0) {
-                    recycleBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-recycle"></i><h4>রিসাইকেল বিন খালি</h4></div></td></tr>';
+                    recycleBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-recycle"></i><h4>রিসাইকেল বিন খালি</h4><p>মুছে ফেলা আইটেম এখানে দেখা যাবে</p></div></td></tr>';
                     return;
                 }
                 
@@ -4664,18 +4606,16 @@
                     const dateStr = deletedDate.toLocaleString('bn-BD');
                     
                     recycleBody.innerHTML += `
-                        <tr>
+                        <tr class="recycle-item">
                             <td>
                                 <span class="status-badge info">${item.type}</span>
                             </td>
                             <td>${item.data.name || item.data.productName || item.data.customerName || 'নেই'}</td>
                             <td>${dateStr}</td>
                             <td>
-                                <button onclick="restoreItem('${item.id}')" class="btn btn-success btn-sm" title="পুনরুদ্ধার">
+                                <button onclick="restoreItem('${item.id}')" class="btn btn-success btn-sm" title="রিস্টোর করুন">
                                     <i class="fas fa-undo"></i>
-                                </button>
-                                <button onclick="permanentlyDeleteItem('${item.id}')" class="btn btn-danger btn-sm" title="স্থায়ীভাবে মুছুন">
-                                    <i class="fas fa-times"></i>
+                                    রিস্টোর
                                 </button>
                             </td>
                         </tr>
@@ -4704,10 +4644,12 @@
                         await db.ref('expenses/' + item.originalId).set(item.data);
                     }
                     
-                    await db.ref('recycle/' + recycleId).remove();
+                    // Keep the item in recycle bin for history
+                    // Only restore to original location
                     
-                    Swal.fire({ icon: 'success', title: 'আইটেম পুনরুদ্ধার হয়েছে!', timer: 2000, showConfirmButton: false });
+                    Swal.fire({ icon: 'success', title: 'আইটেম রিস্টোর হয়েছে!', timer: 2000, showConfirmButton: false });
                     
+                    // Reload all sections
                     loadRecycleBin();
                     loadRecycleBadge();
                     
@@ -4716,54 +4658,10 @@
                     if (item.type === 'purchase') loadPurchases();
                     if (item.type === 'customer') loadCustomers();
                     if (item.type === 'expense') loadExpenses();
+                    
+                    showNotification('আইটেম সফলভাবে রিস্টোর হয়েছে!', 'success');
                 })
                 .catch((error) => console.error('Error:', error));
-        }
-
-        function permanentlyDeleteItem(recycleId) {
-            Swal.fire({
-                title: 'স্থায়ীভাবে মুছবেন?',
-                text: 'এই আইটেম আর পুনরুদ্ধার করা যাবে না!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ',
-                cancelButtonText: 'বাতিল'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    db.ref('recycle/' + recycleId).remove()
-                        .then(() => {
-                            Swal.fire({ icon: 'success', title: 'আইটেম মুছে ফেলা হয়েছে!', timer: 2000, showConfirmButton: false });
-                            loadRecycleBin();
-                            loadRecycleBadge();
-                        })
-                        .catch((error) => console.error('Error:', error));
-                }
-            });
-        }
-
-        function emptyRecycleBin() {
-            Swal.fire({
-                title: 'রিসাইকেল বিন খালি করবেন?',
-                text: 'সব আইটেম স্থায়ীভাবে মুছে যাবে!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ',
-                cancelButtonText: 'বাতিল'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    db.ref('recycle').remove()
-                        .then(() => {
-                            Swal.fire({ icon: 'success', title: 'রিসাইকেল বিন খালি হয়েছে!', timer: 2000, showConfirmButton: false });
-                            loadRecycleBin();
-                            loadRecycleBadge();
-                        })
-                        .catch((error) => console.error('Error:', error));
-                }
-            });
         }
 
         // Settings
@@ -4850,6 +4748,10 @@
                 })
                 .then((snapshot) => {
                     backupData.purchases = snapshot.val();
+                    return db.ref('recycle').once('value');
+                })
+                .then((snapshot) => {
+                    backupData.recycle = snapshot.val();
                     
                     const json = JSON.stringify(backupData, null, 2);
                     const blob = new Blob([json], { type: 'application/json' });
@@ -4860,7 +4762,7 @@
                     a.click();
                     
                     hideLoading();
-                    Swal.fire({ icon: 'success', title: 'ব্যাকআপ সম্পন্ন!', text: 'ডেটা সফলভাবে ডাউনলোড হয়েছে', timer: 3000, showConfirmButton: false });
+                    Swal.fire({ icon: 'success', title: 'ব্যাকআপ সম্পন্ন!', text: 'সব ডেটা সফলভাবে ডাউনলোড হয়েছে', timer: 3000, showConfirmButton: false });
                 })
                 .catch((error) => {
                     hideLoading();
@@ -4894,107 +4796,6 @@
                     hideLoading();
                     showNotification('এক্সপোর্ট ব্যর্থ! ' + error.message, 'error');
                 });
-        }
-
-        function clearAllData() {
-            Swal.fire({
-                title: 'সব ডেটা রিসাইকেলে যাবে?',
-                text: 'আপনি পুনরুদ্ধার করতে পারবেন',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'হ্যাঁ',
-                cancelButtonText: 'বাতিল'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    showLoading('ডেটা মুছে ফেলা হচ্ছে...');
-                    
-                    try {
-                        // Move all data to recycle bin instead of deleting
-                        const productsSnapshot = await db.ref('products').once('value');
-                        productsSnapshot.forEach(async (child) => {
-                            const product = child.val();
-                            const recycleData = {
-                                type: 'product',
-                                data: product,
-                                originalId: child.key,
-                                deletedAt: new Date().toISOString()
-                            };
-                            await db.ref('recycle').push(recycleData);
-                        });
-                        
-                        const salesSnapshot = await db.ref('sales').once('value');
-                        salesSnapshot.forEach(async (child) => {
-                            const sale = child.val();
-                            const recycleData = {
-                                type: 'sale',
-                                data: sale,
-                                originalId: child.key,
-                                deletedAt: new Date().toISOString()
-                            };
-                            await db.ref('recycle').push(recycleData);
-                        });
-                        
-                        const customersSnapshot = await db.ref('customers').once('value');
-                        customersSnapshot.forEach(async (child) => {
-                            const customer = child.val();
-                            const recycleData = {
-                                type: 'customer',
-                                data: customer,
-                                originalId: child.key,
-                                deletedAt: new Date().toISOString()
-                            };
-                            await db.ref('recycle').push(recycleData);
-                        });
-                        
-                        const expensesSnapshot = await db.ref('expenses').once('value');
-                        expensesSnapshot.forEach(async (child) => {
-                            const expense = child.val();
-                            const recycleData = {
-                                type: 'expense',
-                                data: expense,
-                                originalId: child.key,
-                                deletedAt: new Date().toISOString()
-                            };
-                            await db.ref('recycle').push(recycleData);
-                        });
-                        
-                        const purchasesSnapshot = await db.ref('purchases').once('value');
-                        purchasesSnapshot.forEach(async (child) => {
-                            const purchase = child.val();
-                            const recycleData = {
-                                type: 'purchase',
-                                data: purchase,
-                                originalId: child.key,
-                                deletedAt: new Date().toISOString()
-                            };
-                            await db.ref('recycle').push(recycleData);
-                        });
-                        
-                        // Now clear the original data
-                        await db.ref('products').remove();
-                        await db.ref('sales').remove();
-                        await db.ref('customers').remove();
-                        await db.ref('expenses').remove();
-                        await db.ref('purchases').remove();
-                        
-                        hideLoading();
-                        Swal.fire({ icon: 'success', title: 'সব ডেটা রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
-                        
-                        loadProducts();
-                        loadSales();
-                        loadCustomers();
-                        loadExpenses();
-                        loadPurchases();
-                        loadRecycleBin();
-                        loadDashboardData();
-                    } catch (error) {
-                        hideLoading();
-                        showNotification('ডেটা মুছতে ব্যর্থ! ' + error.message, 'error');
-                    }
-                }
-            });
         }
 
         // Update product dropdowns
@@ -5085,4 +4886,3 @@
     </script>
 </body>
 </html>
-                

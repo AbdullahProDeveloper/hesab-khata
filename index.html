@@ -11,9 +11,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -34,18 +31,26 @@
         }
         
         :root {
-            --primary-color: #4F46E5;
-            --primary-dark: #4338CA;
-            --primary-light: #818CF8;
-            --secondary-color: #10B981;
-            --danger-color: #EF4444;
-            --warning-color: #F59E0B;
-            --info-color: #3B82F6;
-            --dark-color: #1E293B;
-            --dark-light: #334155;
-            --light-color: #F8FAFC;
-            --gray-color: #6B7280;
-            --gray-light: #E5E7EB;
+            --primary: #6C5CE7;
+            --primary-dark: #5A4BD1;
+            --primary-light: #A29BFE;
+            --success: #00B894;
+            --danger: #E17055;
+            --warning: #FDCB6E;
+            --info: #0984E3;
+            --dark: #2D3436;
+            --gray: #636E72;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --border: #E9ECEF;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+            --sidebar-width: 280px;
+            --header-height: 72px;
+            --mobile-header-height: 64px;
         }
         
         body {
@@ -53,133 +58,167 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--dark);
         }
         
-        /* Login Page */
-        .login-container {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-            padding: 50px 40px;
-            max-width: 500px;
-            margin: 60px auto;
+        /* === LOGIN PAGE === */
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
             position: relative;
             overflow: hidden;
         }
         
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--success), var(--warning), var(--danger));
+        }
+        
         .login-logo {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 25px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3);
             animation: float 3s ease-in-out infinite;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
         .login-logo i {
-            font-size: 45px;
+            font-size: 40px;
             color: white;
         }
         
         .login-title {
-            color: var(--dark-color);
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            margin-bottom: 8px;
             text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .login-subtitle {
-            color: var(--gray-color);
-            font-size: 14px;
             text-align: center;
-            margin-bottom: 35px;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 30px;
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .form-label {
             display: block;
             margin-bottom: 8px;
-            color: var(--dark-color);
             font-weight: 600;
             font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
         }
         
         .form-control {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--gray-light);
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            padding: 14px 16px 14px 44px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
             font-size: 15px;
-            background: white;
+            transition: all 0.3s ease;
+            background: var(--light);
         }
         
         .form-control:focus {
-            border-color: var(--primary-color);
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+            background: white;
         }
         
-        .login-btn {
+        .btn-login {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 15px;
         }
         
-        .login-btn:hover {
+        .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3);
         }
         
-        /* Dashboard */
-        .dashboard-container {
-            background: #f8fafc;
-            min-height: 100vh;
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        /* === DASHBOARD === */
+        .dashboard-wrapper {
             display: none;
-            position: relative;
+            min-height: 100vh;
+            background: #f0f2f5;
         }
         
         /* Header */
         .main-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--gray-light);
-            height: 70px;
             position: fixed;
             top: 0;
-            right: 0;
             left: 0;
-            z-index: 100;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .header-left {
@@ -188,30 +227,29 @@
             gap: 12px;
         }
         
-        .menu-btn {
+        .menu-toggle {
             background: none;
             border: none;
-            font-size: 24px;
-            color: var(--dark-color);
+            font-size: 22px;
             cursor: pointer;
             padding: 8px;
             border-radius: 8px;
             transition: all 0.3s;
         }
         
-        .menu-btn:hover {
-            background: var(--light-color);
+        .menu-toggle:hover {
+            background: var(--light);
         }
         
         .header-logo {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 10px rgba(108,92,231,0.3);
         }
         
         .header-logo i {
@@ -222,8 +260,7 @@
         .header-title {
             font-size: 18px;
             font-weight: 700;
-            color: var(--dark-color);
-            display: none;
+            color: var(--dark);
         }
         
         .header-right {
@@ -232,20 +269,24 @@
             gap: 8px;
         }
         
-        .header-action-btn {
-            position: relative;
-            background: var(--light-color);
+        .header-btn {
+            background: var(--light);
             border: none;
-            font-size: 16px;
-            color: var(--dark-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 12px;
+            font-size: 16px;
+            color: var(--dark);
             transition: all 0.3s;
+            position: relative;
         }
         
-        .header-action-btn:hover {
-            background: var(--gray-light);
+        .header-btn:hover {
+            background: var(--border);
             transform: scale(1.05);
         }
         
@@ -253,78 +294,66 @@
             position: absolute;
             top: -4px;
             right: -4px;
-            background: var(--danger-color);
+            background: var(--danger);
             color: white;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .language-switch {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--light-color);
-            padding: 4px;
-            border-radius: 12px;
-        }
-        
-        .language-btn {
-            padding: 4px 8px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .language-btn.active {
-            background: var(--primary-color);
-            color: white;
+            animation: pulse 2s infinite;
         }
         
         .user-profile {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 6px;
+            border-radius: 10px;
             cursor: pointer;
-            padding: 4px;
-            border-radius: 12px;
             transition: all 0.3s;
+        }
+        
+        .user-profile:hover {
+            background: var(--light);
         }
         
         .user-avatar {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary), var(--success));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 700;
             font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
         }
         
         .logout-btn {
             background: none;
             border: none;
-            color: var(--danger-color);
-            font-size: 16px;
+            color: var(--danger);
+            font-size: 18px;
             cursor: pointer;
             padding: 8px;
-            border-radius: 50%;
+            border-radius: 8px;
             transition: all 0.3s;
         }
         
         .logout-btn:hover {
-            background: #FEF2F2;
+            background: rgba(225,112,85,0.1);
         }
         
         /* Sidebar */
@@ -334,8 +363,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 199;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
             display: none;
             backdrop-filter: blur(2px);
         }
@@ -345,73 +374,65 @@
         }
         
         .main-sidebar {
-            background: linear-gradient(180deg, #1E293B 0%, #334155 100%);
-            width: 280px;
-            height: 100vh;
             position: fixed;
             top: 0;
             left: -280px;
-            z-index: 200;
-            padding: 20px 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1001;
             transition: all 0.3s ease;
             overflow-y: auto;
-            scrollbar-width: thin;
+            padding: 20px 0;
         }
         
         .main-sidebar.active {
             left: 0;
         }
         
-        .sidebar-brand {
+        .sidebar-header {
             display: flex;
             align-items: center;
-            gap: 12px;
             padding: 0 20px;
             margin-bottom: 30px;
         }
         
-        .sidebar-brand-icon {
+        .sidebar-logo {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(108,92,231,0.4);
         }
         
-        .sidebar-brand-icon i {
+        .sidebar-logo i {
             font-size: 24px;
             color: white;
         }
         
-        .sidebar-brand-text {
+        .sidebar-brand {
             color: white;
             font-size: 18px;
             font-weight: 700;
-            line-height: 1.2;
+            flex: 1;
         }
         
-        .sidebar-brand-subtext {
-            color: #94A3B8;
-            font-size: 11px;
-        }
-        
-        .sidebar-close-btn {
+        .sidebar-close {
             background: none;
             border: none;
-            color: #94A3B8;
+            color: rgba(255,255,255,0.6);
             font-size: 20px;
             cursor: pointer;
             padding: 8px;
             border-radius: 8px;
-            transition: all 0.3s;
-            margin-left: auto;
         }
         
-        .sidebar-close-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .sidebar-close:hover {
+            background: rgba(255,255,255,0.1);
             color: white;
         }
         
@@ -419,80 +440,82 @@
             padding: 0 12px;
         }
         
-        .sidebar-menu-title {
-            color: #94A3B8;
+        .sidebar-section-title {
+            color: rgba(255,255,255,0.5);
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             padding: 0 12px;
             margin-bottom: 12px;
+            margin-top: 20px;
         }
         
         .sidebar-item {
             display: flex;
             align-items: center;
-            gap: 12px;
             padding: 12px 16px;
             border-radius: 12px;
-            color: #CBD5E1;
+            color: rgba(255,255,255,0.7);
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 4px;
+            position: relative;
         }
         
         .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             color: white;
             transform: translateX(4px);
         }
         
         .sidebar-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(108,92,231,0.4);
         }
         
         .sidebar-item-icon {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            font-size: 14px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            margin-right: 12px;
+            font-size: 16px;
         }
         
         .sidebar-item.active .sidebar-item-icon {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
         }
         
         .sidebar-item-text {
             flex: 1;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
         }
         
-        .sidebar-item-badge {
-            background: var(--danger-color);
+        .sidebar-badge {
+            background: var(--danger);
             color: white;
             font-size: 10px;
             font-weight: 700;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 8px;
         }
         
         /* Main Content */
         .main-content {
             margin-left: 0;
-            padding-top: 70px;
+            padding-top: var(--header-height);
             min-height: 100vh;
             transition: all 0.3s ease;
         }
         
         .content-section {
-            padding: 16px;
+            padding: 20px;
             display: none;
             animation: fadeInUp 0.3s ease;
         }
@@ -522,77 +545,83 @@
         
         .stat-card {
             background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             cursor: pointer;
         }
         
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            opacity: 0.1;
+            transform: translate(30px, -30px);
         }
         
-        .stat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
         
         .stat-icon {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
+            margin-bottom: 12px;
         }
         
         .stat-icon.primary {
-            background: #EEF2FF;
-            color: var(--primary-color);
+            background: rgba(108,92,231,0.1);
+            color: var(--primary);
         }
         
         .stat-icon.success {
-            background: #ECFDF5;
-            color: var(--secondary-color);
+            background: rgba(0,184,148,0.1);
+            color: var(--success);
         }
         
         .stat-icon.warning {
-            background: #FEF3C7;
-            color: var(--warning-color);
+            background: rgba(253,203,110,0.1);
+            color: #e17055;
         }
         
         .stat-icon.danger {
-            background: #FEF2F2;
-            color: var(--danger-color);
+            background: rgba(225,112,85,0.1);
+            color: var(--danger);
         }
         
         .stat-label {
-            color: var(--gray-color);
-            font-size: 12px;
+            font-size: 13px;
+            color: var(--gray);
             font-weight: 500;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
-            color: var(--dark-color);
+            color: var(--dark);
             margin-top: 4px;
         }
         
         /* Cards */
         .card {
             background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
         }
         
         .card-header {
@@ -605,13 +634,18 @@
         .card-title {
             font-size: 16px;
             font-weight: 700;
-            color: var(--dark-color);
+            color: var(--dark);
+        }
+        
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--gray);
         }
         
         /* Buttons */
         .btn {
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -623,38 +657,42 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(108,92,231,0.4);
         }
         
         .btn-success {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            background: linear-gradient(135deg, #00b894, #00a381);
             color: white;
         }
         
         .btn-danger {
-            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            background: linear-gradient(135deg, #e17055, #d63031);
             color: white;
         }
         
         .btn-sm {
-            padding: 6px 10px;
+            padding: 6px 12px;
             font-size: 11px;
             border-radius: 8px;
+        }
+        
+        .btn-block {
+            width: 100%;
         }
         
         /* Tables */
         .table-container {
             background: white;
-            border-radius: 16px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
         
         .table-wrapper {
@@ -667,7 +705,7 @@
         }
         
         thead {
-            background: var(--light-color);
+            background: var(--light);
         }
         
         th {
@@ -675,23 +713,28 @@
             text-align: left;
             font-size: 12px;
             font-weight: 600;
-            color: var(--gray-color);
+            color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         
         td {
             padding: 12px;
-            border-bottom: 1px solid #F3F4F6;
+            border-bottom: 1px solid var(--border);
             font-size: 13px;
-            color: var(--dark-color);
+            color: var(--dark);
+        }
+        
+        tbody tr {
+            transition: all 0.2s;
         }
         
         tbody tr:hover {
-            background: var(--light-color);
+            background: var(--light);
         }
         
-        /* Search Input */
+        /* Search Box */
         .search-box {
             position: relative;
             margin-bottom: 16px;
@@ -699,17 +742,18 @@
         
         .search-box input {
             width: 100%;
-            padding: 12px 16px 12px 40px;
-            border: 2px solid var(--gray-light);
-            border-radius: 12px;
-            font-size: 13px;
-            transition: all 0.3s;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
             background: white;
+            transition: all 0.3s;
         }
         
         .search-box input:focus {
-            border-color: var(--primary-color);
+            border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
         }
         
         .search-box i {
@@ -717,7 +761,7 @@
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--gray-color);
+            color: var(--gray);
         }
         
         /* Modal */
@@ -728,7 +772,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -737,22 +781,22 @@
         
         .modal-content {
             background: white;
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 500px;
+            border-radius: var(--radius-lg);
+            padding: 24px;
             width: 90%;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideIn 0.3s ease;
+            animation: slideUp 0.3s ease;
         }
         
-        @keyframes slideIn {
+        @keyframes slideUp {
             from {
-                transform: translateY(-50px) scale(0.9);
+                transform: translateY(50px);
                 opacity: 0;
             }
             to {
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
@@ -765,32 +809,74 @@
         }
         
         .modal-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--dark-color);
         }
         
         .modal-close {
-            background: var(--light-color);
+            background: var(--light);
             border: none;
-            font-size: 16px;
-            color: var(--gray-color);
-            cursor: pointer;
-            padding: 8px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
             transition: all 0.3s;
         }
         
         .modal-close:hover {
-            background: var(--danger-color);
+            background: var(--danger);
             color: white;
         }
         
         .modal-footer {
             display: flex;
             justify-content: flex-end;
-            gap: 12px;
+            gap: 10px;
             margin-top: 20px;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .payment-method {
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+            background: rgba(108,92,231,0.05);
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary);
+            background: rgba(108,92,231,0.1);
+            color: var(--primary);
+        }
+        
+        .payment-method i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+        
+        .payment-method span {
+            font-size: 11px;
+            font-weight: 600;
         }
         
         /* Notification */
@@ -807,29 +893,25 @@
             background: white;
             border-radius: 12px;
             padding: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
             animation: slideInRight 0.3s ease;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
         }
         
         .notification.success {
-            border-left-color: var(--secondary-color);
+            border-left-color: var(--success);
         }
         
         .notification.error {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--danger);
         }
         
         .notification.warning {
-            border-left-color: var(--warning-color);
-        }
-        
-        .notification.info {
-            border-left-color: var(--info-color);
+            border-left-color: var(--warning);
         }
         
         @keyframes slideInRight {
@@ -851,7 +933,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255,255,255,0.9);
             z-index: 5000;
             justify-content: center;
             align-items: center;
@@ -861,8 +943,8 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid var(--light-color);
-            border-top: 5px solid var(--primary-color);
+            border: 5px solid var(--light);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -872,67 +954,50 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Payment Methods */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 250px;
         }
         
-        .payment-method-btn {
-            padding: 12px;
-            border: 2px solid var(--gray-light);
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* Empty State */
+        .empty-state {
             text-align: center;
-            font-size: 11px;
-            font-weight: 600;
+            padding: 40px;
+            color: var(--gray);
         }
         
-        .payment-method-btn:hover {
-            border-color: var(--primary-color);
-            background: #EEF2FF;
-        }
-        
-        .payment-method-btn.active {
-            border-color: var(--primary-color);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .payment-method-btn i {
-            display: block;
-            font-size: 20px;
-            margin-bottom: 4px;
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--border);
         }
         
         /* Responsive */
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             
             .header-title {
                 display: none;
             }
             
-            .user-profile {
-                display: none;
-            }
-            
-            .language-switch {
+            .user-name {
                 display: none;
             }
             
             .content-section {
-                padding: 12px;
+                padding: 14px;
             }
             
             .payment-methods {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card {
+                padding: 16px;
             }
         }
         
@@ -942,16 +1007,16 @@
                 gap: 8px;
             }
             
-            .card {
-                padding: 12px;
+            .modal-content {
+                padding: 20px;
             }
             
-            .modal-content {
-                padding: 16px;
+            .login-card {
+                padding: 30px 20px;
             }
         }
         
-        /* Print Styles */
+        /* Print */
         @media print {
             .main-header,
             .main-sidebar,
@@ -974,47 +1039,49 @@
     </style>
 </head>
 <body>
-    <!-- Loading Spinner -->
+    <!-- Loading -->
     <div id="loading" class="loading">
         <div class="spinner"></div>
     </div>
     
     <!-- Login Page -->
-    <div id="login-page" class="login-container">
-        <div class="login-logo">
-            <i class="fas fa-store"></i>
-        </div>
-        <h1 class="login-title">বসনীসে হেসাব খাতা</h1>
-        <p class="login-subtitle">আপনার দোকানের সম্পূর্ণ ব্যবস্থাপনা</p>
-        
-        <form id="login-form">
-            <div class="form-group">
-                <label class="form-label" for="email">
-                    <i class="fas fa-envelope mr-2"></i>
-                    ইমেইল
-                </label>
-                <input type="email" id="email" class="form-control" placeholder="আপনার ইমেইল" required>
+    <div id="login-page" class="login-wrapper">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-store"></i>
             </div>
+            <h1 class="login-title">বসনীসে হেসাব খাতা</h1>
+            <p class="login-subtitle">আপনার দোকানের সম্পূর্ণ ব্যবস্থাপনা</p>
             
-            <div class="form-group">
-                <label class="form-label" for="password">
-                    <i class="fas fa-lock mr-2"></i>
-                    পাসওয়ার্ড
-                </label>
-                <input type="password" id="password" class="form-control" placeholder="আপনার পাসওয়ার্ড" required>
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label">ইমেইল</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" class="form-control" placeholder="আপনার ইমেইল" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">পাসওয়ার্ড</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" class="form-control" placeholder="আপনার পাসওয়ার্ড" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    লগইন করুন
+                </button>
+            </form>
+            
+            <div class="forgot-password">
+                <a href="#" id="forgot-password-btn">
+                    <i class="fas fa-question-circle"></i>
+                    পাসওয়ার্ড ভুলে গেছেন?
+                </a>
             </div>
-            
-            <button type="submit" class="login-btn">
-                <i class="fas fa-sign-in-alt mr-2"></i>
-                লগইন করুন
-            </button>
-        </form>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="#" id="forgot-password-btn" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
-                <i class="fas fa-question-circle mr-1"></i>
-                পাসওয়ার্ড ভুলে গেছেন?
-            </a>
         </div>
     </div>
     
@@ -1031,7 +1098,10 @@
             <form id="forgot-password-form">
                 <div class="form-group">
                     <label class="form-label">ইমেইল</label>
-                    <input type="email" id="reset-email" class="form-control" placeholder="আপনার ইমেইল" required>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="reset-email" class="form-control" placeholder="আপনার ইমেইল" required>
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -1046,11 +1116,11 @@
     </div>
     
     <!-- Dashboard -->
-    <div id="dashboard" class="dashboard-container">
+    <div id="dashboard" class="dashboard-wrapper">
         <!-- Header -->
         <header class="main-header">
             <div class="header-left">
-                <button class="menu-btn" onclick="toggleSidebar()">
+                <button class="menu-toggle" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="header-logo">
@@ -1060,15 +1130,10 @@
             </div>
             
             <div class="header-right">
-                <button class="header-action-btn" onclick="showNotifications()">
+                <button class="header-btn" onclick="showNotifications()">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge" id="notification-badge">3</span>
                 </button>
-                
-                <div class="language-switch">
-                    <button class="language-btn active" onclick="changeLanguage('bn')">বাং</button>
-                    <button class="language-btn" onclick="changeLanguage('en')">EN</button>
-                </div>
                 
                 <div class="user-profile">
                     <div class="user-avatar" id="user-avatar">A</div>
@@ -1086,21 +1151,18 @@
         
         <!-- Sidebar -->
         <aside class="main-sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <div class="sidebar-brand-icon">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
                     <i class="fas fa-store"></i>
                 </div>
-                <div style="flex: 1;">
-                    <div class="sidebar-brand-text">বসনীসে</div>
-                    <div class="sidebar-brand-subtext">হেসাব খাতা</div>
-                </div>
-                <button class="sidebar-close-btn" onclick="closeSidebar()">
+                <div class="sidebar-brand">বসনীসে হেসাব</div>
+                <button class="sidebar-close" onclick="closeSidebar()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
             <div class="sidebar-menu">
-                <div class="sidebar-menu-title">মূল মেনু</div>
+                <div class="sidebar-section-title">মূল মেনু</div>
                 
                 <div class="sidebar-item active" onclick="showSection('dashboard')">
                     <div class="sidebar-item-icon"><i class="fas fa-chart-pie"></i></div>
@@ -1109,17 +1171,17 @@
                 
                 <div class="sidebar-item" onclick="showSection('products')">
                     <div class="sidebar-item-icon"><i class="fas fa-boxes"></i></div>
-                    <span class="sidebar-item-text">পণ্য ব্যবস্থাপনা</span>
-                    <span class="sidebar-item-badge" id="product-badge">0</span>
+                    <span class="sidebar-item-text">পণ্য</span>
+                    <span class="sidebar-badge" id="product-badge">0</span>
                 </div>
                 
                 <div class="sidebar-item" onclick="showSection('sales')">
-                    <div class="sidebar-item-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="sidebar-item-icon"><i class="fas fa-cart-plus"></i></div>
                     <span class="sidebar-item-text">বিক্রি</span>
                 </div>
                 
                 <div class="sidebar-item" onclick="showSection('purchases')">
-                    <div class="sidebar-item-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <div class="sidebar-item-icon"><i class="fas fa-cart-arrow-down"></i></div>
                     <span class="sidebar-item-text">ক্রয়</span>
                 </div>
                 
@@ -1133,7 +1195,7 @@
                     <span class="sidebar-item-text">খরচ</span>
                 </div>
                 
-                <div class="sidebar-menu-title">রিপোর্ট ও সেটিংস</div>
+                <div class="sidebar-section-title">রিপোর্ট ও সেটিংস</div>
                 
                 <div class="sidebar-item" onclick="showSection('reports')">
                     <div class="sidebar-item-icon"><i class="fas fa-chart-line"></i></div>
@@ -1142,8 +1204,8 @@
                 
                 <div class="sidebar-item" onclick="showSection('recycle')">
                     <div class="sidebar-item-icon"><i class="fas fa-recycle"></i></div>
-                    <span class="sidebar-item-text">রিসাইকেল বিন</span>
-                    <span class="sidebar-item-badge" id="recycle-badge">0</span>
+                    <span class="sidebar-item-text">রিসাইকেল</span>
+                    <span class="sidebar-badge" id="recycle-badge">0</span>
                 </div>
                 
                 <div class="sidebar-item" onclick="showSection('settings')">
@@ -1159,40 +1221,32 @@
             <div id="dashboard-section" class="content-section active">
                 <div class="stats-grid">
                     <div class="stat-card" onclick="showSection('sales')">
-                        <div class="stat-header">
-                            <div class="stat-icon primary">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="stat-label">আজকের বিক্রি</div>
                         <div class="stat-value" id="today-sales">৳0</div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('products')">
-                        <div class="stat-header">
-                            <div class="stat-icon success">
-                                <i class="fas fa-boxes"></i>
-                            </div>
+                        <div class="stat-icon success">
+                            <i class="fas fa-boxes"></i>
                         </div>
                         <div class="stat-label">মোট পণ্য</div>
                         <div class="stat-value" id="total-products">0</div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('customers')">
-                        <div class="stat-header">
-                            <div class="stat-icon warning">
-                                <i class="fas fa-users"></i>
-                            </div>
+                        <div class="stat-icon warning">
+                            <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-label">কাস্টমার</div>
                         <div class="stat-value" id="total-customers">0</div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('expenses')">
-                        <div class="stat-header">
-                            <div class="stat-icon danger">
-                                <i class="fas fa-wallet"></i>
-                            </div>
+                        <div class="stat-icon danger">
+                            <i class="fas fa-wallet"></i>
                         </div>
                         <div class="stat-label">আজকের খরচ</div>
                         <div class="stat-value" id="today-expenses">৳0</div>
@@ -1203,10 +1257,10 @@
                     <div class="card-header">
                         <div>
                             <h3 class="card-title">বিক্রির চার্ট</h3>
-                            <p style="font-size: 12px; color: var(--gray-color);">গত ৭ দিন</p>
+                            <p class="card-subtitle">গত ৭ দিনের বিক্রি</p>
                         </div>
                     </div>
-                    <div style="height: 200px;">
+                    <div class="chart-container">
                         <canvas id="salesChart"></canvas>
                     </div>
                 </div>
@@ -1231,11 +1285,9 @@
             <!-- Products Section -->
             <div id="products-section" class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <div>
-                        <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
-                            <i class="fas fa-boxes"></i> পণ্য ব্যবস্থাপনা
-                        </h2>
-                    </div>
+                    <h2 style="font-size: 22px; font-weight: 800;">
+                        <i class="fas fa-boxes"></i> পণ্য ব্যবস্থাপনা
+                    </h2>
                     <button class="btn btn-primary" onclick="openProductModal()">
                         <i class="fas fa-plus"></i> নতুন পণ্য
                     </button>
@@ -1267,8 +1319,8 @@
             <!-- Sales Section -->
             <div id="sales-section" class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
-                        <i class="fas fa-shopping-cart"></i> বিক্রি ব্যবস্থাপনা
+                    <h2 style="font-size: 22px; font-weight: 800;">
+                        <i class="fas fa-cart-plus"></i> বিক্রি ব্যবস্থাপনা
                     </h2>
                     <button class="btn btn-primary" onclick="openSaleModal()">
                         <i class="fas fa-plus"></i> নতুন বিক্রি
@@ -1302,8 +1354,8 @@
             <!-- Purchases Section -->
             <div id="purchases-section" class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
-                        <i class="fas fa-shopping-bag"></i> ক্রয় ব্যবস্থাপনা
+                    <h2 style="font-size: 22px; font-weight: 800;">
+                        <i class="fas fa-cart-arrow-down"></i> ক্রয় ব্যবস্থাপনা
                     </h2>
                     <button class="btn btn-primary" onclick="openPurchaseModal()">
                         <i class="fas fa-plus"></i> নতুন ক্রয়
@@ -1337,7 +1389,7 @@
             <!-- Customers Section -->
             <div id="customers-section" class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                    <h2 style="font-size: 22px; font-weight: 800;">
                         <i class="fas fa-users"></i> কাস্টমার ব্যবস্থাপনা
                     </h2>
                     <button class="btn btn-primary" onclick="openCustomerModal()">
@@ -1370,7 +1422,7 @@
             <!-- Expenses Section -->
             <div id="expenses-section" class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color);">
+                    <h2 style="font-size: 22px; font-weight: 800;">
                         <i class="fas fa-wallet"></i> খরচ ব্যবস্থাপনা
                     </h2>
                     <button class="btn btn-primary" onclick="openExpenseModal()">
@@ -1403,7 +1455,7 @@
             
             <!-- Reports Section -->
             <div id="reports-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">
                     <i class="fas fa-chart-line"></i> রিপোর্ট
                 </h2>
                 
@@ -1416,14 +1468,14 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="card">
                         <h3 class="card-title">বিক্রি রিপোর্ট</h3>
-                        <div style="height: 200px;">
+                        <div class="chart-container">
                             <canvas id="salesReportChart"></canvas>
                         </div>
                     </div>
                     
                     <div class="card">
                         <h3 class="card-title">খরচ রিপোর্ট</h3>
-                        <div style="height: 200px;">
+                        <div class="chart-container">
                             <canvas id="expenseReportChart"></canvas>
                         </div>
                     </div>
@@ -1446,7 +1498,7 @@
             
             <!-- Recycle Bin Section -->
             <div id="recycle-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">
                     <i class="fas fa-recycle"></i> রিসাইকেল বিন
                 </h2>
                 
@@ -1469,7 +1521,7 @@
             
             <!-- Settings Section -->
             <div id="settings-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; color: var(--dark-color); margin-bottom: 16px;">
+                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">
                     <i class="fas fa-cog"></i> সেটিংস
                 </h2>
                 
@@ -1499,8 +1551,8 @@
                     
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <div>
-                            <div class="font-medium">ইমেইল নোটিফিকেশন</div>
-                            <div class="text-sm text-gray-500">প্রতিটি লেনদেনে ইমেইল পাঠান</div>
+                            <div style="font-weight: 600;">ইমেইল নোটিফিকেশন</div>
+                            <div style="font-size: 12px; color: var(--gray);">প্রতিটি লেনদেনে ইমেইল</div>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="email-notification" checked>
@@ -1510,8 +1562,8 @@
                     
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="font-medium">পুশ নোটিফিকেশন</div>
-                            <div class="text-sm text-gray-500">রিয়েল-টাইম নোটিফিকেশন</div>
+                            <div style="font-weight: 600;">পুশ নোটিফিকেশন</div>
+                            <div style="font-size: 12px; color: var(--gray);">রিয়েল-টাইম নোটিফিকেশন</div>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="push-notification" checked>
@@ -1520,7 +1572,7 @@
                     </div>
                 </div>
                 
-                <button class="btn btn-primary" onclick="backupData()" style="width: 100%;">
+                <button class="btn btn-primary btn-block" onclick="backupData()">
                     <i class="fas fa-database"></i> ডেটা ব্যাকআপ নিন
                 </button>
             </div>
@@ -1612,28 +1664,28 @@
                 <div class="form-group">
                     <label class="form-label">পেমেন্ট পদ্ধতি</label>
                     <div class="payment-methods">
-                        <button type="button" class="payment-method-btn active" onclick="selectPaymentMethod('cash', this)">
+                        <button type="button" class="payment-method active" onclick="selectPaymentMethod('cash', this)">
                             <i class="fas fa-money-bill-wave"></i>
-                            ক্যাশ
+                            <span>ক্যাশ</span>
                         </button>
-                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('nagad', this)">
+                        <button type="button" class="payment-method" onclick="selectPaymentMethod('nagad', this)">
                             <i class="fas fa-mobile-alt"></i>
-                            নগদ
+                            <span>নগদ</span>
                         </button>
-                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('bikash', this)">
+                        <button type="button" class="payment-method" onclick="selectPaymentMethod('bikash', this)">
                             <i class="fas fa-mobile-alt"></i>
-                            বিকাশ
+                            <span>বিকাশ</span>
                         </button>
-                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('due', this)">
+                        <button type="button" class="payment-method" onclick="selectPaymentMethod('due', this)">
                             <i class="fas fa-hand-holding-usd"></i>
-                            বাকি
+                            <span>বাকি</span>
                         </button>
                     </div>
                 </div>
                 
                 <div id="due-amount-box" style="background: #ECFDF5; border-radius: 12px; padding: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-                    <span class="font-medium">অবশিষ্ট</span>
-                    <span class="font-bold" id="due-amount-display">৳0</span>
+                    <span style="font-weight: 600;">অবশিষ্ট</span>
+                    <span style="font-weight: 700; font-size: 18px;" id="due-amount-display">৳0</span>
                 </div>
                 
                 <div class="form-group">
@@ -1832,18 +1884,27 @@
 
         // Global variables
         let currentUser = null;
-        let currentLanguage = 'bn';
-        let currentSection = 'dashboard';
         let selectedPaymentMethod = 'cash';
         let salesChart = null;
         let salesReportChart = null;
         let expenseReportChart = null;
 
+        // Sidebar functions
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('sidebar-overlay').classList.add('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('sidebar-overlay').classList.remove('active');
+        }
+
         // Payment method selection
         function selectPaymentMethod(method, btn) {
             selectedPaymentMethod = method;
             
-            document.querySelectorAll('.payment-method-btn').forEach(button => {
+            document.querySelectorAll('.payment-method').forEach(button => {
                 button.classList.remove('active');
             });
             btn.classList.add('active');
@@ -1860,23 +1921,6 @@
                 document.getElementById('due-amount-display').textContent = '৳0';
                 document.getElementById('sale-customer').required = false;
             }
-        }
-
-        // Sidebar functions
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-        }
-
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
         }
 
         // Auth functions
@@ -1957,7 +2001,7 @@
                     auth.signOut().then(() => {
                         currentUser = null;
                         document.getElementById('dashboard').style.display = 'none';
-                        document.getElementById('login-page').style.display = 'block';
+                        document.getElementById('login-page').style.display = 'flex';
                         showNotification('লগআউট সফল!', 'success');
                     });
                 }
@@ -1972,7 +2016,7 @@
                 document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
                 showDashboard();
             } else {
-                document.getElementById('login-page').style.display = 'block';
+                document.getElementById('login-page').style.display = 'flex';
                 document.getElementById('dashboard').style.display = 'none';
             }
         });
@@ -1988,10 +2032,8 @@
             loadSettings();
         }
 
-        // Navigation functions
+        // Navigation
         function showSection(section) {
-            currentSection = section;
-            
             document.querySelectorAll('.content-section').forEach(el => {
                 el.classList.remove('active');
             });
@@ -2024,7 +2066,6 @@
             closeSidebar();
         }
 
-        // Get section name
         function getSectionName(section) {
             const names = {
                 dashboard: 'ড্যাশবোর্ড',
@@ -2040,24 +2081,7 @@
             return names[section] || section;
         }
 
-        // Language functions
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            
-            document.querySelectorAll('.language-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            if (lang === 'bn') {
-                document.querySelector('.language-btn').classList.add('active');
-            } else {
-                document.querySelectorAll('.language-btn')[1].classList.add('active');
-            }
-            
-            showNotification('ভাষা পরিবর্তন হয়েছে!', 'success');
-        }
-
-        // Notification system
+        // Notification
         function showNotification(message, type = 'success') {
             const container = document.getElementById('notification-container');
             
@@ -2074,7 +2098,7 @@
             notification.innerHTML = `
                 <i class="fas ${icons[type] || icons.info}"></i>
                 <span>${message}</span>
-                <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: var(--gray-color); cursor: pointer;">
+                <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: var(--gray); cursor: pointer;">
                     <i class="fas fa-times"></i>
                 </button>
             `;
@@ -2098,21 +2122,16 @@
             document.getElementById('loading').style.display = 'none';
         }
 
-        // Modal functions
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
+        // Modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Dashboard data loading
+        // Dashboard data
         function loadDashboardData() {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             
-            // Load today's sales
             db.ref('sales').orderByChild('timestamp').startAt(today.getTime()).once('value')
                 .then((snapshot) => {
                     let todaySales = 0;
@@ -2121,30 +2140,21 @@
                     });
                     document.getElementById('today-sales').textContent = '৳' + todaySales.toFixed(2);
                 })
-                .catch((error) => {
-                    console.error('Error loading sales:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load total products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
                     document.getElementById('product-badge').textContent = snapshot.numChildren();
                 })
-                .catch((error) => {
-                    console.error('Error loading products:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
                 })
-                .catch((error) => {
-                    console.error('Error loading customers:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load today's expenses
             db.ref('expenses').orderByChild('timestamp').startAt(today.getTime()).once('value')
                 .then((snapshot) => {
                     let todayExpenses = 0;
@@ -2153,11 +2163,8 @@
                     });
                     document.getElementById('today-expenses').textContent = '৳' + todayExpenses.toFixed(2);
                 })
-                .catch((error) => {
-                    console.error('Error loading expenses:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load recent sales
             db.ref('sales').orderByChild('timestamp').limitToLast(5).once('value')
                 .then((snapshot) => {
                     const recentSalesDiv = document.getElementById('recent-sales');
@@ -2168,25 +2175,21 @@
                         const date = new Date(sale.timestamp);
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
-                        const html = `
-                            <div style="padding: 8px; border-bottom: 1px solid #f3f4f6;">
+                        recentSalesDiv.innerHTML += `
+                            <div style="padding: 8px; border-bottom: 1px solid var(--border);">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <div style="font-weight: 600; font-size: 13px;">${sale.productName}</div>
-                                        <div style="font-size: 11px; color: var(--gray-color);">${dateStr}</div>
+                                        <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
                                     </div>
-                                    <div style="font-weight: 700; color: var(--secondary-color);">৳${sale.total.toFixed(2)}</div>
+                                    <div style="font-weight: 700; color: var(--success);">৳${sale.total.toFixed(2)}</div>
                                 </div>
                             </div>
                         `;
-                        recentSalesDiv.innerHTML += html;
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading recent sales:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load recent expenses
             db.ref('expenses').orderByChild('timestamp').limitToLast(5).once('value')
                 .then((snapshot) => {
                     const recentExpensesDiv = document.getElementById('recent-expenses');
@@ -2197,43 +2200,33 @@
                         const date = new Date(expense.timestamp);
                         const dateStr = date.toLocaleDateString('bn-BD');
                         
-                        const html = `
-                            <div style="padding: 8px; border-bottom: 1px solid #f3f4f6;">
+                        recentExpensesDiv.innerHTML += `
+                            <div style="padding: 8px; border-bottom: 1px solid var(--border);">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <div style="font-weight: 600; font-size: 13px;">${expense.type}</div>
-                                        <div style="font-size: 11px; color: var(--gray-color);">${dateStr}</div>
+                                        <div style="font-size: 11px; color: var(--gray);">${dateStr}</div>
                                     </div>
-                                    <div style="font-weight: 700; color: var(--danger-color);">৳${expense.amount.toFixed(2)}</div>
+                                    <div style="font-weight: 700; color: var(--danger);">৳${expense.amount.toFixed(2)}</div>
                                 </div>
                             </div>
                         `;
-                        recentExpensesDiv.innerHTML += html;
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading recent expenses:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
-            // Load sales chart
             loadSalesChart();
-            
-            // Load recycle badge
             loadRecycleBadge();
         }
 
-        // Load recycle badge
         function loadRecycleBadge() {
             db.ref('recycle').once('value')
                 .then((snapshot) => {
                     document.getElementById('recycle-badge').textContent = snapshot.numChildren();
                 })
-                .catch((error) => {
-                    console.error('Error loading recycle count:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Load sales chart
         function loadSalesChart() {
             const today = new Date();
             const sevenDaysAgo = new Date(today);
@@ -2247,8 +2240,7 @@
                     for (let i = 6; i >= 0; i--) {
                         const date = new Date(today);
                         date.setDate(date.getDate() - i);
-                        const dateStr = date.toLocaleDateString('bn-BD');
-                        labels.push(dateStr);
+                        labels.push(date.toLocaleDateString('bn-BD'));
                         salesData.push(0);
                     }
                     
@@ -2258,8 +2250,7 @@
                         const daysAgo = Math.floor((today - saleDate) / (1000 * 60 * 60 * 24));
                         
                         if (daysAgo >= 0 && daysAgo < 7) {
-                            const index = 6 - daysAgo;
-                            salesData[index] += sale.total;
+                            salesData[6 - daysAgo] += sale.total;
                         }
                     });
                     
@@ -2276,8 +2267,8 @@
                             datasets: [{
                                 label: 'বিক্রি',
                                 data: salesData,
-                                backgroundColor: 'rgba(79, 70, 229, 0.7)',
-                                borderColor: 'rgba(79, 70, 229, 1)',
+                                backgroundColor: 'rgba(108, 92, 231, 0.7)',
+                                borderColor: 'rgba(108, 92, 231, 1)',
                                 borderWidth: 1,
                                 borderRadius: 4
                             }]
@@ -2286,32 +2277,24 @@
                             responsive: true,
                             maintainAspectRatio: false,
                             plugins: {
-                                legend: {
-                                    display: false
-                                }
+                                legend: { display: false }
                             },
                             scales: {
                                 y: {
                                     beginAtZero: true,
-                                    grid: {
-                                        display: false
-                                    }
+                                    grid: { display: false }
                                 },
                                 x: {
-                                    grid: {
-                                        display: false
-                                    }
+                                    grid: { display: false }
                                 }
                             }
                         }
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading sales chart:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Product Management
+        // Products
         function loadProducts() {
             const productsBody = document.getElementById('products-body');
             productsBody.innerHTML = '';
@@ -2323,18 +2306,18 @@
                     const product = child.val();
                     const productId = child.key;
                     
-                    const stockColor = product.stock <= 5 ? 'text-red-600' : 'text-green-600';
+                    const stockColor = product.stock <= 5 ? 'color: var(--danger)' : 'color: var(--success)';
                     
-                    const html = `
+                    productsBody.innerHTML += `
                         <tr>
                             <td>
                                 <div style="font-weight: 600;">${product.name}</div>
-                                <div style="font-size: 11px; color: var(--gray-color);">${product.category}</div>
+                                <div style="font-size: 11px; color: var(--gray);">${product.category}</div>
                             </td>
                             <td>৳${product.purchasePrice}</td>
                             <td>৳${product.salePrice}</td>
                             <td>
-                                <span class="${stockColor} font-bold">${product.stock}</span>
+                                <span style="${stockColor}; font-weight: 700;">${product.stock}</span>
                             </td>
                             <td>
                                 <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm">
@@ -2346,15 +2329,13 @@
                             </td>
                         </tr>
                     `;
-                    
-                    productsBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading products:', error);
+                console.error('Error:', error);
+                showNotification('পণ্য লোড করা যায়নি!', 'error');
             });
         }
 
-        // Product CRUD
         document.getElementById('product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -2371,8 +2352,7 @@
                 salePrice: salePrice,
                 stock: stock,
                 createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                createdBy: currentUser ? currentUser.email : 'unknown'
+                updatedAt: new Date().toISOString()
             };
             
             const editId = document.getElementById('product-form').dataset.editId;
@@ -2385,22 +2365,12 @@
                     closeModal('product-modal');
                     document.getElementById('product-form').reset();
                     delete document.getElementById('product-form').dataset.editId;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'পণ্য আপডেট হয়েছে!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({ icon: 'success', title: 'পণ্য আপডেট হয়েছে!', timer: 2000, showConfirmButton: false });
                 } else {
                     await db.ref('products').push(productData);
                     closeModal('product-modal');
                     document.getElementById('product-form').reset();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'পণ্য যোগ হয়েছে!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({ icon: 'success', title: 'পণ্য যোগ হয়েছে!', timer: 2000, showConfirmButton: false });
                 }
                 
                 hideLoading();
@@ -2413,7 +2383,6 @@
             }
         });
 
-        // Edit product
         function editProduct(productId) {
             db.ref('products/' + productId).once('value')
                 .then((snapshot) => {
@@ -2430,16 +2399,12 @@
                     
                     document.getElementById('product-modal').style.display = 'flex';
                 })
-                .catch((error) => {
-                    console.error('Error editing product:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Delete product (soft delete - moves to recycle)
         function deleteProduct(productId) {
             Swal.fire({
                 title: 'পণ্য রিসাইকেলে যাবে?',
-                text: 'পণ্যটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -2456,33 +2421,24 @@
                                 type: 'product',
                                 data: product,
                                 originalId: productId,
-                                deletedAt: new Date().toISOString(),
-                                deletedBy: currentUser ? currentUser.email : 'unknown'
+                                deletedAt: new Date().toISOString()
                             };
                             
                             await db.ref('recycle').push(recycleData);
                             await db.ref('products/' + productId).remove();
                             
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            Swal.fire({ icon: 'success', title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                             
                             loadProducts();
                             updateProductDropdowns();
                             loadDashboardData();
                             loadRecycleBadge();
                         })
-                        .catch((error) => {
-                            console.error('Error deleting product:', error);
-                        });
+                        .catch((error) => console.error('Error:', error));
                 }
             });
         }
 
-        // Filter products
         function filterProducts() {
             const searchTerm = document.getElementById('product-search').value.toLowerCase();
             const rows = document.querySelectorAll('#products-body tr');
@@ -2493,7 +2449,7 @@
             });
         }
 
-        // Sales Management
+        // Sales
         function loadSales() {
             const salesBody = document.getElementById('sales-body');
             salesBody.innerHTML = '';
@@ -2503,10 +2459,7 @@
                 
                 const sales = [];
                 snapshot.forEach((child) => {
-                    sales.push({
-                        id: child.key,
-                        ...child.val()
-                    });
+                    sales.push({ id: child.key, ...child.val() });
                 });
                 
                 sales.sort((a, b) => b.timestamp - a.timestamp);
@@ -2518,22 +2471,20 @@
                     let paymentBadge = '';
                     switch(sale.paymentMethod) {
                         case 'cash':
-                            paymentBadge = '<span style="background: #ECFDF5; color: var(--secondary-color); padding: 2px 6px; border-radius: 4px; font-size: 11px;">ক্যাশ</span>';
+                            paymentBadge = '<span style="background: rgba(0,184,148,0.1); color: var(--success); padding: 2px 6px; border-radius: 4px; font-size: 11px;">ক্যাশ</span>';
                             break;
                         case 'nagad':
-                            paymentBadge = '<span style="background: #FFF7ED; color: #F97316; padding: 2px 6px; border-radius: 4px; font-size: 11px;">নগদ</span>';
+                            paymentBadge = '<span style="background: rgba(253,203,110,0.1); color: #e17055; padding: 2px 6px; border-radius: 4px; font-size: 11px;">নগদ</span>';
                             break;
                         case 'bikash':
-                            paymentBadge = '<span style="background: #FDF2F8; color: #EC4899; padding: 2px 6px; border-radius: 4px; font-size: 11px;">বিকাশ</span>';
+                            paymentBadge = '<span style="background: rgba(9,132,227,0.1); color: var(--info); padding: 2px 6px; border-radius: 4px; font-size: 11px;">বিকাশ</span>';
                             break;
                         case 'due':
-                            paymentBadge = '<span style="background: #FEF3C7; color: #D97706; padding: 2px 6px; border-radius: 4px; font-size: 11px;">বাকি</span>';
+                            paymentBadge = '<span style="background: rgba(225,112,85,0.1); color: var(--danger); padding: 2px 6px; border-radius: 4px; font-size: 11px;">বাকি</span>';
                             break;
-                        default:
-                            paymentBadge = '<span style="background: #F3F4F6; color: var(--gray-color); padding: 2px 6px; border-radius: 4px; font-size: 11px;">অন্যান্য</span>';
                     }
                     
-                    const html = `
+                    salesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
                             <td style="font-weight: 600;">${sale.productName}</td>
@@ -2547,22 +2498,20 @@
                             </td>
                         </tr>
                     `;
-                    
-                    salesBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading sales:', error);
+                console.error('Error:', error);
+                showNotification('বিক্রি লোড করা যায়নি!', 'error');
             });
         }
 
-        // Sale Modal
         function openSaleModal() {
             selectedPaymentMethod = 'cash';
             
-            document.querySelectorAll('.payment-method-btn').forEach(button => {
+            document.querySelectorAll('.payment-method').forEach(button => {
                 button.classList.remove('active');
             });
-            document.querySelector('.payment-method-btn').classList.add('active');
+            document.querySelector('.payment-method').classList.add('active');
             
             db.ref('products').once('value')
                 .then((snapshot) => {
@@ -2582,9 +2531,7 @@
                         }
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading products for sale:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
             db.ref('customers').once('value')
                 .then((snapshot) => {
@@ -2599,14 +2546,11 @@
                         customerSelect.appendChild(option);
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading customers for sale:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
             document.getElementById('sale-modal').style.display = 'flex';
         }
 
-        // Update sale product details
         function updateSaleProductDetails() {
             const select = document.getElementById('sale-product');
             const selectedOption = select.options[select.selectedIndex];
@@ -2617,7 +2561,6 @@
             }
         }
 
-        // Calculate sale total
         function calculateSaleTotal() {
             const quantity = parseFloat(document.getElementById('sale-quantity').value) || 0;
             const price = parseFloat(document.getElementById('sale-price').value) || 0;
@@ -2627,7 +2570,6 @@
             updateDueAmount();
         }
 
-        // Update due amount
         function updateDueAmount() {
             const total = parseFloat(document.getElementById('sale-total').value) || 0;
             const dueBox = document.getElementById('due-amount-box');
@@ -2641,7 +2583,6 @@
             }
         }
 
-        // Save sale
         document.getElementById('sale-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -2669,13 +2610,7 @@
                 
                 if (product.stock < quantity) {
                     hideLoading();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'স্টক যথেষ্ট নয়!',
-                        text: `স্টকে মাত্র ${product.stock} পিস আছে`,
-                        timer: 3000,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({ icon: 'error', title: 'স্টক যথেষ্ট নয়!', text: `স্টকে মাত্র ${product.stock} পিস আছে`, timer: 3000, showConfirmButton: false });
                     return;
                 }
                 
@@ -2688,10 +2623,7 @@
                     
                     if (selectedPaymentMethod === 'due') {
                         const newDue = (customer.due || 0) + total;
-                        await db.ref('customers/' + customerId).update({
-                            due: newDue,
-                            updatedAt: new Date().toISOString()
-                        });
+                        await db.ref('customers/' + customerId).update({ due: newDue, updatedAt: new Date().toISOString() });
                     }
                 }
                 
@@ -2704,28 +2636,18 @@
                     customerId: customerId,
                     customerName: customerName,
                     paymentMethod: selectedPaymentMethod,
-                    timestamp: Date.now(),
-                    createdBy: currentUser ? currentUser.email : 'unknown'
+                    timestamp: Date.now()
                 };
                 
                 await db.ref('sales').push(saleData);
                 
                 const newStock = product.stock - quantity;
-                await db.ref('products/' + productId).update({
-                    stock: newStock,
-                    updatedAt: new Date().toISOString()
-                });
+                await db.ref('products/' + productId).update({ stock: newStock, updatedAt: new Date().toISOString() });
                 
                 hideLoading();
                 closeModal('sale-modal');
                 document.getElementById('sale-form').reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'বিক্রি সফল!',
-                    text: `বিক্রি: ৳${total.toFixed(2)}`,
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'বিক্রি সফল!', text: `বিক্রি: ৳${total.toFixed(2)}`, timer: 2000, showConfirmButton: false });
                 
                 loadSales();
                 loadProducts();
@@ -2738,11 +2660,9 @@
             }
         });
 
-        // Delete sale (soft delete - moves to recycle)
         function deleteSale(saleId) {
             Swal.fire({
                 title: 'বিক্রি রিসাইকেলে যাবে?',
-                text: 'বিক্রিটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -2755,24 +2675,14 @@
                         .then(async (snapshot) => {
                             const sale = snapshot.val();
                             
-                            const recycleData = {
-                                type: 'sale',
-                                data: sale,
-                                originalId: saleId,
-                                deletedAt: new Date().toISOString(),
-                                deletedBy: currentUser ? currentUser.email : 'unknown'
-                            };
-                            
+                            const recycleData = { type: 'sale', data: sale, originalId: saleId, deletedAt: new Date().toISOString() };
                             await db.ref('recycle').push(recycleData);
                             
                             const productSnapshot = await db.ref('products/' + sale.productId).once('value');
                             const product = productSnapshot.val();
                             if (product) {
                                 const newStock = product.stock + sale.quantity;
-                                await db.ref('products/' + sale.productId).update({
-                                    stock: newStock,
-                                    updatedAt: new Date().toISOString()
-                                });
+                                await db.ref('products/' + sale.productId).update({ stock: newStock, updatedAt: new Date().toISOString() });
                             }
                             
                             if (sale.paymentMethod === 'due' && sale.customerId) {
@@ -2780,21 +2690,13 @@
                                 const customer = customerSnapshot.val();
                                 if (customer) {
                                     const newDue = Math.max(0, (customer.due || 0) - sale.total);
-                                    await db.ref('customers/' + sale.customerId).update({
-                                        due: newDue,
-                                        updatedAt: new Date().toISOString()
-                                    });
+                                    await db.ref('customers/' + sale.customerId).update({ due: newDue, updatedAt: new Date().toISOString() });
                                 }
                             }
                             
                             await db.ref('sales/' + saleId).remove();
                             
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            Swal.fire({ icon: 'success', title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                             
                             loadSales();
                             loadProducts();
@@ -2802,14 +2704,11 @@
                             loadDashboardData();
                             loadRecycleBadge();
                         })
-                        .catch((error) => {
-                            console.error('Error deleting sale:', error);
-                        });
+                        .catch((error) => console.error('Error:', error));
                 }
             });
         }
 
-        // Filter sales
         function filterSales() {
             const searchTerm = document.getElementById('sale-search').value.toLowerCase();
             const rows = document.querySelectorAll('#sales-body tr');
@@ -2820,7 +2719,7 @@
             });
         }
 
-        // Purchases Management
+        // Purchases
         function loadPurchases() {
             const purchasesBody = document.getElementById('purchases-body');
             purchasesBody.innerHTML = '';
@@ -2830,10 +2729,7 @@
                 
                 const purchases = [];
                 snapshot.forEach((child) => {
-                    purchases.push({
-                        id: child.key,
-                        ...child.val()
-                    });
+                    purchases.push({ id: child.key, ...child.val() });
                 });
                 
                 purchases.sort((a, b) => b.timestamp - a.timestamp);
@@ -2842,7 +2738,7 @@
                     const date = new Date(purchase.timestamp);
                     const dateStr = date.toLocaleString('bn-BD');
                     
-                    const html = `
+                    purchasesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
                             <td style="font-weight: 600;">${purchase.productName}</td>
@@ -2856,15 +2752,13 @@
                             </td>
                         </tr>
                     `;
-                    
-                    purchasesBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading purchases:', error);
+                console.error('Error:', error);
+                showNotification('ক্রয় লোড করা যায়নি!', 'error');
             });
         }
 
-        // Purchase Modal
         function openPurchaseModal() {
             db.ref('products').once('value')
                 .then((snapshot) => {
@@ -2881,14 +2775,11 @@
                         productSelect.appendChild(option);
                     });
                 })
-                .catch((error) => {
-                    console.error('Error loading products for purchase:', error);
-                });
+                .catch((error) => console.error('Error:', error));
             
             document.getElementById('purchase-modal').style.display = 'flex';
         }
 
-        // Update purchase product details
         function updatePurchaseProductDetails() {
             const select = document.getElementById('purchase-product');
             const selectedOption = select.options[select.selectedIndex];
@@ -2899,7 +2790,6 @@
             }
         }
 
-        // Calculate purchase total
         function calculatePurchaseTotal() {
             const quantity = parseFloat(document.getElementById('purchase-quantity').value) || 0;
             const price = parseFloat(document.getElementById('purchase-price').value) || 0;
@@ -2907,7 +2797,6 @@
             document.getElementById('purchase-total').value = total.toFixed(2);
         }
 
-        // Save purchase
         document.getElementById('purchase-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -2935,29 +2824,18 @@
                     price: price,
                     total: total,
                     supplier: supplier,
-                    timestamp: Date.now(),
-                    createdBy: currentUser ? currentUser.email : 'unknown'
+                    timestamp: Date.now()
                 };
                 
                 await db.ref('purchases').push(purchaseData);
                 
                 const newStock = product.stock + quantity;
-                await db.ref('products/' + productId).update({
-                    stock: newStock,
-                    purchasePrice: price,
-                    updatedAt: new Date().toISOString()
-                });
+                await db.ref('products/' + productId).update({ stock: newStock, purchasePrice: price, updatedAt: new Date().toISOString() });
                 
                 hideLoading();
                 closeModal('purchase-modal');
                 document.getElementById('purchase-form').reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'ক্রয় সফল!',
-                    text: `ক্রয়: ৳${total.toFixed(2)}`,
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'ক্রয় সফল!', text: `ক্রয়: ৳${total.toFixed(2)}`, timer: 2000, showConfirmButton: false });
                 
                 loadPurchases();
                 loadProducts();
@@ -2969,11 +2847,9 @@
             }
         });
 
-        // Delete purchase (soft delete - moves to recycle)
         function deletePurchase(purchaseId) {
             Swal.fire({
                 title: 'ক্রয় রিসাইকেলে যাবে?',
-                text: 'ক্রয়টি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -2986,47 +2862,29 @@
                         .then(async (snapshot) => {
                             const purchase = snapshot.val();
                             
-                            const recycleData = {
-                                type: 'purchase',
-                                data: purchase,
-                                originalId: purchaseId,
-                                deletedAt: new Date().toISOString(),
-                                deletedBy: currentUser ? currentUser.email : 'unknown'
-                            };
-                            
+                            const recycleData = { type: 'purchase', data: purchase, originalId: purchaseId, deletedAt: new Date().toISOString() };
                             await db.ref('recycle').push(recycleData);
                             
                             const productSnapshot = await db.ref('products/' + purchase.productId).once('value');
                             const product = productSnapshot.val();
                             if (product) {
                                 const newStock = Math.max(0, product.stock - purchase.quantity);
-                                await db.ref('products/' + purchase.productId).update({
-                                    stock: newStock,
-                                    updatedAt: new Date().toISOString()
-                                });
+                                await db.ref('products/' + purchase.productId).update({ stock: newStock, updatedAt: new Date().toISOString() });
                             }
                             
                             await db.ref('purchases/' + purchaseId).remove();
                             
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            Swal.fire({ icon: 'success', title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                             
                             loadPurchases();
                             loadProducts();
                             loadRecycleBadge();
                         })
-                        .catch((error) => {
-                            console.error('Error deleting purchase:', error);
-                        });
+                        .catch((error) => console.error('Error:', error));
                 }
             });
         }
 
-        // Filter purchases
         function filterPurchases() {
             const searchTerm = document.getElementById('purchase-search').value.toLowerCase();
             const rows = document.querySelectorAll('#purchases-body tr');
@@ -3037,7 +2895,7 @@
             });
         }
 
-        // Customers Management
+        // Customers
         function loadCustomers() {
             const customersBody = document.getElementById('customers-body');
             customersBody.innerHTML = '';
@@ -3049,17 +2907,17 @@
                     const customer = child.val();
                     const customerId = child.key;
                     
-                    const dueColor = customer.due > 0 ? 'text-red-600' : 'text-green-600';
+                    const dueColor = customer.due > 0 ? 'color: var(--danger)' : 'color: var(--success)';
                     
-                    const html = `
+                    customersBody.innerHTML += `
                         <tr>
                             <td>
                                 <div style="font-weight: 600;">${customer.name}</div>
-                                <div style="font-size: 11px; color: var(--gray-color);">${customer.phone}</div>
+                                <div style="font-size: 11px; color: var(--gray);">${customer.phone}</div>
                             </td>
                             <td>${customer.phone}</td>
                             <td>
-                                <span class="${dueColor} font-bold">৳${customer.due || 0}</span>
+                                <span style="${dueColor}; font-weight: 700;">৳${customer.due || 0}</span>
                             </td>
                             <td>
                                 <button onclick="openDuePaymentModal('${customerId}')" class="btn btn-success btn-sm">
@@ -3071,21 +2929,18 @@
                             </td>
                         </tr>
                     `;
-                    
-                    customersBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading customers:', error);
+                console.error('Error:', error);
+                showNotification('কাস্টমার লোড করা যায়নি!', 'error');
             });
         }
 
-        // Customer Modal
         function openCustomerModal() {
             document.getElementById('customer-modal').style.display = 'flex';
             document.getElementById('customer-form').reset();
         }
 
-        // Save customer
         document.getElementById('customer-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3099,8 +2954,7 @@
                 address: address,
                 due: 0,
                 createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                createdBy: currentUser ? currentUser.email : 'unknown'
+                updatedAt: new Date().toISOString()
             };
             
             showLoading();
@@ -3110,12 +2964,7 @@
                 hideLoading();
                 closeModal('customer-modal');
                 document.getElementById('customer-form').reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'কাস্টমার যোগ হয়েছে!',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'কাস্টমার যোগ হয়েছে!', timer: 2000, showConfirmButton: false });
                 loadCustomers();
                 loadDashboardData();
             } catch (error) {
@@ -3124,11 +2973,9 @@
             }
         });
 
-        // Delete customer (soft delete - moves to recycle)
         function deleteCustomer(customerId) {
             Swal.fire({
                 title: 'কাস্টমার রিসাইকেলে যাবে?',
-                text: 'কাস্টমারটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3141,35 +2988,20 @@
                         .then(async (snapshot) => {
                             const customer = snapshot.val();
                             
-                            const recycleData = {
-                                type: 'customer',
-                                data: customer,
-                                originalId: customerId,
-                                deletedAt: new Date().toISOString(),
-                                deletedBy: currentUser ? currentUser.email : 'unknown'
-                            };
-                            
+                            const recycleData = { type: 'customer', data: customer, originalId: customerId, deletedAt: new Date().toISOString() };
                             await db.ref('recycle').push(recycleData);
                             await db.ref('customers/' + customerId).remove();
                             
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            Swal.fire({ icon: 'success', title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                             
                             loadCustomers();
                             loadRecycleBadge();
                         })
-                        .catch((error) => {
-                            console.error('Error deleting customer:', error);
-                        });
+                        .catch((error) => console.error('Error:', error));
                 }
             });
         }
 
-        // Filter customers
         function filterCustomers() {
             const searchTerm = document.getElementById('customer-search').value.toLowerCase();
             const rows = document.querySelectorAll('#customers-body tr');
@@ -3180,7 +3012,6 @@
             });
         }
 
-        // Due Payment Modal
         function openDuePaymentModal(customerId) {
             db.ref('customers/' + customerId).once('value')
                 .then((snapshot) => {
@@ -3192,12 +3023,9 @@
                     
                     document.getElementById('due-payment-modal').style.display = 'flex';
                 })
-                .catch((error) => {
-                    console.error('Error loading customer for due payment:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Save due payment
         document.getElementById('due-payment-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3217,17 +3045,13 @@
                 const currentDue = customer.due || 0;
                 const newDue = Math.max(0, currentDue - paymentAmount);
                 
-                await db.ref('customers/' + customerId).update({
-                    due: newDue,
-                    updatedAt: new Date().toISOString()
-                });
+                await db.ref('customers/' + customerId).update({ due: newDue, updatedAt: new Date().toISOString() });
                 
                 const paymentData = {
                     customerId: customerId,
                     customerName: customer.name,
                     amount: paymentAmount,
-                    timestamp: Date.now(),
-                    createdBy: currentUser ? currentUser.email : 'unknown'
+                    timestamp: Date.now()
                 };
                 
                 await db.ref('payments').push(paymentData);
@@ -3235,13 +3059,7 @@
                 hideLoading();
                 closeModal('due-payment-modal');
                 document.getElementById('due-payment-form').reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'বাকি পরিশোধ সফল!',
-                    text: `পরিশোধ: ৳${paymentAmount.toFixed(2)}`,
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'বাকি পরিশোধ সফল!', text: `পরিশোধ: ৳${paymentAmount.toFixed(2)}`, timer: 2000, showConfirmButton: false });
                 loadCustomers();
             } catch (error) {
                 hideLoading();
@@ -3249,7 +3067,7 @@
             }
         });
 
-        // Expenses Management
+        // Expenses
         function loadExpenses() {
             const expensesBody = document.getElementById('expenses-body');
             expensesBody.innerHTML = '';
@@ -3259,10 +3077,7 @@
                 
                 const expenses = [];
                 snapshot.forEach((child) => {
-                    expenses.push({
-                        id: child.key,
-                        ...child.val()
-                    });
+                    expenses.push({ id: child.key, ...child.val() });
                 });
                 
                 expenses.sort((a, b) => b.timestamp - a.timestamp);
@@ -3271,7 +3086,7 @@
                     const date = new Date(expense.timestamp);
                     const dateStr = date.toLocaleString('bn-BD');
                     
-                    const html = `
+                    expensesBody.innerHTML += `
                         <tr>
                             <td>${dateStr}</td>
                             <td>${expense.type}</td>
@@ -3284,21 +3099,18 @@
                             </td>
                         </tr>
                     `;
-                    
-                    expensesBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading expenses:', error);
+                console.error('Error:', error);
+                showNotification('খরচ লোড করা যায়নি!', 'error');
             });
         }
 
-        // Expense Modal
         function openExpenseModal() {
             document.getElementById('expense-modal').style.display = 'flex';
             document.getElementById('expense-form').reset();
         }
 
-        // Save expense
         document.getElementById('expense-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3310,8 +3122,7 @@
                 type: type,
                 description: description,
                 amount: amount,
-                timestamp: Date.now(),
-                createdBy: currentUser ? currentUser.email : 'unknown'
+                timestamp: Date.now()
             };
             
             showLoading();
@@ -3321,12 +3132,7 @@
                 hideLoading();
                 closeModal('expense-modal');
                 document.getElementById('expense-form').reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'খরচ যোগ হয়েছে!',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'খরচ যোগ হয়েছে!', timer: 2000, showConfirmButton: false });
                 loadExpenses();
                 loadDashboardData();
             } catch (error) {
@@ -3335,11 +3141,9 @@
             }
         });
 
-        // Delete expense (soft delete - moves to recycle)
         function deleteExpense(expenseId) {
             Swal.fire({
                 title: 'খরচ রিসাইকেলে যাবে?',
-                text: 'খরচটি রিসাইকেল বিনে স্থানান্তরিত হবে',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -3352,36 +3156,21 @@
                         .then(async (snapshot) => {
                             const expense = snapshot.val();
                             
-                            const recycleData = {
-                                type: 'expense',
-                                data: expense,
-                                originalId: expenseId,
-                                deletedAt: new Date().toISOString(),
-                                deletedBy: currentUser ? currentUser.email : 'unknown'
-                            };
-                            
+                            const recycleData = { type: 'expense', data: expense, originalId: expenseId, deletedAt: new Date().toISOString() };
                             await db.ref('recycle').push(recycleData);
                             await db.ref('expenses/' + expenseId).remove();
                             
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
+                            Swal.fire({ icon: 'success', title: 'রিসাইকেলে স্থানান্তরিত হয়েছে!', timer: 3000, showConfirmButton: false });
                             
                             loadExpenses();
                             loadDashboardData();
                             loadRecycleBadge();
                         })
-                        .catch((error) => {
-                            console.error('Error deleting expense:', error);
-                        });
+                        .catch((error) => console.error('Error:', error));
                 }
             });
         }
 
-        // Filter expenses
         function filterExpenses() {
             const searchTerm = document.getElementById('expense-search').value.toLowerCase();
             const rows = document.querySelectorAll('#expenses-body tr');
@@ -3392,14 +3181,13 @@
             });
         }
 
-        // Reports Management
+        // Reports
         function loadReports() {
             loadSalesReport();
             loadExpenseReport();
             loadReportSummary();
         }
 
-        // Load sales report
         function loadSalesReport() {
             db.ref('sales').on('value', (snapshot) => {
                 const salesData = [];
@@ -3409,8 +3197,7 @@
                 for (let i = 29; i >= 0; i--) {
                     const date = new Date(today);
                     date.setDate(date.getDate() - i);
-                    const dateStr = date.toLocaleDateString('bn-BD');
-                    labels.push(dateStr);
+                    labels.push(date.toLocaleDateString('bn-BD'));
                     salesData.push(0);
                 }
                 
@@ -3420,8 +3207,7 @@
                     const daysAgo = Math.floor((today - saleDate) / (1000 * 60 * 60 * 24));
                     
                     if (daysAgo >= 0 && daysAgo < 30) {
-                        const index = 29 - daysAgo;
-                        salesData[index] += sale.total;
+                        salesData[29 - daysAgo] += sale.total;
                     }
                 });
                 
@@ -3438,8 +3224,8 @@
                         datasets: [{
                             label: 'বিক্রি (টাকা)',
                             data: salesData,
-                            borderColor: 'rgba(79, 70, 229, 1)',
-                            backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                            borderColor: 'rgba(108, 92, 231, 1)',
+                            backgroundColor: 'rgba(108, 92, 231, 0.2)',
                             fill: true,
                             tension: 0.4
                         }]
@@ -3447,32 +3233,16 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
+                        plugins: { legend: { display: false } },
                         scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    display: false
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
+                            y: { beginAtZero: true, grid: { display: false } },
+                            x: { grid: { display: false } }
                         }
                     }
                 });
-            }, (error) => {
-                console.error('Error loading sales report:', error);
-            });
+            }, (error) => console.error('Error:', error));
         }
 
-        // Load expense report
         function loadExpenseReport() {
             db.ref('expenses').on('value', (snapshot) => {
                 const expenseData = [];
@@ -3482,8 +3252,7 @@
                 for (let i = 29; i >= 0; i--) {
                     const date = new Date(today);
                     date.setDate(date.getDate() - i);
-                    const dateStr = date.toLocaleDateString('bn-BD');
-                    labels.push(dateStr);
+                    labels.push(date.toLocaleDateString('bn-BD'));
                     expenseData.push(0);
                 }
                 
@@ -3493,8 +3262,7 @@
                     const daysAgo = Math.floor((today - expenseDate) / (1000 * 60 * 60 * 24));
                     
                     if (daysAgo >= 0 && daysAgo < 30) {
-                        const index = 29 - daysAgo;
-                        expenseData[index] += expense.amount;
+                        expenseData[29 - daysAgo] += expense.amount;
                     }
                 });
                 
@@ -3511,8 +3279,8 @@
                         datasets: [{
                             label: 'খরচ (টাকা)',
                             data: expenseData,
-                            borderColor: 'rgba(231, 76, 60, 1)',
-                            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                            borderColor: 'rgba(225, 112, 85, 1)',
+                            backgroundColor: 'rgba(225, 112, 85, 0.2)',
                             fill: true,
                             tension: 0.4
                         }]
@@ -3520,32 +3288,16 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
+                        plugins: { legend: { display: false } },
                         scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    display: false
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
+                            y: { beginAtZero: true, grid: { display: false } },
+                            x: { grid: { display: false } }
                         }
                     }
                 });
-            }, (error) => {
-                console.error('Error loading expense report:', error);
-            });
+            }, (error) => console.error('Error:', error));
         }
 
-        // Load report summary
         function loadReportSummary() {
             const today = new Date();
             const todayStart = new Date();
@@ -3575,30 +3327,27 @@
                     });
                     
                     document.getElementById('report-summary').innerHTML = `
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">আজকের বিক্রি</div>
-                            <div style="font-size: 20px; font-weight: 800;">৳${todaySales.toFixed(2)}</div>
+                        <div style="background: rgba(108,92,231,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">আজকের বিক্রি</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);">৳${todaySales.toFixed(2)}</div>
                         </div>
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">এই সপ্তাহ</div>
-                            <div style="font-size: 20px; font-weight: 800;">৳${weekSales.toFixed(2)}</div>
+                        <div style="background: rgba(0,184,148,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">এই সপ্তাহ</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--success);">৳${weekSales.toFixed(2)}</div>
                         </div>
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">এই মাস</div>
-                            <div style="font-size: 20px; font-weight: 800;">৳${monthSales.toFixed(2)}</div>
+                        <div style="background: rgba(253,203,110,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">এই মাস</div>
+                            <div style="font-size: 24px; font-weight: 800; color: #e17055;">৳${monthSales.toFixed(2)}</div>
                         </div>
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">এই বছর</div>
-                            <div style="font-size: 20px; font-weight: 800;">৳${yearSales.toFixed(2)}</div>
+                        <div style="background: rgba(225,112,85,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">এই বছর</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--danger);">৳${yearSales.toFixed(2)}</div>
                         </div>
                     `;
                 })
-                .catch((error) => {
-                    console.error('Error loading report summary:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Filter by period
         function filterByPeriod(period, btn) {
             const today = new Date();
             let startDate;
@@ -3623,7 +3372,6 @@
             loadFilteredData(startDate, today);
         }
 
-        // Load filtered data
         function loadFilteredData(startDate, endDate) {
             db.ref('sales').orderByChild('timestamp').startAt(startDate.getTime()).endAt(endDate.getTime())
                 .once('value')
@@ -3639,27 +3387,23 @@
                     
                     const summaryDiv = document.getElementById('report-summary');
                     summaryDiv.innerHTML = `
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">মোট বিক্রি</div>
-                            <div style="font-size: 20px; font-weight: 800;">৳${totalSales.toFixed(2)}</div>
+                        <div style="background: rgba(108,92,231,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">মোট বিক্রি</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);">৳${totalSales.toFixed(2)}</div>
                         </div>
-                        <div class="card" style="padding: 12px;">
-                            <div style="font-size: 12px; color: var(--gray-color);">মোট বিক্রি সংখ্যা</div>
-                            <div style="font-size: 20px; font-weight: 800;">${filteredSales.length} টি</div>
+                        <div style="background: rgba(0,184,148,0.05); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 12px; color: var(--gray);">মোট বিক্রি সংখ্যা</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--success);">${filteredSales.length} টি</div>
                         </div>
                     `;
                 })
-                .catch((error) => {
-                    console.error('Error loading filtered data:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Print report
         function printReport() {
             window.print();
         }
 
-        // Download report
         function downloadReport() {
             db.ref('sales').once('value')
                 .then((snapshot) => {
@@ -3680,12 +3424,10 @@
                     
                     showNotification('রিপোর্ট ডাউনলোড হয়েছে!', 'success');
                 })
-                .catch((error) => {
-                    console.error('Error downloading report:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Recycle Bin Management
+        // Recycle Bin
         function loadRecycleBin() {
             const recycleBody = document.getElementById('recycle-body');
             recycleBody.innerHTML = '';
@@ -3695,10 +3437,7 @@
                 
                 const items = [];
                 snapshot.forEach((child) => {
-                    items.push({
-                        id: child.key,
-                        ...child.val()
-                    });
+                    items.push({ id: child.key, ...child.val() });
                 });
                 
                 items.sort((a, b) => b.deletedAt - a.deletedAt);
@@ -3707,10 +3446,10 @@
                     const deletedDate = new Date(item.deletedAt);
                     const dateStr = deletedDate.toLocaleString('bn-BD');
                     
-                    const html = `
+                    recycleBody.innerHTML += `
                         <tr>
                             <td>
-                                <span style="background: #DBEAFE; color: #2563EB; padding: 2px 6px; border-radius: 4px; font-size: 11px;">${item.type}</span>
+                                <span style="background: rgba(9,132,227,0.1); color: var(--info); padding: 2px 6px; border-radius: 4px; font-size: 11px;">${item.type}</span>
                             </td>
                             <td>${item.data.name || item.data.productName || item.data.customerName || 'নেই'}</td>
                             <td>${dateStr}</td>
@@ -3721,15 +3460,13 @@
                             </td>
                         </tr>
                     `;
-                    
-                    recycleBody.innerHTML += html;
                 });
             }, (error) => {
-                console.error('Error loading recycle bin:', error);
+                console.error('Error:', error);
+                showNotification('রিসাইকেল লোড করা যায়নি!', 'error');
             });
         }
 
-        // Restore item from recycle bin
         function restoreItem(recycleId) {
             db.ref('recycle/' + recycleId).once('value')
                 .then(async (snapshot) => {
@@ -3749,12 +3486,7 @@
                     
                     await db.ref('recycle/' + recycleId).remove();
                     
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'আইটেম পুনরুদ্ধার হয়েছে!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({ icon: 'success', title: 'আইটেম পুনরুদ্ধার হয়েছে!', timer: 2000, showConfirmButton: false });
                     
                     loadRecycleBin();
                     loadRecycleBadge();
@@ -3765,12 +3497,10 @@
                     if (item.type === 'customer') loadCustomers();
                     if (item.type === 'expense') loadExpenses();
                 })
-                .catch((error) => {
-                    console.error('Error restoring item:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
-        // Settings Management
+        // Settings
         function loadSettings() {
             if (currentUser) {
                 db.ref('settings/' + currentUser.uid).once('value')
@@ -3784,13 +3514,10 @@
                             document.getElementById('push-notification').checked = settings.pushNotification !== false;
                         }
                     })
-                    .catch((error) => {
-                        console.error('Error loading settings:', error);
-                    });
+                    .catch((error) => console.error('Error:', error));
             }
         }
 
-        // Update shop name
         function updateShopName() {
             if (!currentUser) return;
             
@@ -3808,7 +3535,6 @@
             });
         }
 
-        // Backup data
         function backupData() {
             showLoading();
             
@@ -3843,13 +3569,7 @@
                     a.click();
                     
                     hideLoading();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'ব্যাকআপ সম্পন্ন!',
-                        text: 'ডেটা সফলভাবে ডাউনলোড হয়েছে',
-                        timer: 3000,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({ icon: 'success', title: 'ব্যাকআপ সম্পন্ন!', text: 'ডেটা সফলভাবে ডাউনলোড হয়েছে', timer: 3000, showConfirmButton: false });
                 })
                 .catch((error) => {
                     hideLoading();
@@ -3888,9 +3608,7 @@
                         purchaseProductSelect.appendChild(purchaseOption);
                     });
                 })
-                .catch((error) => {
-                    console.error('Error updating product dropdowns:', error);
-                });
+                .catch((error) => console.error('Error:', error));
         }
 
         // Close modals on outside click
@@ -3911,4 +3629,3 @@
     </script>
 </body>
 </html>
-                                    

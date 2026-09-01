@@ -1276,6 +1276,65 @@
         .toast.show {
             transform: translateY(0);
         }
+        
+        /* Payment Method Styles */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-method-btn {
+            padding: 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-method-btn:hover {
+            border-color: var(--primary-color);
+            background: #EEF2FF;
+            transform: translateY(-2px);
+        }
+        
+        .payment-method-btn.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .payment-method-btn i {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        /* Due Amount */
+        .due-amount-box {
+            background: #FEF3C7;
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .due-amount-box.due {
+            background: #FEF2F2;
+            border-color: var(--danger-color);
+        }
+        
+        .due-amount-box.paid {
+            background: #ECFDF5;
+            border-color: var(--secondary-color);
+        }
     </style>
 </head>
 <body>
@@ -1624,7 +1683,7 @@
                                     <th>পরিমাণ</th>
                                     <th>মূল্য</th>
                                     <th>কাস্টমার</th>
-                                    <th>স্ট্যাটাস</th>
+                                    <th>পেমেন্ট</th>
                                     <th>অ্যাকশন</th>
                                 </tr>
                             </thead>
@@ -2045,19 +2104,41 @@
                     <input type="number" id="sale-total" class="form-control" readonly>
                 </div>
                 
+                <!-- Payment Methods -->
                 <div class="form-group">
-                    <label class="form-label">কাস্টমার (ঐচ্ছিক)</label>
-                    <select id="sale-customer" class="form-control">
-                        <option value="">কাস্টমার নির্বাচন করুন</option>
-                    </select>
+                    <label class="form-label">পেমেন্ট পদ্ধতি</label>
+                    <div class="payment-methods">
+                        <button type="button" class="payment-method-btn active" onclick="selectPaymentMethod('cash', this)">
+                            <i class="fas fa-money-bill-wave"></i>
+                            ক্যাশ
+                        </button>
+                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('nagad', this)">
+                            <i class="fas fa-mobile-alt"></i>
+                            নগদ
+                        </button>
+                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('bikash', this)">
+                            <i class="fas fa-mobile-alt"></i>
+                            বিকাশ
+                        </button>
+                        <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('due', this)">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            বাকি
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Due Amount Box -->
+                <div id="due-amount-box" class="due-amount-box paid">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium">অবশিষ্ট থাকবে</span>
+                        <span class="font-bold" id="due-amount-display">৳0</span>
+                    </div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">পেমেন্ট স্ট্যাটাস</label>
-                    <select id="sale-payment-status" class="form-control">
-                        <option value="cash">ক্যাশ</option>
-                        <option value="due">বাকি</option>
-                        <option value="card">কার্ড</option>
+                    <label class="form-label">কাস্টমার (বাকি হলে আবশ্যক)</label>
+                    <select id="sale-customer" class="form-control">
+                        <option value="">কাস্টমার নির্বাচন করুন</option>
                     </select>
                 </div>
                 
@@ -2250,132 +2331,34 @@
         let currentUser = null;
         let currentLanguage = 'bn';
         let currentSection = 'dashboard';
+        let selectedPaymentMethod = 'cash';
         let salesChart = null;
         let salesReportChart = null;
         let expenseReportChart = null;
 
-        // Translations
-        const translations = {
-            bn: {
-                dashboard: 'ড্যাশবোর্ড',
-                products: 'পণ্য ব্যবস্থাপনা',
-                sales: 'বিক্রি ব্যবস্থাপনা',
-                purchases: 'ক্রয় ব্যবস্থাপনা',
-                customers: 'কাস্টমার ব্যবস্থাপনা',
-                expenses: 'খরচ ব্যবস্থাপনা',
-                reports: 'রিপোর্ট',
-                recycle: 'রিসাইকেল বিন',
-                settings: 'সেটিংস',
-                login: 'লগইন',
-                logout: 'লগআউট',
-                email: 'ইমেইল',
-                password: 'পাসওয়ার্ড',
-                forgotPassword: 'পাসওয়ার্ড ভুলে গেছেন?',
-                resetPassword: 'পাসওয়ার্ড রিসেট',
-                sendResetLink: 'রিসেট লিংক পাঠান',
-                cancel: 'বাতিল',
-                save: 'সংরক্ষণ করুন',
-                add: 'যোগ করুন',
-                edit: 'সম্পাদনা',
-                delete: 'ডিলিট',
-                search: 'খুঁজুন',
-                noData: 'কোনো ডেটা নেই',
-                welcome: 'স্বাগতম',
-                admin: 'প্রশাসক',
-                shopName: 'দোকানের নাম',
-                currency: 'মুদ্রা',
-                settings: 'সেটিংস',
-                profile: 'প্রোফাইল',
-                notifications: 'নোটিফিকেশন',
-                language: 'ভাষা',
-                backup: 'ব্যাকআপ'
-            },
-            en: {
-                dashboard: 'Dashboard',
-                products: 'Products',
-                sales: 'Sales',
-                purchases: 'Purchases',
-                customers: 'Customers',
-                expenses: 'Expenses',
-                reports: 'Reports',
-                recycle: 'Recycle Bin',
-                settings: 'Settings',
-                login: 'Login',
-                logout: 'Logout',
-                email: 'Email',
-                password: 'Password',
-                forgotPassword: 'Forgot Password?',
-                resetPassword: 'Reset Password',
-                sendResetLink: 'Send Reset Link',
-                cancel: 'Cancel',
-                save: 'Save',
-                add: 'Add',
-                edit: 'Edit',
-                delete: 'Delete',
-                search: 'Search',
-                noData: 'No Data',
-                welcome: 'Welcome',
-                admin: 'Admin',
-                shopName: 'Shop Name',
-                currency: 'Currency',
-                settings: 'Settings',
-                profile: 'Profile',
-                notifications: 'Notifications',
-                language: 'Language',
-                backup: 'Backup'
-            }
-        };
-
-        // Set default datetime
-        function setDefaultDateTime() {
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            const datetimeStr = now.toISOString().slice(0, 16);
+        // Payment method selection
+        function selectPaymentMethod(method, btn) {
+            selectedPaymentMethod = method;
             
-            const dateInputs = ['sale-datetime', 'purchase-datetime', 'expense-datetime', 'due-payment-datetime'];
-            dateInputs.forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.value = datetimeStr;
-                }
+            // Update active state
+            document.querySelectorAll('.payment-method-btn').forEach(button => {
+                button.classList.remove('active');
             });
-        }
-
-        // Improved Firebase error handling
-        function handleFirebaseError(error) {
-            let message = '';
-            let type = 'error';
+            btn.classList.add('active');
             
-            switch(error.code) {
-                case 'auth/invalid-email':
-                    message = 'সঠিক ইমেইল দিন! / Please enter valid email!';
-                    break;
-                case 'auth/user-disabled':
-                    message = 'এই ইউজার নিষ্ক্রিয়! / This user is disabled!';
-                    break;
-                case 'auth/user-not-found':
-                    message = 'এই ইমেইলে কোনো অ্যাকাউন্ট নেই! / No account found with this email!';
-                    break;
-                case 'auth/wrong-password':
-                    message = 'পাসওয়ার্ড ভুল! / Wrong password!';
-                    break;
-                case 'auth/too-many-requests':
-                    message = 'অনেকবার চেষ্টা করছেন, একটু পরে আবার চেষ্টা করুন! / Too many attempts, try again later!';
-                    break;
-                case 'auth/network-request-failed':
-                    message = 'ইন্টারনেট সংযোগ সমস্যা! / Network connection failed!';
-                    break;
-                case 'permission-denied':
-                    message = 'অনুমতি নেই! Firebase Rules চেক করুন / Permission denied! Check Firebase Rules';
-                    break;
-                case 'database/invalid-data':
-                    message = 'ডাটা সঠিক নয়! / Invalid data!';
-                    break;
-                default:
-                    message = 'একটি সমস্যা হয়েছে! / Something went wrong!';
+            // Update due amount box
+            const dueBox = document.getElementById('due-amount-box');
+            const total = parseFloat(document.getElementById('sale-total').value) || 0;
+            
+            if (method === 'due') {
+                dueBox.className = 'due-amount-box due';
+                document.getElementById('due-amount-display').textContent = '৳' + total.toFixed(2);
+                document.getElementById('sale-customer').required = true;
+            } else {
+                dueBox.className = 'due-amount-box paid';
+                document.getElementById('due-amount-display').textContent = '৳0';
+                document.getElementById('sale-customer').required = false;
             }
-            
-            return { message, type };
         }
 
         // Auth functions
@@ -2392,14 +2375,13 @@
                 currentUser = userCredential.user;
                 hideLoading();
                 showDashboard();
-                showNotification('সফলভাবে লগইন হয়েছে! / Login successful!', 'success');
+                showNotification('সফলভাবে লগইন হয়েছে!', 'success');
             } catch (error) {
                 hideLoading();
-                const { message, type } = handleFirebaseError(error);
                 Swal.fire({
-                    icon: type === 'error' ? 'error' : 'warning',
-                    title: 'লগইন ব্যর্থ / Login Failed',
-                    text: message,
+                    icon: 'error',
+                    title: 'লগইন ব্যর্থ',
+                    text: error.message,
                     timer: 3000,
                     showConfirmButton: false
                 });
@@ -2432,11 +2414,10 @@
                 });
             } catch (error) {
                 hideLoading();
-                const { message, type } = handleFirebaseError(error);
                 Swal.fire({
-                    icon: type === 'error' ? 'error' : 'warning',
-                    title: 'সমস্যা হয়েছে / Error',
-                    text: message,
+                    icon: 'error',
+                    title: 'সমস্যা হয়েছে',
+                    text: error.message,
                     timer: 3000,
                     showConfirmButton: false
                 });
@@ -2445,8 +2426,8 @@
 
         function logout() {
             Swal.fire({
-                title: 'লগআউট করবেন? / Logout?',
-                text: 'আপনি কি নিশ্চিত? / Are you sure?',
+                title: 'লগআউট করবেন?',
+                text: 'আপনি কি নিশ্চিত?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -2459,7 +2440,7 @@
                         currentUser = null;
                         document.getElementById('dashboard').style.display = 'none';
                         document.getElementById('login-page').style.display = 'block';
-                        showNotification('লগআউট সফল! / Logout successful!', 'success');
+                        showNotification('লগআউট সফল!', 'success');
                     });
                 }
             });
@@ -2509,13 +2490,13 @@
             // Find and activate the correct sidebar item
             const sidebarItems = document.querySelectorAll('.sidebar-item');
             sidebarItems.forEach(item => {
-                if (item.querySelector('.sidebar-item-text').textContent.includes(translations[currentLanguage][section])) {
+                if (item.querySelector('.sidebar-item-text').textContent.includes(section)) {
                     item.classList.add('active');
                 }
             });
             
             // Update header title
-            document.getElementById('header-title').innerHTML = `<i class="fas fa-${getSectionIcon(section)} mr-2"></i>${translations[currentLanguage][section]}`;
+            document.getElementById('header-title').innerHTML = `<i class="fas fa-${getSectionIcon(section)} mr-2"></i>${getSectionName(section)}`;
             
             // Load data for the section
             if (section === 'dashboard') loadDashboardData();
@@ -2550,6 +2531,22 @@
             return icons[section] || 'chart-pie';
         }
 
+        // Get section name
+        function getSectionName(section) {
+            const names = {
+                dashboard: 'ড্যাশবোর্ড',
+                products: 'পণ্য ব্যবস্থাপনা',
+                sales: 'বিক্রি ব্যবস্থাপনা',
+                purchases: 'ক্রয় ব্যবস্থাপনা',
+                customers: 'কাস্টমার ব্যবস্থাপনা',
+                expenses: 'খরচ ব্যবস্থাপনা',
+                reports: 'রিপোর্ট',
+                recycle: 'রিসাইকেল বিন',
+                settings: 'সেটিংস'
+            };
+            return names[section] || section;
+        }
+
         // Toggle sidebar
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
@@ -2563,18 +2560,7 @@
             document.getElementById('lang-bn').classList.toggle('active', lang === 'bn');
             document.getElementById('lang-en').classList.toggle('active', lang === 'en');
             
-            // Update all text elements
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            // Update section title
-            document.getElementById('header-title').innerHTML = `<i class="fas fa-${getSectionIcon(currentSection)} mr-2"></i>${translations[lang][currentSection]}`;
-            
-            showNotification('ভাষা পরিবর্তন হয়েছে! / Language changed!', 'success');
+            showNotification('ভাষা পরিবর্তন হয়েছে!', 'success');
         }
 
         // Notification system
@@ -2606,7 +2592,7 @@
                 setTimeout(() => {
                     notification.remove();
                 }, 300);
-            }, 5000);
+            }, 4000);
         }
 
         // Loading
@@ -2640,10 +2626,6 @@
                         todaySales += child.val().total;
                     });
                     document.getElementById('today-sales').textContent = '৳' + todaySales.toFixed(2);
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load total products
@@ -2651,20 +2633,12 @@
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
                     document.getElementById('product-badge').textContent = snapshot.numChildren();
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load today's expenses
@@ -2675,10 +2649,6 @@
                         todayExpenses += child.val().amount;
                     });
                     document.getElementById('today-expenses').textContent = '৳' + todayExpenses.toFixed(2);
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load recent sales
@@ -2703,10 +2673,6 @@
                         `;
                         recentSalesDiv.innerHTML += html;
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load recent expenses
@@ -2731,10 +2697,6 @@
                         `;
                         recentExpensesDiv.innerHTML += html;
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             // Load sales chart
@@ -2749,10 +2711,6 @@
             db.ref('recycle').once('value')
                 .then((snapshot) => {
                     document.getElementById('recycle-badge').textContent = snapshot.numChildren();
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -2829,10 +2787,6 @@
                             }
                         }
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -2876,9 +2830,6 @@
                     
                     productsBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -2937,8 +2888,7 @@
                 loadDashboardData();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('পণ্য যোগ করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -2958,10 +2908,6 @@
                     document.getElementById('product-form').dataset.editId = productId;
                     
                     document.getElementById('product-modal').style.display = 'flex';
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -3006,10 +2952,6 @@
                             updateProductDropdowns();
                             loadDashboardData();
                             loadRecycleBadge();
-                        })
-                        .catch((error) => {
-                            const { message } = handleFirebaseError(error);
-                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3048,9 +2990,24 @@
                     const date = new Date(sale.timestamp);
                     const dateStr = date.toLocaleString('bn-BD');
                     
-                    const statusBadge = sale.paymentStatus === 'due' 
-                        ? '<span class="badge bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">বাকি</span>'
-                        : '<span class="badge bg-green-100 text-green-600 px-2 py-1 rounded text-xs">পরিশোধিত</span>';
+                    // Payment badge
+                    let paymentBadge = '';
+                    switch(sale.paymentMethod) {
+                        case 'cash':
+                            paymentBadge = '<span class="badge bg-green-100 text-green-600 px-2 py-1 rounded text-xs">ক্যাশ</span>';
+                            break;
+                        case 'nagad':
+                            paymentBadge = '<span class="badge bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs">নগদ</span>';
+                            break;
+                        case 'bikash':
+                            paymentBadge = '<span class="badge bg-pink-100 text-pink-600 px-2 py-1 rounded text-xs">বিকাশ</span>';
+                            break;
+                        case 'due':
+                            paymentBadge = '<span class="badge bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">বাকি</span>';
+                            break;
+                        default:
+                            paymentBadge = '<span class="badge bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">অন্যান্য</span>';
+                    }
                     
                     const html = `
                         <tr>
@@ -3059,7 +3016,7 @@
                             <td>${sale.quantity}</td>
                             <td>৳${sale.total.toFixed(2)}</td>
                             <td>${sale.customerName || 'নেই'}</td>
-                            <td>${statusBadge}</td>
+                            <td>${paymentBadge}</td>
                             <td>
                                 <button onclick="deleteSale('${sale.id}')" class="btn btn-danger btn-sm" title="রিসাইকেলে স্থানান্তর">
                                     <i class="fas fa-trash"></i>
@@ -3070,14 +3027,19 @@
                     
                     salesBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
         // Sale Modal
         function openSaleModal() {
+            // Reset payment method
+            selectedPaymentMethod = 'cash';
+            document.querySelectorAll('.payment-method-btn').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector('.payment-method-btn').classList.add('active');
+            
+            // Load products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('sale-product');
@@ -3095,12 +3057,9 @@
                             productSelect.appendChild(option);
                         }
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
+            // Load customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     const customerSelect = document.getElementById('sale-customer');
@@ -3113,10 +3072,6 @@
                         option.textContent = customer.name;
                         customerSelect.appendChild(option);
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             document.getElementById('sale-modal').style.display = 'flex';
@@ -3139,6 +3094,23 @@
             const price = parseFloat(document.getElementById('sale-price').value) || 0;
             const total = quantity * price;
             document.getElementById('sale-total').value = total.toFixed(2);
+            
+            // Update due amount
+            updateDueAmount();
+        }
+
+        // Update due amount
+        function updateDueAmount() {
+            const total = parseFloat(document.getElementById('sale-total').value) || 0;
+            const dueBox = document.getElementById('due-amount-box');
+            
+            if (selectedPaymentMethod === 'due') {
+                dueBox.className = 'due-amount-box due';
+                document.getElementById('due-amount-display').textContent = '৳' + total.toFixed(2);
+            } else {
+                dueBox.className = 'due-amount-box paid';
+                document.getElementById('due-amount-display').textContent = '৳0';
+            }
         }
 
         // Save sale
@@ -3150,10 +3122,15 @@
             const price = parseFloat(document.getElementById('sale-price').value);
             const total = parseFloat(document.getElementById('sale-total').value);
             const customerId = document.getElementById('sale-customer').value;
-            const paymentStatus = document.getElementById('sale-payment-status').value;
             
             if (!productId) {
-                showNotification('পণ্য নির্বাচন করুন! / Select product!', 'error');
+                showNotification('পণ্য নির্বাচন করুন!', 'error');
+                return;
+            }
+            
+            // Validate customer for due payment
+            if (selectedPaymentMethod === 'due' && !customerId) {
+                showNotification('বাকি বিক্রির জন্য কাস্টমার নির্বাচন করুন!', 'error');
                 return;
             }
             
@@ -3177,15 +3154,15 @@
                 
                 // Get customer details
                 let customerName = '';
-                let customerData = null;
                 
                 if (customerId) {
                     const customerSnapshot = await db.ref('customers/' + customerId).once('value');
-                    customerData = customerSnapshot.val();
-                    customerName = customerData.name;
+                    const customer = customerSnapshot.val();
+                    customerName = customer.name;
                     
-                    if (paymentStatus === 'due') {
-                        const newDue = (customerData.due || 0) + total;
+                    // Update customer due if payment is due
+                    if (selectedPaymentMethod === 'due') {
+                        const newDue = (customer.due || 0) + total;
                         await db.ref('customers/' + customerId).update({
                             due: newDue,
                             updatedAt: new Date().toISOString()
@@ -3201,7 +3178,7 @@
                     total: total,
                     customerId: customerId,
                     customerName: customerName,
-                    paymentStatus: paymentStatus,
+                    paymentMethod: selectedPaymentMethod,
                     timestamp: Date.now(),
                     createdBy: currentUser ? currentUser.email : 'unknown'
                 };
@@ -3228,12 +3205,12 @@
                 
                 loadSales();
                 loadProducts();
+                loadCustomers();
                 loadDashboardData();
                 updateProductDropdowns();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('বিক্রি করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -3276,6 +3253,19 @@
                                 });
                             }
                             
+                            // Remove due from customer if payment was due
+                            if (sale.paymentMethod === 'due' && sale.customerId) {
+                                const customerSnapshot = await db.ref('customers/' + sale.customerId).once('value');
+                                const customer = customerSnapshot.val();
+                                if (customer) {
+                                    const newDue = Math.max(0, (customer.due || 0) - sale.total);
+                                    await db.ref('customers/' + sale.customerId).update({
+                                        due: newDue,
+                                        updatedAt: new Date().toISOString()
+                                    });
+                                }
+                            }
+                            
                             await db.ref('sales/' + saleId).remove();
                             
                             Swal.fire({
@@ -3288,12 +3278,9 @@
                             
                             loadSales();
                             loadProducts();
+                            loadCustomers();
                             loadDashboardData();
                             loadRecycleBadge();
-                        })
-                        .catch((error) => {
-                            const { message } = handleFirebaseError(error);
-                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3349,14 +3336,12 @@
                     
                     purchasesBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
         // Purchase Modal
         function openPurchaseModal() {
+            // Load products
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('purchase-product');
@@ -3371,10 +3356,6 @@
                         option.dataset.name = product.name;
                         productSelect.appendChild(option);
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
             
             document.getElementById('purchase-modal').style.display = 'flex';
@@ -3410,7 +3391,7 @@
             const supplier = document.getElementById('purchase-supplier').value;
             
             if (!productId) {
-                showNotification('পণ্য নির্বাচন করুন! / Select product!', 'error');
+                showNotification('পণ্য নির্বাচন করুন!', 'error');
                 return;
             }
             
@@ -3458,8 +3439,7 @@
                 loadDashboardData();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('ক্রয় করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -3515,10 +3495,6 @@
                             loadPurchases();
                             loadProducts();
                             loadRecycleBadge();
-                        })
-                        .catch((error) => {
-                            const { message } = handleFirebaseError(error);
-                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3573,9 +3549,6 @@
                     
                     customersBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -3620,8 +3593,7 @@
                 loadDashboardData();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('কাস্টমার যোগ করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -3664,10 +3636,6 @@
                             
                             loadCustomers();
                             loadRecycleBadge();
-                        })
-                        .catch((error) => {
-                            const { message } = handleFirebaseError(error);
-                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3695,10 +3663,6 @@
                     document.getElementById('due-payment-form').dataset.customerId = customerId;
                     
                     document.getElementById('due-payment-modal').style.display = 'flex';
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -3710,7 +3674,7 @@
             const paymentAmount = parseFloat(document.getElementById('due-payment-amount').value);
             
             if (paymentAmount <= 0) {
-                showNotification('সঠিক পরিমাণ দিন! / Enter valid amount!', 'error');
+                showNotification('সঠিক পরিমাণ দিন!', 'error');
                 return;
             }
             
@@ -3750,8 +3714,7 @@
                 loadCustomers();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('পরিশোধ করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -3793,9 +3756,6 @@
                     
                     expensesBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -3838,8 +3798,7 @@
                 loadDashboardData();
             } catch (error) {
                 hideLoading();
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('খরচ যোগ করা যায়নি! ' + error.message, 'error');
             }
         });
 
@@ -3883,10 +3842,6 @@
                             loadExpenses();
                             loadDashboardData();
                             loadRecycleBadge();
-                        })
-                        .catch((error) => {
-                            const { message } = handleFirebaseError(error);
-                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3978,9 +3933,6 @@
                         }
                     }
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -4052,9 +4004,6 @@
                         }
                     }
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -4125,10 +4074,6 @@
                             <div class="stat-value">৳${yearSales.toFixed(2)}</div>
                         </div>
                     `;
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -4202,10 +4147,6 @@
                             <div class="stat-value">${filteredSales.length} টি</div>
                         </div>
                     `;
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -4218,12 +4159,12 @@
         function downloadReport() {
             db.ref('sales').once('value')
                 .then((snapshot) => {
-                    let csv = 'Date,Product,Quantity,Price,Total,Customer\n';
+                    let csv = 'Date,Product,Quantity,Price,Total,Customer,Payment\n';
                     
                     snapshot.forEach((child) => {
                         const sale = child.val();
                         const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
-                        csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.customerName || ''}\n`;
+                        csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.customerName || ''},${sale.paymentMethod || ''}\n`;
                     });
                     
                     const blob = new Blob([csv], { type: 'text/csv' });
@@ -4233,11 +4174,7 @@
                     a.download = 'sales_report.csv';
                     a.click();
                     
-                    showNotification('রিপোর্ট ডাউনলোড হয়েছে! / Report downloaded!', 'success');
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
+                    showNotification('রিপোর্ট ডাউনলোড হয়েছে!', 'success');
                 });
         }
 
@@ -4280,9 +4217,6 @@
                     
                     recycleBody.innerHTML += html;
                 });
-            }, (error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
             });
         }
 
@@ -4324,10 +4258,6 @@
                     if (item.type === 'purchase') loadPurchases();
                     if (item.type === 'customer') loadCustomers();
                     if (item.type === 'expense') loadExpenses();
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 
@@ -4357,10 +4287,6 @@
                             document.getElementById('push-notification').checked = settings.pushNotification !== false;
                             document.getElementById('auto-backup').checked = settings.autoBackup !== false;
                         }
-                    })
-                    .catch((error) => {
-                        const { message } = handleFirebaseError(error);
-                        showNotification(message, 'error');
                     });
             }
         }
@@ -4376,11 +4302,10 @@
                 updatedAt: new Date().toISOString()
             })
             .then(() => {
-                showNotification('দোকানের নাম আপডেট হয়েছে! / Shop name updated!', 'success');
+                showNotification('দোকানের নাম আপডেট হয়েছে!', 'success');
             })
             .catch((error) => {
-                const { message } = handleFirebaseError(error);
-                showNotification(message, 'error');
+                showNotification('দোকানের নাম আপডেট করা যায়নি! ' + error.message, 'error');
             });
         }
 
@@ -4429,8 +4354,7 @@
                 })
                 .catch((error) => {
                     hideLoading();
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
+                    showNotification('ব্যাকআপ ব্যর্থ! ' + error.message, 'error');
                 });
         }
 
@@ -4464,10 +4388,6 @@
                         purchaseOption.dataset.name = product.name;
                         purchaseProductSelect.appendChild(purchaseOption);
                     });
-                })
-                .catch((error) => {
-                    const { message } = handleFirebaseError(error);
-                    showNotification(message, 'error');
                 });
         }
 

@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -51,7 +51,7 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
@@ -422,7 +422,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            animation: float 2s ease-in-out infinite;
         }
         
         .sidebar-brand-icon i {
@@ -1229,6 +1228,54 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gray-color);
         }
+        
+        /* Date Time Input */
+        .datetime-input {
+            position: relative;
+        }
+        
+        .datetime-input input {
+            padding-left: 40px;
+        }
+        
+        .datetime-input i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-color);
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark-color);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            transform: translateY(100px);
+            transition: all 0.3s;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -1269,10 +1316,37 @@
         </form>
         
         <div style="text-align: center; margin-top: 20px;">
-            <a href="#" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
+            <a href="#" id="forgot-password-btn" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
                 <i class="fas fa-question-circle mr-1"></i>
                 পাসওয়ার্ড ভুলে গেছেন?
             </a>
+        </div>
+    </div>
+    
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">পাসওয়ার্ড রিসেট</h3>
+                <button class="modal-close" onclick="closeModal('forgot-password-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="forgot-password-form">
+                <div class="form-group">
+                    <label class="form-label">ইমেইল</label>
+                    <input type="email" id="reset-email" class="form-control" placeholder="আপনার ইমেইল" required>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('forgot-password-modal')">বাতিল</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        রিসেট লিংক পাঠান
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     
@@ -1987,6 +2061,14 @@
                     </select>
                 </div>
                 
+                <div class="form-group">
+                    <label class="form-label">তারিখ ও সময়</label>
+                    <div class="datetime-input">
+                        <i class="fas fa-calendar"></i>
+                        <input type="datetime-local" id="sale-datetime" class="form-control">
+                    </div>
+                </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('sale-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">বিক্রি সম্পন্ন করুন</button>
@@ -2031,6 +2113,14 @@
                 <div class="form-group">
                     <label class="form-label">সাপ্লায়ার</label>
                     <input type="text" id="purchase-supplier" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">তারিখ ও সময়</label>
+                    <div class="datetime-input">
+                        <i class="fas fa-calendar"></i>
+                        <input type="datetime-local" id="purchase-datetime" class="form-control">
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -2108,6 +2198,14 @@
                     <input type="number" id="expense-amount" class="form-control" required>
                 </div>
                 
+                <div class="form-group">
+                    <label class="form-label">তারিখ ও সময়</label>
+                    <div class="datetime-input">
+                        <i class="fas fa-calendar"></i>
+                        <input type="datetime-local" id="expense-datetime" class="form-control">
+                    </div>
+                </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('expense-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">সংরক্ষণ করুন</button>
@@ -2140,6 +2238,14 @@
                 <div class="form-group">
                     <label class="form-label">পরিশোধের পরিমাণ</label>
                     <input type="number" id="due-payment-amount" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">তারিখ ও সময়</label>
+                    <div class="datetime-input">
+                        <i class="fas fa-calendar"></i>
+                        <input type="datetime-local" id="due-payment-datetime" class="form-control">
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -2191,7 +2297,30 @@
                 expenses: 'খরচ ব্যবস্থাপনা',
                 reports: 'রিপোর্ট',
                 recycle: 'রিসাইকেল বিন',
-                settings: 'সেটিংস'
+                settings: 'সেটিংস',
+                login: 'লগইন',
+                logout: 'লগআউট',
+                email: 'ইমেইল',
+                password: 'পাসওয়ার্ড',
+                forgotPassword: 'পাসওয়ার্ড ভুলে গেছেন?',
+                resetPassword: 'পাসওয়ার্ড রিসেট',
+                sendResetLink: 'রিসেট লিংক পাঠান',
+                cancel: 'বাতিল',
+                save: 'সংরক্ষণ করুন',
+                add: 'যোগ করুন',
+                edit: 'সম্পাদনা',
+                delete: 'ডিলিট',
+                search: 'খুঁজুন',
+                noData: 'কোনো ডেটা নেই',
+                welcome: 'স্বাগতম',
+                admin: 'প্রশাসক',
+                shopName: 'দোকানের নাম',
+                currency: 'মুদ্রা',
+                settings: 'সেটিংস',
+                profile: 'প্রোফাইল',
+                notifications: 'নোটিফিকেশন',
+                language: 'ভাষা',
+                backup: 'ব্যাকআপ'
             },
             en: {
                 dashboard: 'Dashboard',
@@ -2202,9 +2331,47 @@
                 expenses: 'Expenses',
                 reports: 'Reports',
                 recycle: 'Recycle Bin',
-                settings: 'Settings'
+                settings: 'Settings',
+                login: 'Login',
+                logout: 'Logout',
+                email: 'Email',
+                password: 'Password',
+                forgotPassword: 'Forgot Password?',
+                resetPassword: 'Reset Password',
+                sendResetLink: 'Send Reset Link',
+                cancel: 'Cancel',
+                save: 'Save',
+                add: 'Add',
+                edit: 'Edit',
+                delete: 'Delete',
+                search: 'Search',
+                noData: 'No Data',
+                welcome: 'Welcome',
+                admin: 'Admin',
+                shopName: 'Shop Name',
+                currency: 'Currency',
+                settings: 'Settings',
+                profile: 'Profile',
+                notifications: 'Notifications',
+                language: 'Language',
+                backup: 'Backup'
             }
         };
+
+        // Set default datetime
+        function setDefaultDateTime() {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            const datetimeStr = now.toISOString().slice(0, 16);
+            
+            const dateInputs = ['sale-datetime', 'purchase-datetime', 'expense-datetime', 'due-payment-datetime'];
+            dateInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.value = datetimeStr;
+                }
+            });
+        }
 
         // Auth functions
         document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -2220,12 +2387,48 @@
                 currentUser = userCredential.user;
                 hideLoading();
                 showDashboard();
-                showNotification('সফলভাবে লগইন হয়েছে!', 'success');
+                showNotification(translations[currentLanguage].login + ' সফল!', 'success');
             } catch (error) {
                 hideLoading();
                 Swal.fire({
                     icon: 'error',
-                    title: 'লগইন ব্যর্থ',
+                    title: 'Error',
+                    text: error.message,
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            }
+        });
+
+        // Forgot password
+        document.getElementById('forgot-password-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('forgot-password-modal').style.display = 'flex';
+        });
+
+        document.getElementById('forgot-password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('reset-email').value;
+            
+            showLoading();
+            
+            try {
+                await auth.sendPasswordResetEmail(email);
+                hideLoading();
+                closeModal('forgot-password-modal');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে!',
+                    text: 'আপনার ইমেইল চেক করুন',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            } catch (error) {
+                hideLoading();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
                     text: error.message,
                     timer: 3000,
                     showConfirmButton: false
@@ -2235,7 +2438,7 @@
 
         function logout() {
             Swal.fire({
-                title: 'লগআউট করবেন?',
+                title: translations[currentLanguage].logout + '?',
                 text: 'আপনি কি নিশ্চিত?',
                 icon: 'warning',
                 showCancelButton: true,
@@ -2249,7 +2452,7 @@
                         currentUser = null;
                         document.getElementById('dashboard').style.display = 'none';
                         document.getElementById('login-page').style.display = 'block';
-                        showNotification('লগআউট সফল!', 'success');
+                        showNotification('Logout সফল!', 'success');
                     });
                 }
             });
@@ -2272,6 +2475,7 @@
         function showDashboard() {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
+            setDefaultDateTime();
             loadDashboardData();
             loadProducts();
             loadCustomers();
@@ -2411,6 +2615,7 @@
         // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
+            setDefaultDateTime();
         }
 
         function closeModal(modalId) {
@@ -2625,7 +2830,7 @@
                                 <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm mr-2" title="সম্পাদনা">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button onclick="deleteProduct('${productId}')" class="btn btn-danger btn-sm" title="ডিলিট (রিসাইকেলে যাবে)">
+                                <button onclick="deleteProduct('${productId}')" class="btn btn-danger btn-sm" title="রিসাইকেলে যাবে">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2819,6 +3024,8 @@
 
         // Sale Modal
         function openSaleModal() {
+            setDefaultDateTime();
+            
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('sale-product');
@@ -2884,11 +3091,14 @@
             const total = parseFloat(document.getElementById('sale-total').value);
             const customerId = document.getElementById('sale-customer').value;
             const paymentStatus = document.getElementById('sale-payment-status').value;
+            const saleDateTime = document.getElementById('sale-datetime').value;
             
             if (!productId) {
                 showNotification('পণ্য নির্বাচন করুন!', 'error');
                 return;
             }
+            
+            const timestamp = saleDateTime ? new Date(saleDateTime).getTime() : Date.now();
             
             db.ref('products/' + productId).once('value')
                 .then((snapshot) => {
@@ -2922,16 +3132,16 @@
                                     });
                                 }
                                 
-                                saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus);
+                                saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus, timestamp);
                             });
                     } else {
-                        saveSale(product, productId, quantity, price, total, '', '', paymentStatus);
+                        saveSale(product, productId, quantity, price, total, '', '', paymentStatus, timestamp);
                     }
                 });
         });
 
         // Save sale function
-        function saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus) {
+        function saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus, timestamp) {
             const saleData = {
                 productId: productId,
                 productName: product.name,
@@ -2941,7 +3151,7 @@
                 customerId: customerId,
                 customerName: customerName,
                 paymentStatus: paymentStatus,
-                timestamp: Date.now(),
+                timestamp: timestamp,
                 createdBy: currentUser ? currentUser.email : 'unknown'
             };
             
@@ -2955,6 +3165,7 @@
                     
                     closeModal('sale-modal');
                     document.getElementById('sale-form').reset();
+                    setDefaultDateTime();
                     Swal.fire({
                         icon: 'success',
                         title: 'বিক্রি সফল!',
@@ -3088,6 +3299,8 @@
 
         // Purchase Modal
         function openPurchaseModal() {
+            setDefaultDateTime();
+            
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('purchase-product');
@@ -3135,11 +3348,14 @@
             const price = parseFloat(document.getElementById('purchase-price').value);
             const total = parseFloat(document.getElementById('purchase-total').value);
             const supplier = document.getElementById('purchase-supplier').value;
+            const purchaseDateTime = document.getElementById('purchase-datetime').value;
             
             if (!productId) {
                 showNotification('পণ্য নির্বাচন করুন!', 'error');
                 return;
             }
+            
+            const timestamp = purchaseDateTime ? new Date(purchaseDateTime).getTime() : Date.now();
             
             db.ref('products/' + productId).once('value')
                 .then((snapshot) => {
@@ -3152,7 +3368,7 @@
                         price: price,
                         total: total,
                         supplier: supplier,
-                        timestamp: Date.now(),
+                        timestamp: timestamp,
                         createdBy: currentUser ? currentUser.email : 'unknown'
                     };
                     
@@ -3167,6 +3383,7 @@
                             
                             closeModal('purchase-modal');
                             document.getElementById('purchase-form').reset();
+                            setDefaultDateTime();
                             Swal.fire({
                                 icon: 'success',
                                 title: 'ক্রয় সফল!',
@@ -3397,6 +3614,8 @@
 
         // Due Payment Modal
         function openDuePaymentModal(customerId) {
+            setDefaultDateTime();
+            
             db.ref('customers/' + customerId).once('value')
                 .then((snapshot) => {
                     const customer = snapshot.val();
@@ -3415,11 +3634,14 @@
             
             const customerId = document.getElementById('due-payment-form').dataset.customerId;
             const paymentAmount = parseFloat(document.getElementById('due-payment-amount').value);
+            const paymentDateTime = document.getElementById('due-payment-datetime').value;
             
             if (paymentAmount <= 0) {
                 showNotification('সঠিক পরিমাণ দিন!', 'error');
                 return;
             }
+            
+            const timestamp = paymentDateTime ? new Date(paymentDateTime).getTime() : Date.now();
             
             db.ref('customers/' + customerId).once('value')
                 .then((snapshot) => {
@@ -3436,7 +3658,7 @@
                         customerId: customerId,
                         customerName: customer.name,
                         amount: paymentAmount,
-                        timestamp: Date.now(),
+                        timestamp: timestamp,
                         createdBy: currentUser ? currentUser.email : 'unknown'
                     };
                     
@@ -3444,6 +3666,7 @@
                     
                     closeModal('due-payment-modal');
                     document.getElementById('due-payment-form').reset();
+                    setDefaultDateTime();
                     Swal.fire({
                         icon: 'success',
                         title: 'বাকি পরিশোধ সফল!',
@@ -3498,6 +3721,7 @@
 
         // Expense Modal
         function openExpenseModal() {
+            setDefaultDateTime();
             document.getElementById('expense-modal').style.display = 'flex';
             document.getElementById('expense-form').reset();
         }
@@ -3509,12 +3733,15 @@
             const type = document.getElementById('expense-type').value;
             const description = document.getElementById('expense-description').value;
             const amount = parseFloat(document.getElementById('expense-amount').value);
+            const expenseDateTime = document.getElementById('expense-datetime').value;
+            
+            const timestamp = expenseDateTime ? new Date(expenseDateTime).getTime() : Date.now();
             
             const expenseData = {
                 type: type,
                 description: description,
                 amount: amount,
-                timestamp: Date.now(),
+                timestamp: timestamp,
                 createdBy: currentUser ? currentUser.email : 'unknown'
             };
             
@@ -3522,6 +3749,7 @@
                 .then(() => {
                     closeModal('expense-modal');
                     document.getElementById('expense-form').reset();
+                    setDefaultDateTime();
                     Swal.fire({
                         icon: 'success',
                         title: 'খরচ যোগ হয়েছে!',
@@ -4129,6 +4357,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            setDefaultDateTime();
             auth.onAuthStateChanged((user) => {
                 if (user) {
                     showDashboard();
@@ -4138,3 +4367,4 @@
     </script>
 </body>
 </html>
+    

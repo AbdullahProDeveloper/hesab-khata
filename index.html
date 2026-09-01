@@ -2061,14 +2061,6 @@
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">তারিখ ও সময়</label>
-                    <div class="datetime-input">
-                        <i class="fas fa-calendar"></i>
-                        <input type="datetime-local" id="sale-datetime" class="form-control">
-                    </div>
-                </div>
-                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('sale-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">বিক্রি সম্পন্ন করুন</button>
@@ -2113,14 +2105,6 @@
                 <div class="form-group">
                     <label class="form-label">সাপ্লায়ার</label>
                     <input type="text" id="purchase-supplier" class="form-control">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">তারিখ ও সময়</label>
-                    <div class="datetime-input">
-                        <i class="fas fa-calendar"></i>
-                        <input type="datetime-local" id="purchase-datetime" class="form-control">
-                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -2198,14 +2182,6 @@
                     <input type="number" id="expense-amount" class="form-control" required>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">তারিখ ও সময়</label>
-                    <div class="datetime-input">
-                        <i class="fas fa-calendar"></i>
-                        <input type="datetime-local" id="expense-datetime" class="form-control">
-                    </div>
-                </div>
-                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('expense-modal')">বাতিল</button>
                     <button type="submit" class="btn btn-primary">সংরক্ষণ করুন</button>
@@ -2238,14 +2214,6 @@
                 <div class="form-group">
                     <label class="form-label">পরিশোধের পরিমাণ</label>
                     <input type="number" id="due-payment-amount" class="form-control" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">তারিখ ও সময়</label>
-                    <div class="datetime-input">
-                        <i class="fas fa-calendar"></i>
-                        <input type="datetime-local" id="due-payment-datetime" class="form-control">
-                    </div>
                 </div>
                 
                 <div class="modal-footer">
@@ -2373,6 +2341,43 @@
             });
         }
 
+        // Improved Firebase error handling
+        function handleFirebaseError(error) {
+            let message = '';
+            let type = 'error';
+            
+            switch(error.code) {
+                case 'auth/invalid-email':
+                    message = 'সঠিক ইমেইল দিন! / Please enter valid email!';
+                    break;
+                case 'auth/user-disabled':
+                    message = 'এই ইউজার নিষ্ক্রিয়! / This user is disabled!';
+                    break;
+                case 'auth/user-not-found':
+                    message = 'এই ইমেইলে কোনো অ্যাকাউন্ট নেই! / No account found with this email!';
+                    break;
+                case 'auth/wrong-password':
+                    message = 'পাসওয়ার্ড ভুল! / Wrong password!';
+                    break;
+                case 'auth/too-many-requests':
+                    message = 'অনেকবার চেষ্টা করছেন, একটু পরে আবার চেষ্টা করুন! / Too many attempts, try again later!';
+                    break;
+                case 'auth/network-request-failed':
+                    message = 'ইন্টারনেট সংযোগ সমস্যা! / Network connection failed!';
+                    break;
+                case 'permission-denied':
+                    message = 'অনুমতি নেই! Firebase Rules চেক করুন / Permission denied! Check Firebase Rules';
+                    break;
+                case 'database/invalid-data':
+                    message = 'ডাটা সঠিক নয়! / Invalid data!';
+                    break;
+                default:
+                    message = 'একটি সমস্যা হয়েছে! / Something went wrong!';
+            }
+            
+            return { message, type };
+        }
+
         // Auth functions
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -2387,13 +2392,14 @@
                 currentUser = userCredential.user;
                 hideLoading();
                 showDashboard();
-                showNotification(translations[currentLanguage].login + ' সফল!', 'success');
+                showNotification('সফলভাবে লগইন হয়েছে! / Login successful!', 'success');
             } catch (error) {
                 hideLoading();
+                const { message, type } = handleFirebaseError(error);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.message,
+                    icon: type === 'error' ? 'error' : 'warning',
+                    title: 'লগইন ব্যর্থ / Login Failed',
+                    text: message,
                     timer: 3000,
                     showConfirmButton: false
                 });
@@ -2426,10 +2432,11 @@
                 });
             } catch (error) {
                 hideLoading();
+                const { message, type } = handleFirebaseError(error);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.message,
+                    icon: type === 'error' ? 'error' : 'warning',
+                    title: 'সমস্যা হয়েছে / Error',
+                    text: message,
                     timer: 3000,
                     showConfirmButton: false
                 });
@@ -2438,8 +2445,8 @@
 
         function logout() {
             Swal.fire({
-                title: translations[currentLanguage].logout + '?',
-                text: 'আপনি কি নিশ্চিত?',
+                title: 'লগআউট করবেন? / Logout?',
+                text: 'আপনি কি নিশ্চিত? / Are you sure?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
@@ -2452,7 +2459,7 @@
                         currentUser = null;
                         document.getElementById('dashboard').style.display = 'none';
                         document.getElementById('login-page').style.display = 'block';
-                        showNotification('Logout সফল!', 'success');
+                        showNotification('লগআউট সফল! / Logout successful!', 'success');
                     });
                 }
             });
@@ -2475,7 +2482,6 @@
         function showDashboard() {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
-            setDefaultDateTime();
             loadDashboardData();
             loadProducts();
             loadCustomers();
@@ -2568,7 +2574,7 @@
             // Update section title
             document.getElementById('header-title').innerHTML = `<i class="fas fa-${getSectionIcon(currentSection)} mr-2"></i>${translations[lang][currentSection]}`;
             
-            showNotification('ভাষা পরিবর্তন হয়েছে!', 'success');
+            showNotification('ভাষা পরিবর্তন হয়েছে! / Language changed!', 'success');
         }
 
         // Notification system
@@ -2600,7 +2606,7 @@
                 setTimeout(() => {
                     notification.remove();
                 }, 300);
-            }, 4000);
+            }, 5000);
         }
 
         // Loading
@@ -2615,7 +2621,6 @@
         // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
-            setDefaultDateTime();
         }
 
         function closeModal(modalId) {
@@ -2635,6 +2640,10 @@
                         todaySales += child.val().total;
                     });
                     document.getElementById('today-sales').textContent = '৳' + todaySales.toFixed(2);
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load total products
@@ -2642,12 +2651,20 @@
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
                     document.getElementById('product-badge').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load today's expenses
@@ -2658,6 +2675,10 @@
                         todayExpenses += child.val().amount;
                     });
                     document.getElementById('today-expenses').textContent = '৳' + todayExpenses.toFixed(2);
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load recent sales
@@ -2682,6 +2703,10 @@
                         `;
                         recentSalesDiv.innerHTML += html;
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load recent expenses
@@ -2706,6 +2731,10 @@
                         `;
                         recentExpensesDiv.innerHTML += html;
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             // Load sales chart
@@ -2720,6 +2749,10 @@
             db.ref('recycle').once('value')
                 .then((snapshot) => {
                     document.getElementById('recycle-badge').textContent = snapshot.numChildren();
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -2796,6 +2829,10 @@
                             }
                         }
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -2839,11 +2876,14 @@
                     
                     productsBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
         // Product CRUD
-        document.getElementById('product-form').addEventListener('submit', (e) => {
+        document.getElementById('product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const name = document.getElementById('product-name').value;
@@ -2859,41 +2899,46 @@
                 salePrice: salePrice,
                 stock: stock,
                 createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
+                updatedAt: new Date().toISOString(),
+                createdBy: currentUser ? currentUser.email : 'unknown'
             };
             
             const editId = document.getElementById('product-form').dataset.editId;
             
-            if (editId) {
-                db.ref('products/' + editId).update(productData)
-                    .then(() => {
-                        closeModal('product-modal');
-                        document.getElementById('product-form').reset();
-                        delete document.getElementById('product-form').dataset.editId;
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'পণ্য আপডেট হয়েছে!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        loadProducts();
-                        updateProductDropdowns();
+            showLoading();
+            
+            try {
+                if (editId) {
+                    await db.ref('products/' + editId).update(productData);
+                    closeModal('product-modal');
+                    document.getElementById('product-form').reset();
+                    delete document.getElementById('product-form').dataset.editId;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'পণ্য আপডেট হয়েছে!',
+                        timer: 2000,
+                        showConfirmButton: false
                     });
-            } else {
-                db.ref('products').push(productData)
-                    .then(() => {
-                        closeModal('product-modal');
-                        document.getElementById('product-form').reset();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'পণ্য যোগ হয়েছে!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        loadProducts();
-                        updateProductDropdowns();
-                        loadDashboardData();
+                } else {
+                    await db.ref('products').push(productData);
+                    closeModal('product-modal');
+                    document.getElementById('product-form').reset();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'পণ্য যোগ হয়েছে!',
+                        timer: 2000,
+                        showConfirmButton: false
                     });
+                }
+                
+                hideLoading();
+                loadProducts();
+                updateProductDropdowns();
+                loadDashboardData();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             }
         });
 
@@ -2913,6 +2958,10 @@
                     document.getElementById('product-form').dataset.editId = productId;
                     
                     document.getElementById('product-modal').style.display = 'flex';
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -2930,7 +2979,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     db.ref('products/' + productId).once('value')
-                        .then((snapshot) => {
+                        .then(async (snapshot) => {
                             const product = snapshot.val();
                             
                             // Save to recycle bin
@@ -2942,10 +2991,8 @@
                                 deletedBy: currentUser ? currentUser.email : 'unknown'
                             };
                             
-                            db.ref('recycle').push(recycleData);
-                            
-                            // Remove from products (but data preserved in recycle)
-                            db.ref('products/' + productId).remove();
+                            await db.ref('recycle').push(recycleData);
+                            await db.ref('products/' + productId).remove();
                             
                             Swal.fire({
                                 icon: 'success',
@@ -2959,6 +3006,10 @@
                             updateProductDropdowns();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            const { message } = handleFirebaseError(error);
+                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3019,13 +3070,14 @@
                     
                     salesBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
         // Sale Modal
         function openSaleModal() {
-            setDefaultDateTime();
-            
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('sale-product');
@@ -3043,6 +3095,10 @@
                             productSelect.appendChild(option);
                         }
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             db.ref('customers').once('value')
@@ -3057,6 +3113,10 @@
                         option.textContent = customer.name;
                         customerSelect.appendChild(option);
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             document.getElementById('sale-modal').style.display = 'flex';
@@ -3082,7 +3142,7 @@
         }
 
         // Save sale
-        document.getElementById('sale-form').addEventListener('submit', (e) => {
+        document.getElementById('sale-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const productId = document.getElementById('sale-product').value;
@@ -3091,97 +3151,91 @@
             const total = parseFloat(document.getElementById('sale-total').value);
             const customerId = document.getElementById('sale-customer').value;
             const paymentStatus = document.getElementById('sale-payment-status').value;
-            const saleDateTime = document.getElementById('sale-datetime').value;
             
             if (!productId) {
-                showNotification('পণ্য নির্বাচন করুন!', 'error');
+                showNotification('পণ্য নির্বাচন করুন! / Select product!', 'error');
                 return;
             }
             
-            const timestamp = saleDateTime ? new Date(saleDateTime).getTime() : Date.now();
+            showLoading();
             
-            db.ref('products/' + productId).once('value')
-                .then((snapshot) => {
-                    const product = snapshot.val();
-                    
-                    if (product.stock < quantity) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'স্টক যথেষ্ট নয়!',
-                            text: `স্টকে মাত্র ${product.stock} পিস আছে`,
-                            timer: 3000,
-                            showConfirmButton: false
-                        });
-                        return;
-                    }
-                    
-                    // Get customer details
-                    let customerName = '';
-                    
-                    if (customerId) {
-                        db.ref('customers/' + customerId).once('value')
-                            .then((customerSnapshot) => {
-                                const customer = customerSnapshot.val();
-                                customerName = customer.name;
-                                
-                                if (paymentStatus === 'due') {
-                                    const newDue = (customer.due || 0) + total;
-                                    db.ref('customers/' + customerId).update({
-                                        due: newDue,
-                                        updatedAt: new Date().toISOString()
-                                    });
-                                }
-                                
-                                saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus, timestamp);
-                            });
-                    } else {
-                        saveSale(product, productId, quantity, price, total, '', '', paymentStatus, timestamp);
-                    }
-                });
-        });
-
-        // Save sale function
-        function saveSale(product, productId, quantity, price, total, customerId, customerName, paymentStatus, timestamp) {
-            const saleData = {
-                productId: productId,
-                productName: product.name,
-                quantity: quantity,
-                price: price,
-                total: total,
-                customerId: customerId,
-                customerName: customerName,
-                paymentStatus: paymentStatus,
-                timestamp: timestamp,
-                createdBy: currentUser ? currentUser.email : 'unknown'
-            };
-            
-            db.ref('sales').push(saleData)
-                .then(() => {
-                    const newStock = product.stock - quantity;
-                    db.ref('products/' + productId).update({
-                        stock: newStock,
-                        updatedAt: new Date().toISOString()
-                    });
-                    
-                    closeModal('sale-modal');
-                    document.getElementById('sale-form').reset();
-                    setDefaultDateTime();
+            try {
+                const productSnapshot = await db.ref('products/' + productId).once('value');
+                const product = productSnapshot.val();
+                
+                if (product.stock < quantity) {
+                    hideLoading();
                     Swal.fire({
-                        icon: 'success',
-                        title: 'বিক্রি সফল!',
-                        text: `বিক্রি: ৳${total.toFixed(2)}`,
-                        timer: 2000,
+                        icon: 'error',
+                        title: 'স্টক যথেষ্ট নয়!',
+                        text: `স্টকে মাত্র ${product.stock} পিস আছে`,
+                        timer: 3000,
                         showConfirmButton: false
                     });
-                    loadSales();
-                    loadProducts();
-                    loadDashboardData();
-                    updateProductDropdowns();
-                })
-                .catch((error) => {
-                    showNotification('বিক্রি সফল হয়নি: ' + error.message, 'error');
+                    return;
+                }
+                
+                // Get customer details
+                let customerName = '';
+                let customerData = null;
+                
+                if (customerId) {
+                    const customerSnapshot = await db.ref('customers/' + customerId).once('value');
+                    customerData = customerSnapshot.val();
+                    customerName = customerData.name;
+                    
+                    if (paymentStatus === 'due') {
+                        const newDue = (customerData.due || 0) + total;
+                        await db.ref('customers/' + customerId).update({
+                            due: newDue,
+                            updatedAt: new Date().toISOString()
+                        });
+                    }
+                }
+                
+                const saleData = {
+                    productId: productId,
+                    productName: product.name,
+                    quantity: quantity,
+                    price: price,
+                    total: total,
+                    customerId: customerId,
+                    customerName: customerName,
+                    paymentStatus: paymentStatus,
+                    timestamp: Date.now(),
+                    createdBy: currentUser ? currentUser.email : 'unknown'
+                };
+                
+                await db.ref('sales').push(saleData);
+                
+                // Update product stock
+                const newStock = product.stock - quantity;
+                await db.ref('products/' + productId).update({
+                    stock: newStock,
+                    updatedAt: new Date().toISOString()
                 });
-        }
+                
+                hideLoading();
+                closeModal('sale-modal');
+                document.getElementById('sale-form').reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'বিক্রি সফল!',
+                    text: `বিক্রি: ৳${total.toFixed(2)}`,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                
+                loadSales();
+                loadProducts();
+                loadDashboardData();
+                updateProductDropdowns();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
+            }
+        });
 
         // Delete sale (soft delete - moves to recycle)
         function deleteSale(saleId) {
@@ -3197,7 +3251,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     db.ref('sales/' + saleId).once('value')
-                        .then((snapshot) => {
+                        .then(async (snapshot) => {
                             const sale = snapshot.val();
                             
                             // Save to recycle bin
@@ -3209,23 +3263,20 @@
                                 deletedBy: currentUser ? currentUser.email : 'unknown'
                             };
                             
-                            db.ref('recycle').push(recycleData);
+                            await db.ref('recycle').push(recycleData);
                             
                             // Restore product stock
-                            db.ref('products/' + sale.productId).once('value')
-                                .then((productSnapshot) => {
-                                    const product = productSnapshot.val();
-                                    if (product) {
-                                        const newStock = product.stock + sale.quantity;
-                                        db.ref('products/' + sale.productId).update({
-                                            stock: newStock,
-                                            updatedAt: new Date().toISOString()
-                                        });
-                                    }
+                            const productSnapshot = await db.ref('products/' + sale.productId).once('value');
+                            const product = productSnapshot.val();
+                            if (product) {
+                                const newStock = product.stock + sale.quantity;
+                                await db.ref('products/' + sale.productId).update({
+                                    stock: newStock,
+                                    updatedAt: new Date().toISOString()
                                 });
+                            }
                             
-                            // Remove from sales (but data preserved in recycle)
-                            db.ref('sales/' + saleId).remove();
+                            await db.ref('sales/' + saleId).remove();
                             
                             Swal.fire({
                                 icon: 'success',
@@ -3239,6 +3290,10 @@
                             loadProducts();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            const { message } = handleFirebaseError(error);
+                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3294,13 +3349,14 @@
                     
                     purchasesBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
         // Purchase Modal
         function openPurchaseModal() {
-            setDefaultDateTime();
-            
             db.ref('products').once('value')
                 .then((snapshot) => {
                     const productSelect = document.getElementById('purchase-product');
@@ -3315,6 +3371,10 @@
                         option.dataset.name = product.name;
                         productSelect.appendChild(option);
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
             
             document.getElementById('purchase-modal').style.display = 'flex';
@@ -3340,7 +3400,7 @@
         }
 
         // Save purchase
-        document.getElementById('purchase-form').addEventListener('submit', (e) => {
+        document.getElementById('purchase-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const productId = document.getElementById('purchase-product').value;
@@ -3348,57 +3408,59 @@
             const price = parseFloat(document.getElementById('purchase-price').value);
             const total = parseFloat(document.getElementById('purchase-total').value);
             const supplier = document.getElementById('purchase-supplier').value;
-            const purchaseDateTime = document.getElementById('purchase-datetime').value;
             
             if (!productId) {
-                showNotification('পণ্য নির্বাচন করুন!', 'error');
+                showNotification('পণ্য নির্বাচন করুন! / Select product!', 'error');
                 return;
             }
             
-            const timestamp = purchaseDateTime ? new Date(purchaseDateTime).getTime() : Date.now();
+            showLoading();
             
-            db.ref('products/' + productId).once('value')
-                .then((snapshot) => {
-                    const product = snapshot.val();
-                    
-                    const purchaseData = {
-                        productId: productId,
-                        productName: product.name,
-                        quantity: quantity,
-                        price: price,
-                        total: total,
-                        supplier: supplier,
-                        timestamp: timestamp,
-                        createdBy: currentUser ? currentUser.email : 'unknown'
-                    };
-                    
-                    db.ref('purchases').push(purchaseData)
-                        .then(() => {
-                            const newStock = product.stock + quantity;
-                            db.ref('products/' + productId).update({
-                                stock: newStock,
-                                purchasePrice: price,
-                                updatedAt: new Date().toISOString()
-                            });
-                            
-                            closeModal('purchase-modal');
-                            document.getElementById('purchase-form').reset();
-                            setDefaultDateTime();
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'ক্রয় সফল!',
-                                text: `ক্রয়: ৳${total.toFixed(2)}`,
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-                            loadPurchases();
-                            loadProducts();
-                            updateProductDropdowns();
-                        })
-                        .catch((error) => {
-                            showNotification('ক্রয় সফল হয়নি: ' + error.message, 'error');
-                        });
+            try {
+                const productSnapshot = await db.ref('products/' + productId).once('value');
+                const product = productSnapshot.val();
+                
+                const purchaseData = {
+                    productId: productId,
+                    productName: product.name,
+                    quantity: quantity,
+                    price: price,
+                    total: total,
+                    supplier: supplier,
+                    timestamp: Date.now(),
+                    createdBy: currentUser ? currentUser.email : 'unknown'
+                };
+                
+                await db.ref('purchases').push(purchaseData);
+                
+                // Update product stock
+                const newStock = product.stock + quantity;
+                await db.ref('products/' + productId).update({
+                    stock: newStock,
+                    purchasePrice: price,
+                    updatedAt: new Date().toISOString()
                 });
+                
+                hideLoading();
+                closeModal('purchase-modal');
+                document.getElementById('purchase-form').reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ক্রয় সফল!',
+                    text: `ক্রয়: ৳${total.toFixed(2)}`,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                
+                loadPurchases();
+                loadProducts();
+                updateProductDropdowns();
+                loadDashboardData();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
+            }
         });
 
         // Delete purchase (soft delete - moves to recycle)
@@ -3415,7 +3477,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     db.ref('purchases/' + purchaseId).once('value')
-                        .then((snapshot) => {
+                        .then(async (snapshot) => {
                             const purchase = snapshot.val();
                             
                             // Save to recycle bin
@@ -3427,23 +3489,20 @@
                                 deletedBy: currentUser ? currentUser.email : 'unknown'
                             };
                             
-                            db.ref('recycle').push(recycleData);
+                            await db.ref('recycle').push(recycleData);
                             
                             // Update product stock
-                            db.ref('products/' + purchase.productId).once('value')
-                                .then((productSnapshot) => {
-                                    const product = productSnapshot.val();
-                                    if (product) {
-                                        const newStock = Math.max(0, product.stock - purchase.quantity);
-                                        db.ref('products/' + purchase.productId).update({
-                                            stock: newStock,
-                                            updatedAt: new Date().toISOString()
-                                        });
-                                    }
+                            const productSnapshot = await db.ref('products/' + purchase.productId).once('value');
+                            const product = productSnapshot.val();
+                            if (product) {
+                                const newStock = Math.max(0, product.stock - purchase.quantity);
+                                await db.ref('products/' + purchase.productId).update({
+                                    stock: newStock,
+                                    updatedAt: new Date().toISOString()
                                 });
+                            }
                             
-                            // Remove from purchases (but data preserved in recycle)
-                            db.ref('purchases/' + purchaseId).remove();
+                            await db.ref('purchases/' + purchaseId).remove();
                             
                             Swal.fire({
                                 icon: 'success',
@@ -3456,6 +3515,10 @@
                             loadPurchases();
                             loadProducts();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            const { message } = handleFirebaseError(error);
+                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3510,6 +3573,9 @@
                     
                     customersBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
@@ -3520,7 +3586,7 @@
         }
 
         // Save customer
-        document.getElementById('customer-form').addEventListener('submit', (e) => {
+        document.getElementById('customer-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const name = document.getElementById('customer-name').value;
@@ -3537,22 +3603,26 @@
                 createdBy: currentUser ? currentUser.email : 'unknown'
             };
             
-            db.ref('customers').push(customerData)
-                .then(() => {
-                    closeModal('customer-modal');
-                    document.getElementById('customer-form').reset();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'কাস্টমার যোগ হয়েছে!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    loadCustomers();
-                    loadDashboardData();
-                })
-                .catch((error) => {
-                    showNotification('কাস্টমার যোগ করতে ব্যর্থ: ' + error.message, 'error');
+            showLoading();
+            
+            try {
+                await db.ref('customers').push(customerData);
+                hideLoading();
+                closeModal('customer-modal');
+                document.getElementById('customer-form').reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'কাস্টমার যোগ হয়েছে!',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
+                loadCustomers();
+                loadDashboardData();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
+            }
         });
 
         // Delete customer (soft delete - moves to recycle)
@@ -3569,7 +3639,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     db.ref('customers/' + customerId).once('value')
-                        .then((snapshot) => {
+                        .then(async (snapshot) => {
                             const customer = snapshot.val();
                             
                             // Save to recycle bin
@@ -3581,10 +3651,8 @@
                                 deletedBy: currentUser ? currentUser.email : 'unknown'
                             };
                             
-                            db.ref('recycle').push(recycleData);
-                            
-                            // Remove from customers (but data preserved in recycle)
-                            db.ref('customers/' + customerId).remove();
+                            await db.ref('recycle').push(recycleData);
+                            await db.ref('customers/' + customerId).remove();
                             
                             Swal.fire({
                                 icon: 'success',
@@ -3596,6 +3664,10 @@
                             
                             loadCustomers();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            const { message } = handleFirebaseError(error);
+                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3614,8 +3686,6 @@
 
         // Due Payment Modal
         function openDuePaymentModal(customerId) {
-            setDefaultDateTime();
-            
             db.ref('customers/' + customerId).once('value')
                 .then((snapshot) => {
                     const customer = snapshot.val();
@@ -3625,57 +3695,64 @@
                     document.getElementById('due-payment-form').dataset.customerId = customerId;
                     
                     document.getElementById('due-payment-modal').style.display = 'flex';
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
         // Save due payment
-        document.getElementById('due-payment-form').addEventListener('submit', (e) => {
+        document.getElementById('due-payment-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const customerId = document.getElementById('due-payment-form').dataset.customerId;
             const paymentAmount = parseFloat(document.getElementById('due-payment-amount').value);
-            const paymentDateTime = document.getElementById('due-payment-datetime').value;
             
             if (paymentAmount <= 0) {
-                showNotification('সঠিক পরিমাণ দিন!', 'error');
+                showNotification('সঠিক পরিমাণ দিন! / Enter valid amount!', 'error');
                 return;
             }
             
-            const timestamp = paymentDateTime ? new Date(paymentDateTime).getTime() : Date.now();
+            showLoading();
             
-            db.ref('customers/' + customerId).once('value')
-                .then((snapshot) => {
-                    const customer = snapshot.val();
-                    const currentDue = customer.due || 0;
-                    const newDue = Math.max(0, currentDue - paymentAmount);
-                    
-                    db.ref('customers/' + customerId).update({
-                        due: newDue,
-                        updatedAt: new Date().toISOString()
-                    });
-                    
-                    const paymentData = {
-                        customerId: customerId,
-                        customerName: customer.name,
-                        amount: paymentAmount,
-                        timestamp: timestamp,
-                        createdBy: currentUser ? currentUser.email : 'unknown'
-                    };
-                    
-                    db.ref('payments').push(paymentData);
-                    
-                    closeModal('due-payment-modal');
-                    document.getElementById('due-payment-form').reset();
-                    setDefaultDateTime();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'বাকি পরিশোধ সফল!',
-                        text: `পরিশোধ: ৳${paymentAmount.toFixed(2)}`,
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    loadCustomers();
+            try {
+                const customerSnapshot = await db.ref('customers/' + customerId).once('value');
+                const customer = customerSnapshot.val();
+                const currentDue = customer.due || 0;
+                const newDue = Math.max(0, currentDue - paymentAmount);
+                
+                await db.ref('customers/' + customerId).update({
+                    due: newDue,
+                    updatedAt: new Date().toISOString()
                 });
+                
+                const paymentData = {
+                    customerId: customerId,
+                    customerName: customer.name,
+                    amount: paymentAmount,
+                    timestamp: Date.now(),
+                    createdBy: currentUser ? currentUser.email : 'unknown'
+                };
+                
+                await db.ref('payments').push(paymentData);
+                
+                hideLoading();
+                closeModal('due-payment-modal');
+                document.getElementById('due-payment-form').reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'বাকি পরিশোধ সফল!',
+                    text: `পরিশোধ: ৳${paymentAmount.toFixed(2)}`,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                loadCustomers();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
+            }
         });
 
         // Expenses Management
@@ -3716,52 +3793,54 @@
                     
                     expensesBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
         // Expense Modal
         function openExpenseModal() {
-            setDefaultDateTime();
             document.getElementById('expense-modal').style.display = 'flex';
             document.getElementById('expense-form').reset();
         }
 
         // Save expense
-        document.getElementById('expense-form').addEventListener('submit', (e) => {
+        document.getElementById('expense-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const type = document.getElementById('expense-type').value;
             const description = document.getElementById('expense-description').value;
             const amount = parseFloat(document.getElementById('expense-amount').value);
-            const expenseDateTime = document.getElementById('expense-datetime').value;
-            
-            const timestamp = expenseDateTime ? new Date(expenseDateTime).getTime() : Date.now();
             
             const expenseData = {
                 type: type,
                 description: description,
                 amount: amount,
-                timestamp: timestamp,
+                timestamp: Date.now(),
                 createdBy: currentUser ? currentUser.email : 'unknown'
             };
             
-            db.ref('expenses').push(expenseData)
-                .then(() => {
-                    closeModal('expense-modal');
-                    document.getElementById('expense-form').reset();
-                    setDefaultDateTime();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'খরচ যোগ হয়েছে!',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    loadExpenses();
-                    loadDashboardData();
-                })
-                .catch((error) => {
-                    showNotification('খরচ যোগ করতে ব্যর্থ: ' + error.message, 'error');
+            showLoading();
+            
+            try {
+                await db.ref('expenses').push(expenseData);
+                hideLoading();
+                closeModal('expense-modal');
+                document.getElementById('expense-form').reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'খরচ যোগ হয়েছে!',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
+                loadExpenses();
+                loadDashboardData();
+            } catch (error) {
+                hideLoading();
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
+            }
         });
 
         // Delete expense (soft delete - moves to recycle)
@@ -3778,7 +3857,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     db.ref('expenses/' + expenseId).once('value')
-                        .then((snapshot) => {
+                        .then(async (snapshot) => {
                             const expense = snapshot.val();
                             
                             // Save to recycle bin
@@ -3790,10 +3869,8 @@
                                 deletedBy: currentUser ? currentUser.email : 'unknown'
                             };
                             
-                            db.ref('recycle').push(recycleData);
-                            
-                            // Remove from expenses (but data preserved in recycle)
-                            db.ref('expenses/' + expenseId).remove();
+                            await db.ref('recycle').push(recycleData);
+                            await db.ref('expenses/' + expenseId).remove();
                             
                             Swal.fire({
                                 icon: 'success',
@@ -3806,6 +3883,10 @@
                             loadExpenses();
                             loadDashboardData();
                             loadRecycleBadge();
+                        })
+                        .catch((error) => {
+                            const { message } = handleFirebaseError(error);
+                            showNotification(message, 'error');
                         });
                 }
             });
@@ -3897,6 +3978,9 @@
                         }
                     }
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
@@ -3968,6 +4052,9 @@
                         }
                     }
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
@@ -3977,67 +4064,72 @@
             const todayStart = new Date();
             todayStart.setHours(0, 0, 0, 0);
             
-            db.ref('sales').once('value', (snapshot) => {
-                let todaySales = 0;
-                let weekSales = 0;
-                let monthSales = 0;
-                let yearSales = 0;
-                
-                const weekStart = new Date(todayStart);
-                weekStart.setDate(weekStart.getDate() - 7);
-                
-                const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-                const yearStart = new Date(today.getFullYear(), 0, 1);
-                
-                snapshot.forEach((child) => {
-                    const sale = child.val();
-                    const saleDate = new Date(sale.timestamp);
+            db.ref('sales').once('value')
+                .then((snapshot) => {
+                    let todaySales = 0;
+                    let weekSales = 0;
+                    let monthSales = 0;
+                    let yearSales = 0;
                     
-                    if (saleDate >= todayStart) todaySales += sale.total;
-                    if (saleDate >= weekStart) weekSales += sale.total;
-                    if (saleDate >= monthStart) monthSales += sale.total;
-                    if (saleDate >= yearStart) yearSales += sale.total;
+                    const weekStart = new Date(todayStart);
+                    weekStart.setDate(weekStart.getDate() - 7);
+                    
+                    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                    const yearStart = new Date(today.getFullYear(), 0, 1);
+                    
+                    snapshot.forEach((child) => {
+                        const sale = child.val();
+                        const saleDate = new Date(sale.timestamp);
+                        
+                        if (saleDate >= todayStart) todaySales += sale.total;
+                        if (saleDate >= weekStart) weekSales += sale.total;
+                        if (saleDate >= monthStart) monthSales += sale.total;
+                        if (saleDate >= yearStart) yearSales += sale.total;
+                    });
+                    
+                    document.getElementById('report-summary').innerHTML = `
+                        <div class="card">
+                            <div class="stat-header">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="stat-label">আজকের বিক্রি</div>
+                            <div class="stat-value">৳${todaySales.toFixed(2)}</div>
+                        </div>
+                        <div class="card">
+                            <div class="stat-header">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                            </div>
+                            <div class="stat-label">এই সপ্তাহের বিক্রি</div>
+                            <div class="stat-value">৳${weekSales.toFixed(2)}</div>
+                        </div>
+                        <div class="card">
+                            <div class="stat-header">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                            </div>
+                            <div class="stat-label">এই মাসের বিক্রি</div>
+                            <div class="stat-value">৳${monthSales.toFixed(2)}</div>
+                        </div>
+                        <div class="card">
+                            <div class="stat-header">
+                                <div class="stat-icon danger">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                            </div>
+                            <div class="stat-label">এই বছরের বিক্রি</div>
+                            <div class="stat-value">৳${yearSales.toFixed(2)}</div>
+                        </div>
+                    `;
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
-                
-                document.getElementById('report-summary').innerHTML = `
-                    <div class="card">
-                        <div class="stat-header">
-                            <div class="stat-icon primary">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                        <div class="stat-label">আজকের বিক্রি</div>
-                        <div class="stat-value">৳${todaySales.toFixed(2)}</div>
-                    </div>
-                    <div class="card">
-                        <div class="stat-header">
-                            <div class="stat-icon success">
-                                <i class="fas fa-chart-bar"></i>
-                            </div>
-                        </div>
-                        <div class="stat-label">এই সপ্তাহের বিক্রি</div>
-                        <div class="stat-value">৳${weekSales.toFixed(2)}</div>
-                    </div>
-                    <div class="card">
-                        <div class="stat-header">
-                            <div class="stat-icon warning">
-                                <i class="fas fa-chart-area"></i>
-                            </div>
-                        </div>
-                        <div class="stat-label">এই মাসের বিক্রি</div>
-                        <div class="stat-value">৳${monthSales.toFixed(2)}</div>
-                    </div>
-                    <div class="card">
-                        <div class="stat-header">
-                            <div class="stat-icon danger">
-                                <i class="fas fa-chart-pie"></i>
-                            </div>
-                        </div>
-                        <div class="stat-label">এই বছরের বিক্রি</div>
-                        <div class="stat-value">৳${yearSales.toFixed(2)}</div>
-                    </div>
-                `;
-            });
         }
 
         // Filter by period
@@ -4078,7 +4170,8 @@
         // Load filtered data
         function loadFilteredData(startDate, endDate) {
             db.ref('sales').orderByChild('timestamp').startAt(startDate.getTime()).endAt(endDate.getTime())
-                .once('value', (snapshot) => {
+                .once('value')
+                .then((snapshot) => {
                     let totalSales = 0;
                     const filteredSales = [];
                     
@@ -4109,6 +4202,10 @@
                             <div class="stat-value">${filteredSales.length} টি</div>
                         </div>
                     `;
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -4119,24 +4216,29 @@
 
         // Download report
         function downloadReport() {
-            db.ref('sales').once('value', (snapshot) => {
-                let csv = 'Date,Product,Quantity,Price,Total,Customer\n';
-                
-                snapshot.forEach((child) => {
-                    const sale = child.val();
-                    const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
-                    csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.customerName || ''}\n`;
+            db.ref('sales').once('value')
+                .then((snapshot) => {
+                    let csv = 'Date,Product,Quantity,Price,Total,Customer\n';
+                    
+                    snapshot.forEach((child) => {
+                        const sale = child.val();
+                        const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
+                        csv += `${date},${sale.productName},${sale.quantity},${sale.price},${sale.total},${sale.customerName || ''}\n`;
+                    });
+                    
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'sales_report.csv';
+                    a.click();
+                    
+                    showNotification('রিপোর্ট ডাউনলোড হয়েছে! / Report downloaded!', 'success');
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
-                
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'sales_report.csv';
-                a.click();
-                
-                showNotification('রিপোর্ট ডাউনলোড হয়েছে!', 'success');
-            });
         }
 
         // Recycle Bin Management
@@ -4178,30 +4280,33 @@
                     
                     recycleBody.innerHTML += html;
                 });
+            }, (error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
         }
 
         // Restore item from recycle bin
         function restoreItem(recycleId) {
             db.ref('recycle/' + recycleId).once('value')
-                .then((snapshot) => {
+                .then(async (snapshot) => {
                     const item = snapshot.val();
                     
                     // Restore based on type
                     if (item.type === 'product') {
-                        db.ref('products/' + item.originalId).set(item.data);
+                        await db.ref('products/' + item.originalId).set(item.data);
                     } else if (item.type === 'sale') {
-                        db.ref('sales/' + item.originalId).set(item.data);
+                        await db.ref('sales/' + item.originalId).set(item.data);
                     } else if (item.type === 'purchase') {
-                        db.ref('purchases/' + item.originalId).set(item.data);
+                        await db.ref('purchases/' + item.originalId).set(item.data);
                     } else if (item.type === 'customer') {
-                        db.ref('customers/' + item.originalId).set(item.data);
+                        await db.ref('customers/' + item.originalId).set(item.data);
                     } else if (item.type === 'expense') {
-                        db.ref('expenses/' + item.originalId).set(item.data);
+                        await db.ref('expenses/' + item.originalId).set(item.data);
                     }
                     
                     // Remove from recycle bin (but data preserved in original location)
-                    db.ref('recycle/' + recycleId).remove();
+                    await db.ref('recycle/' + recycleId).remove();
                     
                     Swal.fire({
                         icon: 'success',
@@ -4219,6 +4324,10 @@
                     if (item.type === 'purchase') loadPurchases();
                     if (item.type === 'customer') loadCustomers();
                     if (item.type === 'expense') loadExpenses();
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -4248,6 +4357,10 @@
                             document.getElementById('push-notification').checked = settings.pushNotification !== false;
                             document.getElementById('auto-backup').checked = settings.autoBackup !== false;
                         }
+                    })
+                    .catch((error) => {
+                        const { message } = handleFirebaseError(error);
+                        showNotification(message, 'error');
                     });
             }
         }
@@ -4261,9 +4374,14 @@
             db.ref('settings/' + currentUser.uid).update({
                 shopName: shopName,
                 updatedAt: new Date().toISOString()
+            })
+            .then(() => {
+                showNotification('দোকানের নাম আপডেট হয়েছে! / Shop name updated!', 'success');
+            })
+            .catch((error) => {
+                const { message } = handleFirebaseError(error);
+                showNotification(message, 'error');
             });
-            
-            showNotification('দোকানের নাম আপডেট হয়েছে!', 'success');
         }
 
         // Backup data
@@ -4311,7 +4429,8 @@
                 })
                 .catch((error) => {
                     hideLoading();
-                    showNotification('ব্যাকআপ ব্যর্থ: ' + error.message, 'error');
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -4345,6 +4464,10 @@
                         purchaseOption.dataset.name = product.name;
                         purchaseProductSelect.appendChild(purchaseOption);
                     });
+                })
+                .catch((error) => {
+                    const { message } = handleFirebaseError(error);
+                    showNotification(message, 'error');
                 });
         }
 
@@ -4357,7 +4480,6 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            setDefaultDateTime();
             auth.onAuthStateChanged((user) => {
                 if (user) {
                     showDashboard();

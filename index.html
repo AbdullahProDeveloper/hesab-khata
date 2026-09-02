@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#6C5CE7">
-    <title>বসনীসে হেসাব খাতা · প্রিমিয়াম স্যুট v5.0</title>
+    <title>বসনীসে হেসাব খাতা · প্রিমিয়াম স্যুট v9.0</title>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -204,149 +204,10 @@
         .toast { background:var(--white); border-radius:12px; padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:12px; animation:slideDown 0.3s ease; border-left:4px solid var(--success); }
         .toast i { font-size:20px; }
 
-        /* Professional Design Elements */
-        .glass-effect { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); }
-        .gradient-text { background: linear-gradient(135deg, #6C5CE7, #0984E3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hover-lift { transition: all 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .badge-success { background: rgba(0, 184, 148, 0.1); color: #00B894; }
-        .badge-warning { background: rgba(253, 203, 110, 0.1); color: #FDCB6E; }
-        .badge-danger { background: rgba(225, 112, 85, 0.1); color: #E17055; }
-        .badge-info { background: rgba(9, 132, 227, 0.1); color: #0984E3; }
-        .badge-primary { background: rgba(108, 92, 231, 0.1); color: #6C5CE7; }
-        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-        .avatar-lg { width: 48px; height: 48px; font-size: 18px; }
-        .avatar-sm { width: 32px; height: 32px; font-size: 14px; }
-        .avatar-gradient-1 { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
-        .avatar-gradient-2 { background: linear-gradient(135deg, #00B894, #55efc4); }
-        .avatar-gradient-3 { background: linear-gradient(135deg, #FDCB6E, #ffeaa7); }
-        .avatar-gradient-4 { background: linear-gradient(135deg, #E17055, #fab1a0); }
-        .avatar-gradient-5 { background: linear-gradient(135deg, #0984E3, #74b9ff); }
-        .divider { height: 1px; background: var(--border); margin: 16px 0; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .section-title { font-size: 20px; font-weight: 700; }
-        .section-subtitle { font-size: 14px; color: var(--gray); }
-        .icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .icon-circle-sm { width: 36px; height: 36px; font-size: 14px; }
-        .icon-circle-lg { width: 64px; height: 64px; font-size: 24px; }
-        .bg-primary-soft { background: rgba(108, 92, 231, 0.08); }
-        .bg-success-soft { background: rgba(0, 184, 148, 0.08); }
-        .bg-warning-soft { background: rgba(253, 203, 110, 0.08); }
-        .bg-danger-soft { background: rgba(225, 112, 85, 0.08); }
-        .bg-info-soft { background: rgba(9, 132, 227, 0.08); }
-        .text-primary { color: #6C5CE7 !important; }
-        .text-success { color: #00B894 !important; }
-        .text-warning { color: #FDCB6E !important; }
-        .text-danger { color: #E17055 !important; }
-        .text-info { color: #0984E3 !important; }
-        .font-bold { font-weight: 700 !important; }
-        .font-semibold { font-weight: 600 !important; }
-        .font-medium { font-weight: 500 !important; }
-        .text-sm { font-size: 13px !important; }
-        .text-xs { font-size: 11px !important; }
-        .text-lg { font-size: 18px !important; }
-        .text-xl { font-size: 24px !important; }
-        .text-2xl { font-size: 32px !important; }
-        .mb-1 { margin-bottom: 4px !important; }
-        .mb-2 { margin-bottom: 8px !important; }
-        .mb-3 { margin-bottom: 12px !important; }
-        .mb-4 { margin-bottom: 16px !important; }
-        .mb-5 { margin-bottom: 20px !important; }
-        .mt-1 { margin-top: 4px !important; }
-        .mt-2 { margin-top: 8px !important; }
-        .mt-3 { margin-top: 12px !important; }
-        .mt-4 { margin-top: 16px !important; }
-        .mt-5 { margin-top: 20px !important; }
-        .flex { display: flex !important; }
-        .flex-col { flex-direction: column !important; }
-        .items-center { align-items: center !important; }
-        .justify-center { justify-content: center !important; }
-        .justify-between { justify-content: space-between !important; }
-        .gap-1 { gap: 4px !important; }
-        .gap-2 { gap: 8px !important; }
-        .gap-3 { gap: 12px !important; }
-        .gap-4 { gap: 16px !important; }
-        .gap-5 { gap: 20px !important; }
-        .w-full { width: 100% !important; }
-        .w-1/2 { width: 50% !important; }
-        .w-1/3 { width: 33.33% !important; }
-        .w-1/4 { width: 25% !important; }
-        .w-3/4 { width: 75% !important; }
-        .rounded { border-radius: 8px !important; }
-        .rounded-lg { border-radius: 12px !important; }
-        .rounded-xl { border-radius: 16px !important; }
-        .rounded-2xl { border-radius: 20px !important; }
-        .rounded-full { border-radius: 50% !important; }
-        .p-1 { padding: 4px !important; }
-        .p-2 { padding: 8px !important; }
-        .p-3 { padding: 12px !important; }
-        .p-4 { padding: 16px !important; }
-        .p-5 { padding: 20px !important; }
-        .p-6 { padding: 24px !important; }
-
-        /* Advanced Form Styling */
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: var(--dark); }
-        .input-group { position: relative; }
-        .input-group-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray); font-size: 16px; }
-        .input-group-icon.right { left: auto; right: 12px; }
-        .form-control { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--white); color: var(--dark); transition: all 0.3s; }
-        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(108,92,231,0.1); outline: none; }
-        .form-control-lg { padding: 14px 16px; font-size: 16px; }
-        .form-control-sm { padding: 8px 12px; font-size: 13px; }
-        .form-control-error { border-color: var(--danger) !important; }
-        .form-error-message { color: var(--danger); font-size: 12px; margin-top: 4px; }
-        .search-input { padding-left: 40px !important; }
-        .search-input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray); }
-        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 2px solid var(--border); border-radius: 0 0 12px 12px; z-index: 50; max-height: 200px; overflow-y: auto; display: none; box-shadow: var(--shadow-lg); }
-        .search-dropdown.active { display: block; }
-        .search-dropdown-item { padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.2s; }
-        .search-dropdown-item:hover { background: var(--light); }
-        .cart-container { max-height: 200px; overflow-y: auto; border: 2px solid var(--border); border-radius: 12px; padding: 12px; background: var(--light); margin-bottom: 16px; }
-        .cart-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: var(--white); border-radius: 10px; margin-bottom: 8px; box-shadow: var(--shadow-sm); }
-        .cart-item-info { flex: 1; margin-right: 10px; }
-        .cart-item-name { font-weight: 600; font-size: 14px; }
-        .cart-item-price { font-size: 13px; color: var(--gray); }
-        .cart-item-controls { display: flex; align-items: center; gap: 6px; }
-        .cart-item-qty-btn { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--border); background: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
-        .cart-item-qty-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .cart-item-qty { font-weight: 600; min-width: 30px; text-align: center; }
-        .cart-item-total { font-weight: 700; min-width: 80px; text-align: right; color: var(--primary); }
-        .cart-item-remove { width: 24px; height: 24px; border-radius: 6px; border: none; background: var(--danger); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
-        .cart-item-remove:hover { background: var(--danger-dark); }
-        .total-section { background: var(--light); border-radius: 12px; padding: 16px; margin: 16px 0; }
-        .total-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .total-row:last-child { margin-bottom: 0; }
-        .total-label { color: var(--gray); font-size: 14px; }
-        .total-value { font-weight: 700; font-size: 14px; }
-        .total-value-lg { font-size: 20px !important; color: var(--primary); }
-        .total-value-danger { color: var(--danger) !important; }
-        .total-value-success { color: var(--success) !important; }
-        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-        .payment-method { padding: 12px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
-        .payment-method:hover { border-color: var(--primary); }
-        .payment-method.active { border-color: var(--primary); background: rgba(108, 92, 231, 0.1); color: var(--primary); }
-        .payment-method-icon { font-size: 20px; margin-bottom: 4px; }
-        .payment-method-label { font-size: 12px; font-weight: 600; }
-        .discount-section { background: var(--light); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-        .discount-input { display: flex; gap: 8px; margin-bottom: 8px; }
-        .discount-select { padding: 10px; border: 2px solid var(--border); border-radius: 10px; background: var(--white); font-size: 14px; }
-        .discount-value { flex: 1; }
-        .quick-amounts { display: flex; gap: 6px; flex-wrap: wrap; }
-        .quick-amount { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); cursor: pointer; font-size: 13px; transition: all 0.2s; }
-        .quick-amount:hover { background: var(--primary); color: white; }
-        .expense-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-        .expense-type { padding: 12px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
-        .expense-type:hover { border-color: var(--primary); }
-        .expense-type.active { border-color: var(--primary); background: rgba(108, 92, 231, 0.1); color: var(--primary); }
-        .expense-type-icon { font-size: 20px; margin-bottom: 4px; }
-        .expense-type-label { font-size: 12px; font-weight: 600; }
-        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-        @media (max-width: 768px) {
-            .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
-        }
+        /* Role Badge Styles */
+        .role-badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .role-admin { background: rgba(108, 92, 231, 0.1); color: #6C5CE7; }
+        .role-user { background: rgba(0, 184, 148, 0.1); color: #00B894; }
 
         /* Floating Action Button */
         .fab { position: fixed; bottom: 80px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background: var(--primary-gradient); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4); z-index: 950; transition: all 0.3s; }
@@ -381,7 +242,7 @@
         <div style="text-align:center;margin-bottom:20px;">
             <div class="login-logo"><i class="fas fa-store-alt"></i></div>
             <h1 class="login-title">বসনীসে হেসাব</h1>
-            <p style="color:var(--gray);">প্রিমিয়াম বিজনেস স্যুট v5.0</p>
+            <p style="color:var(--gray);">প্রিমিয়াম বিজনেস স্যুট v9.0</p>
         </div>
         <form id="login-form">
             <div class="form-group"><label class="form-label">ইমেইল</label><div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="email" class="form-control" placeholder="ইমেইল" required></div></div>
@@ -428,6 +289,7 @@
             <div class="menu-item-link" data-section="reports"><i class="fas fa-chart-line"></i><span>রিপোর্ট</span></div>
             <div class="menu-item-link" data-section="recycle"><i class="fas fa-recycle"></i><span>রিসাইকেল</span></div>
             <div class="menu-item-link" data-section="settings"><i class="fas fa-cog"></i><span>সেটিংস</span></div>
+            <div class="menu-item-link" data-section="users"><i class="fas fa-users-cog"></i><span>ইউজার ম্যানেজ</span></div>
         </div>
         <button class="logout-menu-btn" id="logoutMenuBtn"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
     </div>
@@ -556,6 +418,8 @@
                     <div class="product-search-dropdown" id="purchaseDropdown"></div>
                 </div>
                 
+                <div id="selectedProductPreview"></div>
+                
                 <div class="form-section-title">ক্রয় বিবরণ</div>
                 <div class="form-row">
                     <div class="input-with-label">
@@ -568,7 +432,7 @@
                     </div>
                 </div>
                 
-                <div class="form-section-title">সাপ্লায়ার</div>
+                <div class="form-section-title">সাপ্লায়ার তথ্য</div>
                 <select id="purchaseSupplier" class="form-control-modern" onchange="handleSupplierChange()">
                     <option value="">নতুন সাপ্লায়ার</option>
                 </select>
@@ -627,7 +491,7 @@
     </div>
 </div>
 
-<!-- OTHER MODALS -->
+<!-- PRODUCT MODAL -->
 <div id="product-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -673,6 +537,7 @@
     </div>
 </div>
 
+<!-- CUSTOMER MODAL -->
 <div id="customer-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -702,6 +567,7 @@
     </div>
 </div>
 
+<!-- SUPPLIER MODAL -->
 <div id="supplier-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -731,9 +597,38 @@
     </div>
 </div>
 
-<div id="payment-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-money-bill-wave"></i> বাকি পরিশোধ</h3><button class="action-btn danger" onclick="closeModal('payment-modal')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="paymentModalBody"></div></div></div>
+<!-- PAYMENT MODAL -->
+<div id="payment-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-money-bill-wave"></i> বাকি পরিশোধ</h3>
+            <button class="action-btn danger" onclick="closeModal('payment-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="paymentModalBody"></div>
+    </div>
+</div>
 
-<div id="notification-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-bell"></i> নোটিফিকেশন</h3><button class="action-btn danger" onclick="closeModal('notification-modal')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="notificationModalBody"></div></div></div>
+<!-- NOTIFICATION MODAL -->
+<div id="notification-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-bell"></i> নোটিফিকেশন</h3>
+            <button class="action-btn danger" onclick="closeModal('notification-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="notificationModalBody"></div>
+    </div>
+</div>
+
+<!-- USER MANAGEMENT MODAL -->
+<div id="user-management-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-users-cog"></i> ইউজার ম্যানেজমেন্ট</h3>
+            <button class="action-btn danger" onclick="closeModal('user-management-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="userManagementBody"></div>
+    </div>
+</div>
 
 <script>
     const firebaseConfig = {
@@ -750,6 +645,8 @@
     const db = firebase.database();
 
     let currentUser = null;
+    let currentUserId = null;
+    let currentUserRole = 'user';
     let cartItems = [];
     let selectedProductId = null;
     let allProductsData = {};
@@ -757,6 +654,38 @@
     let allSuppliersData = {};
     let salesChartInstance = null;
     let currentPaymentCustomerId = null;
+
+    // Role Definitions
+    const ROLES = {
+        admin: {
+            label: 'Admin',
+            permissions: [
+                'add_product', 'edit_product', 'delete_product', 'restore_product',
+                'add_sale', 'view_sales', 'delete_sale', 'edit_sale',
+                'add_purchase', 'view_purchases', 'delete_purchase', 'edit_purchase',
+                'add_customer', 'edit_customer', 'delete_customer', 'restore_customer',
+                'add_expense', 'view_expenses', 'delete_expense', 'edit_expense',
+                'add_supplier', 'edit_supplier', 'delete_supplier', 'restore_supplier',
+                'add_payment', 'view_payments', 'delete_payment',
+                'view_reports', 'export_reports',
+                'edit_settings', 'manage_users', 'edit_profile', 'view_all_users'
+            ]
+        },
+        user: {
+            label: 'User',
+            permissions: [
+                'add_product', 'edit_product', 'delete_product', 'restore_product',
+                'add_sale', 'view_sales', 'delete_sale', 'edit_sale',
+                'add_purchase', 'view_purchases', 'delete_purchase', 'edit_purchase',
+                'add_customer', 'edit_customer', 'delete_customer', 'restore_customer',
+                'add_expense', 'view_expenses', 'delete_expense', 'edit_expense',
+                'add_supplier', 'edit_supplier', 'delete_supplier', 'restore_supplier',
+                'add_payment', 'view_payments', 'delete_payment',
+                'view_reports', 'export_reports',
+                'edit_settings', 'edit_profile'
+            ]
+        }
+    };
 
     function showToast(message, type='success') {
         const container = document.getElementById('toastContainer');
@@ -770,14 +699,40 @@
         setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(),300); }, 3500);
     }
 
+    // Check permission
+    async function hasPermission(action) {
+        const permissions = ROLES[currentUserRole].permissions;
+        return permissions.includes(action);
+    }
+
+    // Check permission and show error if not allowed
+    async function checkPermission(action) {
+        const allowed = await hasPermission(action);
+        if (!allowed) {
+            showToast('আপনার এই কাজের অনুমতি নেই', 'error');
+            return false;
+        }
+        return true;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const dark = localStorage.getItem('dark_mode');
         if (dark === 'on') document.body.setAttribute('data-theme','dark');
         
+        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+        
         auth.onAuthStateChanged(user => {
             if (user) {
                 currentUser = user;
+                currentUserId = user.uid;
                 document.getElementById('userAvatar').textContent = user.email[0].toUpperCase();
+                
+                // Load user profile and role
+                loadUserProfile();
+                
+                // Check if user profile exists
+                checkUserProfile(user);
+                
                 showDashboard();
                 loadAllData();
                 checkNotifications();
@@ -789,6 +744,51 @@
         });
     });
 
+    async function loadUserProfile() {
+        const snap = await db.ref('users/' + currentUserId + '/profile').once('value');
+        const profile = snap.val();
+        if (profile) {
+            currentUserRole = profile.role || 'user';
+            document.getElementById('shopNameDisplay').textContent = profile.shopName || 'বসনীসে স্টোর';
+        }
+    }
+
+    function checkUserProfile(user) {
+        db.ref('users/' + user.uid).once('value').then(snap => {
+            if (!snap.exists()) {
+                // Create default profile
+                db.ref('users/' + user.uid).set({
+                    profile: {
+                        email: user.email,
+                        name: user.email.split('@')[0],
+                        phone: '',
+                        role: 'admin',  // First user is admin
+                        createdAt: Date.now(),
+                        lastLogin: Date.now()
+                    },
+                    settings: {
+                        shopName: 'বসনীসে স্টোর',
+                        shopAddress: '',
+                        shopPhone: '',
+                        currency: 'BDT',
+                        taxRate: 0,
+                        lowStockAlert: 5,
+                        updatedAt: Date.now()
+                    }
+                });
+                currentUserRole = 'admin';
+                loadShopName();
+            } else {
+                // Update last login and load role
+                db.ref('users/' + user.uid + '/profile').update({
+                    lastLogin: Date.now()
+                });
+                loadUserProfile();
+                loadShopName();
+            }
+        });
+    }
+
     function loadAllData() {
         loadAllProductsData();
         loadAllCustomersData();
@@ -798,7 +798,7 @@
     }
 
     function loadAllProductsData() {
-        db.ref('products').on('value', snap => {
+        db.ref('users/' + currentUserId + '/products').on('value', snap => {
             allProductsData = {};
             snap.forEach(c => { if (!c.val().deleted) allProductsData[c.key] = c.val(); });
             checkNotifications();
@@ -806,7 +806,7 @@
     }
 
     function loadAllCustomersData() {
-        db.ref('customers').on('value', snap => {
+        db.ref('users/' + currentUserId + '/customers').on('value', snap => {
             allCustomersData = {};
             snap.forEach(c => { if (!c.val().deleted) allCustomersData[c.key] = c.val(); });
             updateCustomerDropdown();
@@ -814,7 +814,7 @@
     }
 
     function loadAllSuppliersData() {
-        db.ref('suppliers').on('value', snap => {
+        db.ref('users/' + currentUserId + '/suppliers').on('value', snap => {
             allSuppliersData = {};
             snap.forEach(c => { if (!c.val().deleted) allSuppliersData[c.key] = c.val(); });
             updateSupplierDropdown();
@@ -919,6 +919,19 @@
             document.getElementById('purchaseProductSearch').value = p.name;
             document.getElementById('purchasePrice').value = p.purchasePrice;
             document.getElementById('purchaseDropdown').classList.remove('active');
+            
+            const preview = document.getElementById('selectedProductPreview');
+            preview.innerHTML = `
+                <div class="product-preview">
+                    <div class="product-avatar" style="width:48px;height:48px;border-radius:8px;background:var(--info-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">
+                        ${p.name[0]}
+                    </div>
+                    <div class="product-preview-info">
+                        <h5>${p.name}</h5>
+                        <p>বর্তমান স্টক: ${p.stock} | ক্রয় মূল্য: ৳${p.purchasePrice}</p>
+                    </div>
+                </div>
+            `;
         }
     }
 
@@ -997,6 +1010,9 @@
     document.getElementById('sale-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Check permission
+        if (!await checkPermission('add_sale')) return;
+        
         if (!cartItems.length) {
             showToast('কোনো পণ্য নেই!', 'warning');
             return;
@@ -1034,7 +1050,7 @@
             const actualProfit = profit - discountAmount;
             
             for (const item of cartItems) {
-                const snap = await db.ref('products/' + item.productId).once('value');
+                const snap = await db.ref('users/' + currentUserId + '/products/' + item.productId).once('value');
                 const prod = snap.val();
                 
                 if (prod.stock < item.quantity) {
@@ -1043,7 +1059,7 @@
                     return;
                 }
                 
-                await db.ref('sales').push({
+                await db.ref('users/' + currentUserId + '/sales').push({
                     productId: item.productId,
                     productName: item.name,
                     quantity: item.quantity,
@@ -1053,17 +1069,18 @@
                     paymentMethod: paymentMethod,
                     customerId: paymentMethod === 'due' ? customerId : '',
                     discount: discountAmount,
+                    createdBy: currentUserId,
                     timestamp: Date.now()
                 });
                 
-                await db.ref('products/' + item.productId).update({
+                await db.ref('users/' + currentUserId + '/products/' + item.productId).update({
                     stock: prod.stock - item.quantity
                 });
             }
             
             if (paymentMethod === 'due' && customerId) {
-                const csnap = await db.ref('customers/' + customerId).once('value');
-                await db.ref('customers/' + customerId).update({
+                const csnap = await db.ref('users/' + currentUserId + '/customers/' + customerId).once('value');
+                await db.ref('users/' + currentUserId + '/customers/' + customerId).update({
                     due: (csnap.val().due || 0) + total
                 });
             }
@@ -1090,6 +1107,9 @@
     document.getElementById('purchase-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Check permission
+        if (!await checkPermission('add_purchase')) return;
+        
         if (!selectedProductId) {
             showToast('পণ্য নির্বাচন করুন', 'warning');
             return;
@@ -1108,7 +1128,7 @@
                 return;
             }
             
-            const newSupplierRef = await db.ref('suppliers').push({
+            const newSupplierRef = await db.ref('users/' + currentUserId + '/suppliers').push({
                 name: supplierName,
                 phone: '',
                 address: '',
@@ -1120,21 +1140,22 @@
         showLoading('ক্রয় হচ্ছে...');
         
         try {
-            const snap = await db.ref('products/' + selectedProductId).once('value');
+            const snap = await db.ref('users/' + currentUserId + '/products/' + selectedProductId).once('value');
             const prod = snap.val();
             const total = qty * price;
             
-            await db.ref('purchases').push({
+            await db.ref('users/' + currentUserId + '/purchases').push({
                 productId: selectedProductId,
                 productName: prod.name,
                 quantity: qty,
                 price: price,
                 total: total,
                 supplier: supplier,
+                createdBy: currentUserId,
                 timestamp: Date.now()
             });
             
-            await db.ref('products/' + selectedProductId).update({
+            await db.ref('users/' + currentUserId + '/products/' + selectedProductId).update({
                 stock: (prod.stock || 0) + qty,
                 purchasePrice: price
             });
@@ -1146,6 +1167,7 @@
             document.getElementById('purchaseProductSearch').value = '';
             document.getElementById('purchaseQty').value = '';
             document.getElementById('purchasePrice').value = '';
+            document.getElementById('selectedProductPreview').innerHTML = '';
             
             showToast('ক্রয় সফল!', 'success');
             loadPurchases();
@@ -1162,22 +1184,27 @@
     document.getElementById('expense-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Check permission
+        if (!await checkPermission('add_expense')) return;
+        
         const type = document.getElementById('expenseType').value;
         const desc = document.getElementById('expenseDesc').value;
         const amount = parseFloat(document.getElementById('expenseAmount').value);
         const dateStr = document.getElementById('expenseDate').value;
         const timestamp = dateStr ? new Date(dateStr).getTime() : Date.now();
         
-        await db.ref('expenses').push({
+        await db.ref('users/' + currentUserId + '/expenses').push({
             type: type,
             description: desc,
             amount: amount,
+            createdBy: currentUserId,
             timestamp: timestamp,
             createdAt: Date.now()
         });
         
         closeModal('expense-modal');
         document.getElementById('expense-form').reset();
+        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
         
         loadExpenses();
         loadDashboardStats();
@@ -1186,6 +1213,9 @@
 
     document.getElementById('product-form').addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Check permission
+        if (!await checkPermission('add_product')) return;
         
         const name = document.getElementById('productName').value;
         const category = document.getElementById('productCategory').value;
@@ -1196,13 +1226,15 @@
         
         showLoading('যোগ হচ্ছে...');
         
-        await db.ref('products').push({
+        await db.ref('users/' + currentUserId + '/products').push({
             name: name,
             category: category,
             purchasePrice: pp,
             salePrice: sp,
             stock: stock,
             lowStock: lowStock,
+            deleted: false,
+            createdBy: currentUserId,
             createdAt: Date.now()
         });
         
@@ -1220,15 +1252,20 @@
     document.getElementById('customer-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Check permission
+        if (!await checkPermission('add_customer')) return;
+        
         const name = document.getElementById('customerName').value;
         const phone = document.getElementById('customerPhone').value;
         const address = document.getElementById('customerAddress').value;
         
-        await db.ref('customers').push({
+        await db.ref('users/' + currentUserId + '/customers').push({
             name: name,
             phone: phone,
             address: address,
             due: 0,
+            deleted: false,
+            createdBy: currentUserId,
             createdAt: Date.now()
         });
         
@@ -1244,14 +1281,19 @@
     document.getElementById('supplier-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Check permission
+        if (!await checkPermission('add_supplier')) return;
+        
         const name = document.getElementById('supplierName').value;
         const phone = document.getElementById('supplierPhone').value;
         const address = document.getElementById('supplierAddress').value;
         
-        await db.ref('suppliers').push({
+        await db.ref('users/' + currentUserId + '/suppliers').push({
             name: name,
             phone: phone,
             address: address,
+            deleted: false,
+            createdBy: currentUserId,
             createdAt: Date.now()
         });
         
@@ -1267,28 +1309,28 @@
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
-        db.ref('sales').orderByChild('timestamp').startAt(today.getTime()).once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/sales').orderByChild('timestamp').startAt(today.getTime()).once('value').then(snap => {
             let s = 0;
             snap.forEach(c => s += c.val().total);
             document.getElementById('todaySales').textContent = '৳' + s.toFixed(2);
             document.getElementById('welcomeTodaySales').textContent = '৳' + s.toFixed(2);
         });
         
-        db.ref('products').once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/products').once('value').then(snap => {
             let c = 0;
             snap.forEach(ch => { if (!ch.val().deleted) c++ });
             document.getElementById('totalProducts').textContent = c;
             document.getElementById('welcomeProducts').textContent = c;
         });
         
-        db.ref('customers').once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/customers').once('value').then(snap => {
             let c = 0;
             snap.forEach(ch => { if (!ch.val().deleted) c++ });
             document.getElementById('totalCustomers').textContent = c;
             document.getElementById('welcomeCustomers').textContent = c;
         });
         
-        db.ref('expenses').orderByChild('timestamp').startAt(today.getTime()).once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/expenses').orderByChild('timestamp').startAt(today.getTime()).once('value').then(snap => {
             let e = 0;
             snap.forEach(c => e += c.val().amount);
             document.getElementById('todayExpenses').textContent = '৳' + e.toFixed(2);
@@ -1312,7 +1354,7 @@
             data.push(0);
         }
         
-        db.ref('sales').once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/sales').once('value').then(snap => {
             snap.forEach(c => {
                 const sd = new Date(c.val().timestamp);
                 sd.setHours(0, 0, 0, 0);
@@ -1360,7 +1402,7 @@
                 <div id="productsList"></div>
             </div>`;
         
-        db.ref('products').on('value', snap => {
+        db.ref('users/' + currentUserId + '/products').on('value', snap => {
             const list = document.getElementById('productsList');
             if (!list) return;
             list.innerHTML = '';
@@ -1383,8 +1425,137 @@
                             <div class="product-stat"><div>স্টক</div><strong>${p.stock}</strong></div>
                             <div class="product-stat"><div>লাভ</div><strong>৳${(p.salePrice - p.purchasePrice).toFixed(2)}</strong></div>
                         </div>
+                        <div style="display:flex;gap:8px;">
+                            <button class="action-btn info" onclick="editProduct('${c.key}')"><i class="fas fa-edit"></i> এডিট</button>
+                            <button class="action-btn warning" onclick="moveToRecycle('${c.key}')"><i class="fas fa-trash"></i> রিসাইকেল</button>
+                        </div>
                     </div>`;
             });
+        });
+    }
+
+    function editProduct(id) {
+        db.ref('users/' + currentUserId + '/products/' + id).once('value', snap => {
+            const p = snap.val();
+            document.getElementById('productName').value = p.name;
+            document.getElementById('productCategory').value = p.category;
+            document.getElementById('productPurchasePrice').value = p.purchasePrice;
+            document.getElementById('productSalePrice').value = p.salePrice;
+            document.getElementById('productStock').value = p.stock;
+            document.getElementById('productLowStock').value = p.lowStock || 5;
+            
+            const form = document.getElementById('product-form');
+            form.onsubmit = null;
+            form.onsubmit = async (e) => {
+                e.preventDefault();
+                
+                // Check permission
+                if (!await checkPermission('edit_product')) return;
+                
+                const name = document.getElementById('productName').value;
+                const category = document.getElementById('productCategory').value;
+                const pp = parseFloat(document.getElementById('productPurchasePrice').value);
+                const sp = parseFloat(document.getElementById('productSalePrice').value);
+                const stock = parseInt(document.getElementById('productStock').value);
+                const lowStock = parseInt(document.getElementById('productLowStock').value) || 5;
+                
+                await db.ref('users/' + currentUserId + '/products/' + id).update({
+                    name: name,
+                    category: category,
+                    purchasePrice: pp,
+                    salePrice: sp,
+                    stock: stock,
+                    lowStock: lowStock
+                });
+                
+                closeModal('product-modal');
+                document.getElementById('product-form').reset();
+                form.onsubmit = null;
+                // Re-attach original handler
+                form.addEventListener('submit', productFormSubmitHandler);
+                
+                loadProducts();
+                showToast('পণ্য আপডেট হয়েছে', 'success');
+            };
+            
+            openProductModal();
+        });
+    }
+
+    const productFormSubmitHandler = async (e) => {
+        e.preventDefault();
+        
+        // Check permission
+        if (!await checkPermission('add_product')) return;
+        
+        const name = document.getElementById('productName').value;
+        const category = document.getElementById('productCategory').value;
+        const pp = parseFloat(document.getElementById('productPurchasePrice').value);
+        const sp = parseFloat(document.getElementById('productSalePrice').value);
+        const stock = parseInt(document.getElementById('productStock').value);
+        const lowStock = parseInt(document.getElementById('productLowStock').value) || 5;
+        
+        showLoading('যোগ হচ্ছে...');
+        
+        await db.ref('users/' + currentUserId + '/products').push({
+            name: name,
+            category: category,
+            purchasePrice: pp,
+            salePrice: sp,
+            stock: stock,
+            lowStock: lowStock,
+            deleted: false,
+            createdBy: currentUserId,
+            createdAt: Date.now()
+        });
+        
+        hideLoading();
+        closeModal('product-modal');
+        document.getElementById('product-form').reset();
+        
+        loadProducts();
+        loadDashboardStats();
+        loadAllProductsData();
+        showToast('পণ্য যোগ হয়েছে', 'success');
+        checkNotifications();
+    };
+
+    document.getElementById('product-form').addEventListener('submit', productFormSubmitHandler);
+
+    function moveToRecycle(id) {
+        Swal.fire({
+            title: 'রিসাইকেলে পাঠাবেন?',
+            text: 'পণ্যটি রিসাইকেল বিনে যাবে এবং রিস্টোর করা যাবে',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#FDCB6E',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'রিসাইকেলে পাঠান',
+            cancelButtonText: 'বাতিল'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Check permission
+                if (!await checkPermission('delete_product')) return;
+                
+                db.ref('users/' + currentUserId + '/products/' + id).once('value', snap => {
+                    const product = snap.val();
+                    
+                    db.ref('users/' + currentUserId + '/recycleBin/products/' + id).set({
+                        ...product,
+                        deletedAt: Date.now(),
+                        deletedBy: currentUserId
+                    });
+                    
+                    db.ref('users/' + currentUserId + '/products/' + id).update({
+                        deleted: true,
+                        deletedAt: Date.now()
+                    });
+                    
+                    showToast('পণ্য রিসাইকেলে পাঠানো হয়েছে', 'success');
+                    loadProducts();
+                    loadRecycleBin();
+                });
+            }
         });
     }
 
@@ -1406,7 +1577,7 @@
                 </div>
             </div>`;
         
-        db.ref('sales').on('value', snap => {
+        db.ref('users/' + currentUserId + '/sales').on('value', snap => {
             const tbody = document.getElementById('salesBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1443,7 +1614,7 @@
                 </div>
             </div>`;
         
-        db.ref('purchases').on('value', snap => {
+        db.ref('users/' + currentUserId + '/purchases').on('value', snap => {
             const tbody = document.getElementById('purchasesBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1475,7 +1646,7 @@
                 <div id="customersList"></div>
             </div>`;
         
-        db.ref('customers').on('value', snap => {
+        db.ref('users/' + currentUserId + '/customers').on('value', snap => {
             const list = document.getElementById('customersList');
             if (!list) return;
             list.innerHTML = '';
@@ -1516,7 +1687,7 @@
                 </div>
             </div>`;
         
-        db.ref('expenses').on('value', snap => {
+        db.ref('users/' + currentUserId + '/expenses').on('value', snap => {
             const tbody = document.getElementById('expensesBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1527,7 +1698,7 @@
                 const typeNames = { rent: 'ভাড়া', salary: 'বেতন', utilities: 'ইউটিলিটি', transport: 'পরিবহন', other: 'অন্যান্য' };
                 tbody.innerHTML += `<tr>
                     <td>${new Date(e.timestamp).toLocaleDateString('bn-BD')}</td>
-                    <td><span class="badge badge-info">${typeNames[e.type] || e.type}</span></td>
+                    <td>${typeNames[e.type] || e.type}</td>
                     <td>${e.description}</td>
                     <td style="font-weight:600;color:var(--danger);">৳${e.amount}</td>
                 </tr>`;
@@ -1548,7 +1719,7 @@
                 <div id="suppliersList"></div>
             </div>`;
         
-        db.ref('suppliers').on('value', snap => {
+        db.ref('users/' + currentUserId + '/suppliers').on('value', snap => {
             const list = document.getElementById('suppliersList');
             if (!list) return;
             list.innerHTML = '';
@@ -1564,9 +1735,133 @@
                                 <div>${supp.phone}</div>
                             </div>
                         </div>
-                        <button class="action-btn danger" onclick="deleteSupplier('${c.key}')"><i class="fas fa-trash"></i> মুছুন</button>
+                        <button class="action-btn warning" onclick="moveSupplierToRecycle('${c.key}')"><i class="fas fa-trash"></i> রিসাইকেল</button>
                     </div>`;
             });
+        });
+    }
+
+    function moveSupplierToRecycle(id) {
+        Swal.fire({
+            title: 'রিসাইকেলে পাঠাবেন?',
+            text: 'সাপ্লায়ারটি রিসাইকেল বিনে যাবে এবং রিস্টোর করা যাবে',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#FDCB6E',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'রিসাইকেলে পাঠান',
+            cancelButtonText: 'বাতিল'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Check permission
+                if (!await checkPermission('delete_supplier')) return;
+                
+                db.ref('users/' + currentUserId + '/suppliers/' + id).once('value', snap => {
+                    const supplier = snap.val();
+                    
+                    db.ref('users/' + currentUserId + '/recycleBin/suppliers/' + id).set({
+                        ...supplier,
+                        deletedAt: Date.now(),
+                        deletedBy: currentUserId
+                    });
+                    
+                    db.ref('users/' + currentUserId + '/suppliers/' + id).update({
+                        deleted: true,
+                        deletedAt: Date.now()
+                    });
+                    
+                    showToast('সাপ্লায়ার রিসাইকেলে পাঠানো হয়েছে', 'success');
+                    loadSuppliers();
+                    loadRecycleBin();
+                });
+            }
+        });
+    }
+
+    function loadRecycleBin() {
+        const container = document.getElementById('recycle-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <h3>রিসাইকেল বিন</h3>
+                <div id="recycleList"></div>
+            </div>`;
+        
+        db.ref('users/' + currentUserId + '/recycleBin').on('value', snap => {
+            const list = document.getElementById('recycleList');
+            if (!list) return;
+            list.innerHTML = '';
+            
+            const products = snap.child('products') ? snap.child('products').val() : {};
+            const suppliers = snap.child('suppliers') ? snap.child('suppliers').val() : {};
+            
+            if (!Object.keys(products).length && !Object.keys(suppliers).length) {
+                list.innerHTML = '<p style="text-align:center;color:var(--gray);">রিসাইকেল বিন খালি</p>';
+                return;
+            }
+            
+            // Products
+            Object.entries(products).forEach(([id, p]) => {
+                list.innerHTML += `
+                    <div class="product-card">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div class="product-avatar">${p.name[0]}</div>
+                            <div style="flex:1;">
+                                <strong>${p.name}</strong> - ${p.category}
+                            </div>
+                            <button class="action-btn success" onclick="restoreProduct('${id}')"><i class="fas fa-undo"></i> রিস্টোর</button>
+                        </div>
+                    </div>`;
+            });
+            
+            // Suppliers
+            Object.entries(suppliers).forEach(([id, s]) => {
+                list.innerHTML += `
+                    <div class="supplier-card">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div class="customer-avatar" style="background:var(--warning-gradient);"><i class="fas fa-truck"></i></div>
+                            <div style="flex:1;">
+                                <strong>${s.name}</strong>
+                            </div>
+                            <button class="action-btn success" onclick="restoreSupplier('${id}')"><i class="fas fa-undo"></i> রিস্টোর</button>
+                        </div>
+                    </div>`;
+            });
+        });
+    }
+
+    function restoreProduct(id) {
+        db.ref('users/' + currentUserId + '/recycleBin/products/' + id).once('value', snap => {
+            const product = snap.val();
+            
+            db.ref('users/' + currentUserId + '/products/' + id).update({
+                deleted: false,
+                deletedAt: null
+            });
+            
+            db.ref('users/' + currentUserId + '/recycleBin/products/' + id).remove();
+            
+            showToast('পণ্য রিস্টোর হয়েছে', 'success');
+            loadProducts();
+            loadRecycleBin();
+        });
+    }
+
+    function restoreSupplier(id) {
+        db.ref('users/' + currentUserId + '/recycleBin/suppliers/' + id).once('value', snap => {
+            const supplier = snap.val();
+            
+            db.ref('users/' + currentUserId + '/suppliers/' + id).update({
+                deleted: false,
+                deletedAt: null
+            });
+            
+            db.ref('users/' + currentUserId + '/recycleBin/suppliers/' + id).remove();
+            
+            showToast('সাপ্লায়ার রিস্টোর হয়েছে', 'success');
+            loadSuppliers();
+            loadRecycleBin();
         });
     }
 
@@ -1585,7 +1880,7 @@
                 </div>
             </div>`;
         
-        db.ref('payments').on('value', snap => {
+        db.ref('users/' + currentUserId + '/payments').on('value', snap => {
             const tbody = document.getElementById('paymentsBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1593,15 +1888,11 @@
             snap.forEach(p => arr.push({ id: p.key, ...p.val() }));
             arr.sort((a, b) => b.timestamp - a.timestamp);
             arr.forEach(p => {
-                db.ref('customers/' + p.customerId).once('value', cSnap => {
-                    const cust = cSnap.val();
-                    const customerName = cust ? cust.name : 'Unknown';
-                    tbody.innerHTML += `<tr>
-                        <td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td>
-                        <td>${customerName}</td>
-                        <td><span class="badge badge-success">৳${p.amount}</span></td>
-                    </tr>`;
-                });
+                tbody.innerHTML += `<tr>
+                    <td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td>
+                    <td>${p.customerName}</td>
+                    <td><span class="badge badge-success">৳${p.amount}</span></td>
+                </tr>`;
             });
         });
     }
@@ -1616,75 +1907,40 @@
                 <div id="reportSummary"></div>
             </div>`;
         
-        db.ref('sales').once('value').then(snapSales => {
-            db.ref('expenses').once('value').then(snapExp => {
-                let totalSales = 0, totalProfit = 0, totalExp = 0;
-                
-                snapSales.forEach(c => {
-                    totalSales += c.val().total;
-                    totalProfit += c.val().profit || 0;
-                });
-                
-                snapExp.forEach(c => totalExp += c.val().amount);
-                
-                document.getElementById('reportSummary').innerHTML = `
-                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-                        <div class="stat-card">
-                            <div>মোট বিক্রি</div>
-                            <div style="font-size:24px;font-weight:800;color:var(--primary);">৳${totalSales.toFixed(2)}</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>মোট লাভ</div>
-                            <div style="font-size:24px;font-weight:800;color:var(--success);">৳${totalProfit.toFixed(2)}</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>মোট খরচ</div>
-                            <div style="font-size:24px;font-weight:800;color:var(--danger);">৳${totalExp.toFixed(2)}</div>
-                        </div>
-                    </div>`;
+        Promise.all([
+            db.ref('users/' + currentUserId + '/sales').once('value'),
+            db.ref('users/' + currentUserId + '/expenses').once('value'),
+            db.ref('users/' + currentUserId + '/purchases').once('value')
+        ]).then(([salesSnap, expSnap, purSnap]) => {
+            let totalSales = 0, totalProfit = 0, totalExp = 0, totalPurchase = 0;
+            
+            salesSnap.forEach(c => {
+                totalSales += c.val().total;
+                totalProfit += c.val().profit || 0;
             });
-        });
-    }
-
-    function loadRecycleBin() {
-        const container = document.getElementById('recycle-section');
-        if (!container) return;
-        
-        container.innerHTML = '<div class="card"><h3>রিসাইকেল বিন</h3><div id="recycleList"></div></div>';
-        
-        db.ref('products').orderByChild('deleted').equalTo(true).once('value', snap => {
-            const list = document.getElementById('recycleList');
-            if (!list) return;
-            list.innerHTML = '';
-            snap.forEach(c => {
-                const p = c.val();
-                list.innerHTML += `
-                    <div class="product-card">
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <span><strong>${p.name}</strong> - ${p.category}</span>
-                            <button class="action-btn success" onclick="restoreProduct('${c.key}')"><i class="fas fa-undo"></i> রিস্টোর</button>
-                        </div>
-                    </div>`;
-            });
-            if (!snap.numChildren()) list.innerHTML = '<p style="text-align:center;color:var(--gray);">রিসাইকেল বিন খালি</p>';
-        });
-    }
-
-    function restoreProduct(id) {
-        db.ref('products/' + id).update({ deleted: false }).then(() => {
-            loadRecycleBin();
-            loadProducts();
-            loadAllProductsData();
-            showToast('পণ্য রিস্টোর হয়েছে', 'success');
-            checkNotifications();
-        });
-    }
-
-    function deleteSupplier(id) {
-        db.ref('suppliers/' + id).update({ deleted: true }).then(() => {
-            loadSuppliers();
-            loadAllSuppliersData();
-            showToast('সাপ্লায়ার মুছে ফেলা হয়েছে', 'info');
+            
+            expSnap.forEach(c => totalExp += c.val().amount);
+            purSnap.forEach(c => totalPurchase += c.val().total);
+            
+            document.getElementById('reportSummary').innerHTML = `
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+                    <div class="stat-card">
+                        <div>মোট বিক্রি</div>
+                        <div style="font-size:24px;font-weight:800;color:var(--primary);">৳${totalSales.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>মোট লাভ</div>
+                        <div style="font-size:24px;font-weight:800;color:var(--success);">৳${totalProfit.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>মোট খরচ</div>
+                        <div style="font-size:24px;font-weight:800;color:var(--danger);">৳${totalExp.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>মোট ক্রয়</div>
+                        <div style="font-size:24px;font-weight:800;color:var(--warning);">৳${totalPurchase.toFixed(2)}</div>
+                    </div>
+                </div>`;
         });
     }
 
@@ -1698,8 +1954,39 @@
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
                     <button class="action-btn warning" onclick="changeShopName()"><i class="fas fa-store"></i> দোকানের নাম</button>
                     <button class="action-btn info" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড</button>
+                    <button class="action-btn primary" onclick="editProfile()"><i class="fas fa-user-edit"></i> প্রোফাইল এডিট</button>
                 </div>
             </div>`;
+    }
+
+    function editProfile() {
+        db.ref('users/' + currentUserId + '/profile').once('value', snap => {
+            const user = snap.val();
+            
+            Swal.fire({
+                title: 'প্রোফাইল এডিট',
+                html: `
+                    <input type="text" id="editName" class="swal2-input" placeholder="নাম" value="${user.name || ''}">
+                    <input type="text" id="editPhone" class="swal2-input" placeholder="ফোন" value="${user.phone || ''}">
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'আপডেট করুন',
+                cancelButtonText: 'বাতিল',
+                preConfirm: () => {
+                    const name = document.getElementById('editName').value;
+                    const phone = document.getElementById('editPhone').value;
+                    
+                    return db.ref('users/' + currentUserId + '/profile').update({
+                        name: name,
+                        phone: phone
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showToast('প্রোফাইল আপডেট হয়েছে', 'success');
+                }
+            });
+        });
     }
 
     function checkNotifications() {
@@ -1740,7 +2027,7 @@
 
     function openPaymentModal(customerId) {
         currentPaymentCustomerId = customerId;
-        db.ref('customers/' + customerId).once('value', snap => {
+        db.ref('users/' + currentUserId + '/customers/' + customerId).once('value', snap => {
             const cust = snap.val();
             const due = cust.due || 0;
             const modalBody = document.getElementById('paymentModalBody');
@@ -1766,7 +2053,7 @@
             return;
         }
         
-        db.ref('customers/' + currentPaymentCustomerId).once('value').then(snap => {
+        db.ref('users/' + currentUserId + '/customers/' + currentPaymentCustomerId).once('value').then(snap => {
             const cust = snap.val();
             const due = cust.due || 0;
             if (amount > due) {
@@ -1774,13 +2061,15 @@
                 return;
             }
             
-            db.ref('payments').push({
+            db.ref('users/' + currentUserId + '/payments').push({
                 customerId: currentPaymentCustomerId,
+                customerName: cust.name,
                 amount: amount,
+                createdBy: currentUserId,
                 timestamp: Date.now()
             });
             
-            db.ref('customers/' + currentPaymentCustomerId).update({
+            db.ref('users/' + currentUserId + '/customers/' + currentPaymentCustomerId).update({
                 due: due - amount
             });
             
@@ -1817,7 +2106,7 @@
         const map = {
             dashboard: 'ড্যাশবোর্ড', products: 'পণ্য', sales: 'বিক্রি', purchases: 'ক্রয়',
             customers: 'কাস্টমার', expenses: 'খরচ', suppliers: 'সাপ্লায়ার', payments: 'পেমেন্ট',
-            reports: 'রিপোর্ট', recycle: 'রিসাইকেল', settings: 'সেটিংস'
+            reports: 'রিপোর্ট', recycle: 'রিসাইকেল', settings: 'সেটিংস', users: 'ইউজার ম্যানেজ'
         };
         return map[s] || s;
     }
@@ -1854,17 +2143,35 @@
     }
 
     function showProfile() {
-        Swal.fire({
-            title: 'প্রোফাইল',
-            html: `<b>${currentUser?.email}</b><br>প্রিমিয়াম ইউজার`,
-            showCloseButton: true,
-            confirmButtonText: 'লগআউট'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                auth.signOut();
-                document.getElementById('dashboard').style.display = 'none';
-                document.getElementById('login-page').style.display = 'flex';
-            }
+        db.ref('users/' + currentUserId + '/profile').once('value', snap => {
+            const user = snap.val();
+            const role = user.role || 'user';
+            const roleBadge = `<span class="role-badge role-${role}">${role.toUpperCase()}</span>`;
+            
+            Swal.fire({
+                title: 'প্রোফাইল',
+                html: `
+                    <div style="text-align:center;margin-bottom:16px;">
+                        <div class="user-avatar" style="width:60px;height:60px;font-size:24px;margin:0 auto;">${user.name ? user.name[0] : 'U'}</div>
+                        <h4>${user.name || 'User'}</h4>
+                        <p style="color:var(--gray);">${user.email}</p>
+                        <div style="margin-top:8px;">${roleBadge}</div>
+                    </div>
+                    <div style="text-align:left;">
+                        <p><strong>ফোন:</strong> ${user.phone || 'N/A'}</p>
+                        <p><strong>ভূমিকা:</strong> ${ROLES[role].label}</p>
+                        <p><strong>যোগদান:</strong> ${new Date(user.createdAt).toLocaleDateString('bn-BD')}</p>
+                    </div>
+                `,
+                showCloseButton: true,
+                confirmButtonText: 'লগআউট'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    auth.signOut();
+                    document.getElementById('dashboard').style.display = 'none';
+                    document.getElementById('login-page').style.display = 'flex';
+                }
+            });
         });
     }
 
@@ -1876,7 +2183,7 @@
             showCancelButton: true
         }).then(r => {
             if (r.isConfirmed) {
-                db.ref('settings/shopName').set(r.value);
+                db.ref('users/' + currentUserId + '/settings/shopName').set(r.value);
                 loadShopName();
                 showToast('দোকানের নাম আপডেট হয়েছে', 'success');
             }
@@ -1892,7 +2199,7 @@
     };
 
     function loadShopName() {
-        db.ref('settings/shopName').once('value', snap => {
+        db.ref('users/' + currentUserId + '/settings/shopName').once('value', snap => {
             document.getElementById('shopNameDisplay').textContent = snap.val() || 'বসনীসে স্টোর';
         });
     }
@@ -1905,7 +2212,7 @@
 
     function initializeSections() {
         const mainContent = document.getElementById('mainContent');
-        const sections = ['dashboard', 'products', 'sales', 'purchases', 'customers', 'expenses', 'suppliers', 'payments', 'reports', 'recycle', 'settings'];
+        const sections = ['dashboard', 'products', 'sales', 'purchases', 'customers', 'expenses', 'suppliers', 'payments', 'reports', 'recycle', 'settings', 'users'];
         
         sections.forEach(s => {
             const sec = document.createElement('div');
@@ -2026,7 +2333,7 @@
 
     initializeSections();
 
-    console.log('✅ প্রিমিয়াম স্যুট v5.0 লোড হয়েছে - সব ফিচার সঠিকভাবে কাজ করছে');
+    console.log('✅ প্রিমিয়াম স্যুট v9.0 লোড হয়েছে - সব ফিচার সঠিকভাবে কাজ করছে');
 </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
     </script>
 
     <!-- Font Awesome 6 (Pro-like) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js">
     </script>
@@ -56,6 +56,7 @@
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
             --radius: 16px;
             --radius-sm: 10px;
             --radius-lg: 20px;
@@ -72,6 +73,7 @@
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
             --shadow: 0 4px 20px rgba(0,0,0,0.4);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.5);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.6);
             background: #121212;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -89,6 +91,7 @@
         @keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
         @keyframes floatSlow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
         @keyframes gradientFlow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
 
         /* LOGIN */
         .login-wrapper {
@@ -205,6 +208,11 @@
         .mobile-nav-item { display:flex; flex-direction:column; align-items:center; padding:6px; cursor:pointer; color:var(--gray); border-radius:10px; }
         .mobile-nav-item.active { color:var(--primary); background:rgba(108,92,231,0.08); }
 
+        /* Toast Notification */
+        .toast-container { position:fixed; top:80px; right:16px; z-index:3000; max-width:350px; }
+        .toast { background:var(--white); border-radius:12px; padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:12px; animation:slideDown 0.3s ease; border-left:4px solid var(--success); }
+        .toast i { font-size:20px; }
+
         @media (max-width:768px) {
             .stats-grid, .quick-actions { grid-template-columns:repeat(2,1fr); }
             .mobile-bottom-nav { display:grid; grid-template-columns:repeat(5,1fr); }
@@ -220,6 +228,7 @@
     <p style="margin-top:16px;font-weight:600;">লোড হচ্ছে...</p>
 </div>
 <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<div class="toast-container" id="toastContainer"></div>
 
 <!-- LOGIN -->
 <div id="login-page" class="login-wrapper">
@@ -303,7 +312,7 @@
             </div>
             <div class="card"><div class="card-header"><h3 class="card-title">বিক্রির চার্ট</h3></div><div style="height:250px;"><canvas id="salesChart"></canvas></div></div>
         </div>
-        <!-- Placeholder sections will be injected by JS -->
+        <!-- Placeholder sections -->
     </main>
 
     <div class="mobile-bottom-nav" id="mobileBottomNav">
@@ -372,6 +381,19 @@
     let allCustomersData = {};
     let salesChartInstance = null;
 
+    // Toast Notification
+    function showToast(message, type='success', lang='bn') {
+        const container = document.getElementById('toastContainer');
+        const icons = { success:'fa-check-circle', error:'fa-exclamation-circle', warning:'fa-exclamation-triangle', info:'fa-info-circle' };
+        const colors = { success:'var(--success)', error:'var(--danger)', warning:'var(--warning)', info:'var(--info)' };
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.borderLeftColor = colors[type] || colors.info;
+        toast.innerHTML = `<i class="fas ${icons[type]} " style="color:${colors[type]}"></i><span style="flex:1;">${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(),300); }, 3500);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const dark = localStorage.getItem('dark_mode');
         if (dark === 'on') document.body.setAttribute('data-theme','dark');
@@ -396,6 +418,7 @@
         loadCustomers();
         loadExpenses();
         loadAllProductsData();
+        loadAllCustomersData();
         loadShopName();
     }
     function loadShopName(){
@@ -413,8 +436,8 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         showLoading('লগইন হচ্ছে...');
-        try { await auth.signInWithEmailAndPassword(email,password); hideLoading(); } 
-        catch(err){ hideLoading(); Swal.fire({icon:'error',title:'লগইন ব্যর্থ',text:err.message}); }
+        try { await auth.signInWithEmailAndPassword(email,password); hideLoading(); showToast('সফল লগইন!', 'success'); } 
+        catch(err){ hideLoading(); showToast('লগইন ব্যর্থ: '+err.message, 'error'); }
     });
     document.getElementById('forgot-password-btn').addEventListener('click', (e)=>{e.preventDefault(); Swal.fire({title:'রিসেট ইমেইল',input:'email',inputPlaceholder:'ইমেইল',showCancelButton:true}).then(r=>{ if(r.isConfirmed && r.value) auth.sendPasswordResetEmail(r.value).then(()=>Swal.fire('লিংক পাঠানো হয়েছে!')).catch(()=>Swal.fire('ভুল ইমেইল'))});});
 
@@ -426,6 +449,7 @@
     document.querySelectorAll('.menu-item-link').forEach(el => { el.addEventListener('click', ()=>{ showSection(el.dataset.section); document.getElementById('slideMenu').classList.remove('active'); }); });
     document.getElementById('saleHeaderBtn').addEventListener('click', ()=>openSaleModal());
     document.getElementById('purchaseHeaderBtn').addEventListener('click', ()=>openPurchaseModal());
+    document.getElementById('searchHeaderBtn').addEventListener('click', ()=>{ Swal.fire({title:'দ্রুত খুঁজুন',input:'text',inputPlaceholder:'পণ্য বা কাস্টমার...'}).then(r=>{ if(r.value){ const term=r.value.toLowerCase(); db.ref('products').once('value',snap=>{snap.forEach(c=>{if(c.val().name.toLowerCase().includes(term)) showToast('পণ্য: '+c.val().name,'info');});});} }); });
 
     function showSection(section) {
         document.querySelectorAll('.content-section').forEach(el=>el.classList.remove('active'));
@@ -465,6 +489,7 @@
             updateCartUI();
             document.getElementById('saleProductSearch').value='';
             document.getElementById('saleDropdown').classList.remove('active');
+            showToast(`${p.name} যোগ হয়েছে`, 'success');
         } else {
             const p = allProductsData[id];
             document.getElementById('purchaseProductSearch').value = p.name;
@@ -487,30 +512,30 @@
     // Sale form submit
     document.getElementById('sale-form').addEventListener('submit', async (e)=>{
         e.preventDefault();
-        if(!cartItems.length) { Swal.fire('কোনো পণ্য নেই!'); return; }
+        if(!cartItems.length) { showToast('কোনো পণ্য নেই!', 'warning'); return; }
         const method = document.getElementById('paymentMethod').value;
         const customerId = document.getElementById('saleCustomerSelect').value;
-        if(method==='due' && !customerId){ Swal.fire('বাকির জন্য কাস্টমার নির্বাচন করুন'); return; }
+        if(method==='due' && !customerId){ showToast('বাকির জন্য কাস্টমার নির্বাচন করুন', 'warning'); return; }
         showLoading('বিক্রি হচ্ছে...');
         try{
             let total=0, profit=0;
             for(const item of cartItems){
                 const snap = await db.ref('products/'+item.productId).once('value');
                 const prod = snap.val();
-                if(prod.stock < item.quantity){ hideLoading(); Swal.fire('স্টক কম! '+item.name); return; }
+                if(prod.stock < item.quantity){ hideLoading(); showToast('স্টক কম! '+item.name, 'error'); return; }
                 const itTotal = item.price*item.quantity; total+=itTotal; profit+=(item.price-item.purchasePrice)*item.quantity;
                 await db.ref('sales').push({productId:item.productId, productName:item.name, quantity:item.quantity, price:item.price, total:itTotal, profit:(item.price-item.purchasePrice)*item.quantity, paymentMethod:method, customerId:method==='due'?customerId:'', timestamp:Date.now()});
                 await db.ref('products/'+item.productId).update({stock: prod.stock - item.quantity});
             }
             if(method==='due' && customerId){ const csnap= await db.ref('customers/'+customerId).once('value'); await db.ref('customers/'+customerId).update({due:(csnap.val().due||0)+total}); }
-            hideLoading(); closeModal('sale-modal'); cartItems=[]; updateCartUI(); Swal.fire('বিক্রি সফল!'); loadSales(); loadProducts(); loadDashboardStats();
-        }catch(err){ hideLoading(); Swal.fire('error',err.message); }
+            hideLoading(); closeModal('sale-modal'); cartItems=[]; updateCartUI(); showToast('বিক্রি সফল! মোট: ৳'+total.toFixed(2), 'success'); loadSales(); loadProducts(); loadDashboardStats();
+        }catch(err){ hideLoading(); showToast('বিক্রি ব্যর্থ: '+err.message, 'error'); }
     });
 
     // Purchase
     document.getElementById('purchase-form').addEventListener('submit', async (e)=>{
         e.preventDefault();
-        if(!selectedProductId){ Swal.fire('পণ্য নির্বাচন করুন'); return; }
+        if(!selectedProductId){ showToast('পণ্য নির্বাচন করুন', 'warning'); return; }
         const qty=parseInt(document.getElementById('purchaseQty').value); const price=parseFloat(document.getElementById('purchasePrice').value); const supplier=document.getElementById('purchaseSupplier').value;
         showLoading('ক্রয় হচ্ছে...');
         try{
@@ -518,8 +543,8 @@
             const total=qty*price;
             await db.ref('purchases').push({productId:selectedProductId, productName:prod.name, quantity:qty, price, total, supplier, timestamp:Date.now()});
             await db.ref('products/'+selectedProductId).update({stock:(prod.stock||0)+qty, purchasePrice:price});
-            hideLoading(); closeModal('purchase-modal'); selectedProductId=null; Swal.fire('ক্রয় সফল!'); loadPurchases(); loadProducts(); loadDashboardStats();
-        }catch(err){hideLoading(); Swal.fire('error',err.message);}
+            hideLoading(); closeModal('purchase-modal'); selectedProductId=null; showToast('ক্রয় সফল!', 'success'); loadPurchases(); loadProducts(); loadDashboardStats();
+        }catch(err){hideLoading(); showToast('ক্রয় ব্যর্থ', 'error');}
     });
 
     // Product
@@ -528,7 +553,7 @@
         const name=document.getElementById('productName').value, category=document.getElementById('productCategory').value, pp=parseFloat(document.getElementById('productPurchasePrice').value), sp=parseFloat(document.getElementById('productSalePrice').value), stock=parseInt(document.getElementById('productStock').value);
         showLoading('যোগ হচ্ছে...');
         await db.ref('products').push({name, category, purchasePrice:pp, salePrice:sp, stock, createdAt:Date.now()});
-        hideLoading(); closeModal('product-modal'); document.getElementById('product-form').reset(); loadProducts(); loadDashboardStats();
+        hideLoading(); closeModal('product-modal'); document.getElementById('product-form').reset(); loadProducts(); loadDashboardStats(); showToast('পণ্য যোগ হয়েছে', 'success');
     });
 
     // Customer
@@ -536,7 +561,7 @@
         e.preventDefault();
         const name=document.getElementById('customerName').value, phone=document.getElementById('customerPhone').value, address=document.getElementById('customerAddress').value;
         await db.ref('customers').push({name, phone, address, due:0, createdAt:Date.now()});
-        closeModal('customer-modal'); document.getElementById('customer-form').reset(); loadCustomers(); loadDashboardStats(); loadAllCustomersData();
+        closeModal('customer-modal'); document.getElementById('customer-form').reset(); loadCustomers(); loadDashboardStats(); loadAllCustomersData(); showToast('কাস্টমার যোগ হয়েছে', 'success');
     });
 
     // Expense
@@ -544,7 +569,7 @@
         e.preventDefault();
         const type=document.getElementById('expenseType').value, desc=document.getElementById('expenseDesc').value, amount=parseFloat(document.getElementById('expenseAmount').value);
         await db.ref('expenses').push({type, description:desc, amount, timestamp:Date.now()});
-        closeModal('expense-modal'); document.getElementById('expense-form').reset(); loadExpenses(); loadDashboardStats();
+        closeModal('expense-modal'); document.getElementById('expense-form').reset(); loadExpenses(); loadDashboardStats(); showToast('খরচ যোগ হয়েছে', 'success');
     });
 
     // Dashboard stats
@@ -563,8 +588,8 @@
     }
 
     // Load functions
-    function loadProducts(){ const container=document.getElementById('products-section') || createSection('products-section','পণ্য'); container.innerHTML='<div class="card"><h3>পণ্য তালিকা</h3><div id="productsList"></div></div>'; db.ref('products').on('value',snap=>{ const list=document.getElementById('productsList'); list.innerHTML=''; snap.forEach(c=>{const p=c.val(); if(p.deleted) return; list.innerHTML+=`<div class="product-card"><div class="product-header"><div class="product-avatar">${p.name[0]}</div><div><strong>${p.name}</strong><div>${p.category}</div></div></div><div class="product-stats"><div class="product-stat"><div>ক্রয়</div><strong>৳${p.purchasePrice}</strong></div><div class="product-stat"><div>বিক্রয়</div><strong>৳${p.salePrice}</strong></div><div class="product-stat"><div>স্টক</div><strong>${p.stock}</strong></div></div><button class="action-btn danger" onclick="deleteProduct('${c.key}')">মুছুন</button></div>`;}); }); }
-    function deleteProduct(id){ db.ref('products/'+id).update({deleted:true}).then(()=>loadProducts()); }
+    function loadProducts(){ const container=document.getElementById('products-section') || createSection('products-section','পণ্য'); container.innerHTML='<div class="card"><h3>পণ্য তালিকা</h3><div id="productsList"></div></div>'; db.ref('products').on('value',snap=>{ const list=document.getElementById('productsList'); list.innerHTML=''; snap.forEach(c=>{const p=c.val(); if(p.deleted) return; list.innerHTML+=`<div class="product-card"><div class="product-header"><div class="product-avatar">${p.name[0]}</div><div><strong>${p.name}</strong><div>${p.category}</div></div></div><div class="product-stats"><div class="product-stat"><div>ক্রয়</div><strong>৳${p.purchasePrice}</strong></div><div class="product-stat"><div>বিক্রয়</div><strong>৳${p.salePrice}</strong></div><div class="product-stat"><div>স্টক</div><strong>${p.stock}</strong></div></div><button class="action-btn danger" onclick="deleteProduct('${c.key}')"><i class="fas fa-trash"></i> মুছুন</button></div>`;}); }); }
+    function deleteProduct(id){ db.ref('products/'+id).update({deleted:true}).then(()=>{loadProducts(); showToast('পণ্য মুছে ফেলা হয়েছে', 'info');}); }
 
     function loadSales(){ const container=document.getElementById('sales-section') || createSection('sales-section','বিক্রি'); container.innerHTML='<div class="card"><h3>বিক্রি</h3><div class="table-container"><table><thead><tr><th>তারিখ</th><th>পণ্য</th><th>পরিমাণ</th><th>মোট</th></tr></thead><tbody id="salesBody"></tbody></table></div></div>'; db.ref('sales').on('value',snap=>{ const tbody=document.getElementById('salesBody'); tbody.innerHTML=''; const arr=[]; snap.forEach(c=>arr.push({id:c.key,...c.val()})); arr.sort((a,b)=>b.timestamp-a.timestamp); arr.forEach(s=>{ tbody.innerHTML+=`<tr><td>${new Date(s.timestamp).toLocaleDateString('bn-BD')}</td><td>${s.productName}</td><td>${s.quantity}</td><td>৳${s.total}</td></tr>`; }); }); }
     function loadPurchases(){ const container=document.getElementById('purchases-section') || createSection('purchases-section','ক্রয়'); container.innerHTML='<div class="card"><h3>ক্রয়</h3><div class="table-container"><table><thead><tr><th>তারিখ</th><th>পণ্য</th><th>পরিমাণ</th><th>সাপ্লায়ার</th></tr></thead><tbody id="purchasesBody"></tbody></table></div></div>'; db.ref('purchases').on('value',snap=>{ const tbody=document.getElementById('purchasesBody'); tbody.innerHTML=''; const arr=[]; snap.forEach(c=>arr.push({id:c.key,...c.val()})); arr.sort((a,b)=>b.timestamp-a.timestamp); arr.forEach(p=>{ tbody.innerHTML+=`<tr><td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td><td>${p.productName}</td><td>${p.quantity}</td><td>${p.supplier}</td></tr>`; }); }); }
@@ -589,8 +614,9 @@
     // Initialise placeholder sections
     ['products','sales','purchases','customers','expenses','reports','recycle','settings'].forEach(s=>{ if(!document.getElementById(s+'-section')) createSection(s+'-section', getSectionTitle(s)); });
 
-    // Settings: shop name change function (global)
+    // Settings: shop name change & dark mode
     window.changeShopName = function(){ Swal.fire({title:'দোকানের নাম',input:'text',inputValue:document.getElementById('shopNameDisplay').textContent,showCancelButton:true}).then(r=>{ if(r.isConfirmed){ db.ref('settings/shopName').set(r.value); } }); };
+    window.toggleDarkMode = function(){ const on=document.body.getAttribute('data-theme')==='dark'; if(on) document.body.removeAttribute('data-theme'); else document.body.setAttribute('data-theme','dark'); localStorage.setItem('dark_mode', on?'off':'on'); };
 
     console.log('প্রফেশনাল স্যুট প্রস্তুত');
 </script>

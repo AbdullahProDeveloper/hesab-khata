@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#6C5CE7">
-    <title>বসনীসে হেসাব খাতা - প্রিমিয়াম এন্টারপ্রাইজ সিস্টেম</title>
+    <title>বসনীসে হেসাব খাতা - প্রিমিয়াম বিজনেস স্যুট</title>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,39 +25,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     
+    <!-- SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #6C5CE7;
             --primary-dark: #5A4BD1;
             --primary-light: #A29BFE;
+            --primary-gradient: linear-gradient(135deg, #6C5CE7 0%, #5A4BD1 100%);
+            
             --success: #00B894;
             --success-dark: #00A381;
+            --success-gradient: linear-gradient(135deg, #00B894 0%, #00A381 100%);
+            
             --danger: #E17055;
             --danger-dark: #D63031;
+            --danger-gradient: linear-gradient(135deg, #E17055 0%, #D63031 100%);
+            
             --warning: #FDCB6E;
             --warning-dark: #F39C12;
+            --warning-gradient: linear-gradient(135deg, #FDCB6E 0%, #F39C12 100%);
+            
             --info: #0984E3;
             --info-dark: #0366D6;
+            --info-gradient: linear-gradient(135deg, #0984E3 0%, #0366D6 100%);
+            
             --dark: #2D3436;
+            --dark-secondary: #636E72;
             --gray: #636E72;
             --gray-light: #B2BEC3;
             --light: #F8F9FA;
             --white: #FFFFFF;
             --border: #E9ECEF;
+            
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+            
             --radius-sm: 8px;
             --radius: 12px;
             --radius-lg: 16px;
             --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-3xl: 32px;
+            
+            --header-height: 70px;
+            --sidebar-width: 280px;
         }
         
         [data-theme="dark"] {
             --dark: #f5f5f5;
+            --dark-secondary: #a0a0a0;
             --gray: #a0a0a0;
             --gray-light: #666;
             --light: #1a1a2e;
@@ -65,6 +89,7 @@
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
             --shadow: 0 4px 20px rgba(0,0,0,0.3);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.5);
             background: #121212;
         }
         
@@ -75,9 +100,13 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
-            background: #f0f2f5;
+            font-family: 'Inter', 'Noto Sans Bengali', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
             color: var(--dark);
@@ -88,13 +117,44 @@
         
         /* Animations */
         @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        
+        @keyframes floatSlow {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-20px); }
         }
         
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         /* Login Page */
@@ -103,55 +163,94 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6C5CE7 100%);
+            background-size: 200% 200%;
+            animation: gradientFlow 10s ease infinite;
             padding: 20px;
             position: relative;
             overflow: hidden;
         }
         
+        .login-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { width: 10px; height: 10px; top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 15px; height: 15px; top: 60%; right: 15%; animation-delay: 1s; }
+        .particle:nth-child(3) { width: 8px; height: 8px; top: 30%; right: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { width: 12px; height: 12px; top: 70%; left: 20%; animation-delay: 3s; }
+        .particle:nth-child(5) { width: 6px; height: 6px; top: 50%; left: 50%; animation-delay: 4s; }
+        
         .login-card {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: 0 25px 80px rgba(0,0,0,0.3);
             padding: 40px;
             width: 100%;
-            max-width: 440px;
+            max-width: 460px;
             position: relative;
             z-index: 1;
-            animation: fadeInUp 0.5s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeInUp 0.6s ease;
         }
         
         .login-logo {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-            border-radius: 20px;
+            background: var(--primary-gradient);
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
             animation: float 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-logo::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
         }
         
         .login-logo i {
-            font-size: 36px;
+            font-size: 48px;
             color: white;
+            z-index: 1;
         }
         
         .login-title {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             text-align: center;
-            margin-bottom: 6px;
-            color: #2D3436;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #6C5CE7, #5A4BD1, #0984E3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
         }
         
         .login-subtitle {
             text-align: center;
-            color: #636E72;
-            font-size: 13px;
+            color: var(--gray);
+            font-size: 14px;
             margin-bottom: 30px;
         }
         
@@ -164,7 +263,7 @@
             margin-bottom: 8px;
             font-weight: 600;
             font-size: 14px;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .input-group {
@@ -176,78 +275,126 @@
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #636E72;
+            color: var(--gray);
             font-size: 16px;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+        
+        .input-group:focus-within > i {
+            color: var(--primary);
         }
         
         .form-control {
             width: 100%;
             padding: 14px 16px 14px 46px;
-            border: 2px solid #E9ECEF;
-            border-radius: 10px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
             font-size: 15px;
             transition: all 0.3s ease;
-            background: #F8F9FA;
+            background: var(--light);
+            color: var(--dark);
         }
         
         .form-control:focus {
-            border-color: #6C5CE7;
+            border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
-            background: white;
+            background: var(--white);
         }
         
         .btn-login {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
+            padding: 15px;
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
+            position: relative;
+            overflow: hidden;
         }
         
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-login::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: width 0.6s, height 0.6s;
+            transform: translate(-50%, -50%);
+        }
+        
+        .btn-login:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 16px;
+        }
+        
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
         }
         
         .login-demo {
             margin-top: 20px;
-            padding: 12px;
-            background: #F8F9FA;
-            border-radius: 8px;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 12px;
             text-align: center;
-            font-size: 12px;
-            color: #636E72;
-            border: 1px dashed #B2BEC3;
+            font-size: 13px;
+            color: var(--gray);
+            border: 2px dashed var(--border);
         }
         
-        /* Dashboard */
+        .login-demo strong {
+            color: var(--primary);
+        }
+        
+        /* Header */
         .main-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
-            background: white;
-            border-bottom: 1px solid #E9ECEF;
+            height: var(--header-height);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 24px;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
         
         .menu-toggle {
@@ -255,25 +402,26 @@
             border: none;
             font-size: 22px;
             cursor: pointer;
-            color: #636E72;
-            padding: 8px;
-            border-radius: 8px;
+            color: var(--gray);
+            padding: 10px;
+            border-radius: 12px;
             transition: all 0.3s;
         }
         
         .menu-toggle:hover {
-            background: #F8F9FA;
-            color: #6C5CE7;
+            background: var(--light);
+            color: var(--primary);
         }
         
         .header-logo {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-            border-radius: 10px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
         }
         
         .header-logo i {
@@ -282,97 +430,110 @@
         }
         
         .header-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: #2D3436;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--dark), var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .header-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
         
         .header-btn {
-            background: #F8F9FA;
-            border: 1px solid #E9ECEF;
-            border-radius: 10px;
-            padding: 8px 12px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 14px;
             cursor: pointer;
             position: relative;
             transition: all 0.3s;
-            color: #636E72;
+            color: var(--gray);
         }
         
         .header-btn:hover {
-            background: #6C5CE7;
+            background: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
         
         .notification-badge {
             position: absolute;
             top: -5px;
             right: -5px;
-            background: #E17055;
+            background: var(--danger-gradient);
             color: white;
             font-size: 10px;
             padding: 2px 6px;
             border-radius: 10px;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(225,112,85,0.4);
         }
         
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            background: #F8F9FA;
-            border-radius: 10px;
+            gap: 10px;
+            padding: 8px 16px;
+            background: var(--light);
+            border-radius: 12px;
             cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+        
+        .user-profile:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
         }
         
         .user-avatar {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
         }
         
         .user-name {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .logout-btn {
-            background: #FEECEA;
+            background: var(--danger-gradient);
             border: none;
-            border-radius: 10px;
-            padding: 8px 12px;
+            border-radius: 12px;
+            padding: 10px 14px;
             cursor: pointer;
-            color: #E17055;
+            color: white;
             transition: all 0.3s;
         }
         
         .logout-btn:hover {
-            background: #E17055;
-            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(225,112,85,0.4);
         }
         
         /* Sidebar */
         .main-sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -300px;
+            width: var(--sidebar-width);
             height: 100vh;
-            background: #1a1a2e;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             z-index: 1001;
             transition: all 0.3s ease;
             overflow-y: auto;
@@ -392,24 +553,25 @@
         }
         
         .sidebar-logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(108,92,231,0.4);
         }
         
         .sidebar-logo i {
-            font-size: 22px;
+            font-size: 24px;
             color: white;
         }
         
         .sidebar-brand {
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             flex: 1;
         }
@@ -417,58 +579,76 @@
         .sidebar-close {
             background: none;
             border: none;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6);
             font-size: 20px;
             cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-close:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .sidebar-section-title {
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 16px 14px 8px;
         }
         
         .sidebar-item {
             display: flex;
             align-items: center;
-            padding: 12px 14px;
-            border-radius: 10px;
+            padding: 14px 16px;
+            border-radius: 12px;
             color: rgba(255,255,255,0.7);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             margin-bottom: 4px;
         }
         
         .sidebar-item:hover {
             background: rgba(255,255,255,0.1);
             color: white;
+            transform: translateX(4px);
         }
         
         .sidebar-item.active {
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
+            background: var(--primary-gradient);
             color: white;
             box-shadow: 0 4px 12px rgba(108,92,231,0.4);
         }
         
         .sidebar-item-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 10px;
             background: rgba(255,255,255,0.1);
             margin-right: 12px;
-            font-size: 14px;
+            font-size: 16px;
         }
         
         .sidebar-item-text {
             flex: 1;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
         }
         
         .sidebar-badge {
-            background: #E17055;
+            background: var(--danger-gradient);
             color: white;
             font-size: 10px;
-            padding: 2px 8px;
+            font-weight: 700;
+            padding: 3px 8px;
             border-radius: 10px;
-            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(225,112,85,0.4);
         }
         
         .sidebar-overlay {
@@ -482,6 +662,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
+            backdrop-filter: blur(4px);
         }
         
         .sidebar-overlay.active {
@@ -492,9 +673,10 @@
         /* Main Content */
         .main-content {
             margin-left: 0;
-            padding: 90px 20px 20px;
+            padding: 90px 24px 24px;
             min-height: 100vh;
             transition: margin-left 0.3s;
+            background: var(--light);
         }
         
         .content-section {
@@ -503,17 +685,103 @@
         
         .content-section.active {
             display: block;
-            animation: fadeInUp 0.3s ease;
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #6C5CE7 0%, #5A4BD1 50%, #0984E3 100%);
+            border-radius: var(--radius-2xl);
+            padding: 32px;
+            margin-bottom: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(108,92,231,0.4);
+        }
+        
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .welcome-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .welcome-stat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 12px 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .welcome-stat i {
+            font-size: 24px;
+        }
+        
+        .welcome-stat div {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .welcome-stat strong {
+            font-size: 20px;
+            display: block;
         }
         
         /* Cards */
         .card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
             padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid #E9ECEF;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg);
         }
         
         .card-header {
@@ -528,18 +796,78 @@
         .card-title {
             font-size: 18px;
             font-weight: 700;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .card-subtitle {
             font-size: 13px;
-            color: #636E72;
+            color: var(--gray);
             margin-top: 4px;
         }
         
         .card-actions {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        /* Action Buttons */
+        .action-btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--light);
+            color: var(--gray);
+            border: 1px solid var(--border);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            background: var(--white);
+        }
+        
+        .action-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+        }
+        
+        .action-btn.success {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+        }
+        
+        .action-btn.danger {
+            background: var(--danger-gradient);
+            color: white;
+            border: none;
+        }
+        
+        .action-btn.warning {
+            background: var(--warning-gradient);
+            color: var(--dark);
+            border: none;
+        }
+        
+        .action-btn.info {
+            background: var(--info-gradient);
+            color: white;
+            border: none;
         }
         
         /* Stats Grid */
@@ -551,29 +879,41 @@
         }
         
         .stat-card {
-            background: white;
-            border-radius: 16px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
             padding: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: var(--shadow);
             transition: all 0.3s;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            border: 1px solid transparent;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
         }
         
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
         
         .stat-icon {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 24px;
             margin-bottom: 16px;
         }
         
@@ -597,101 +937,91 @@
             color: #E17055;
         }
         
+        .stat-icon.info {
+            background: rgba(9,132,227,0.1);
+            color: #0984E3;
+        }
+        
         .stat-label {
             font-size: 13px;
-            color: #636E72;
+            color: var(--gray);
             font-weight: 500;
             margin-bottom: 4px;
         }
         
         .stat-value {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
-            color: #2D3436;
+            color: var(--dark);
+            line-height: 1.2;
         }
         
-        /* Investment Summary */
-        .investment-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        
-        .investment-card {
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid #E9ECEF;
+        .stat-trend {
+            font-size: 12px;
+            margin-top: 8px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 4px;
         }
         
-        .investment-card i {
-            font-size: 24px;
+        .stat-trend.up {
+            color: var(--success);
         }
         
-        .investment-label {
-            font-size: 12px;
-            color: #636E72;
+        .stat-trend.down {
+            color: var(--danger);
         }
         
-        .investment-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #2D3436;
-        }
-        
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
+        /* Search Box */
+        .search-box {
+            position: relative;
             margin-bottom: 24px;
         }
         
-        .quick-action {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
         }
         
-        .quick-action:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        
-        .quick-action i {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-            color: #6C5CE7;
-        }
-        
-        .quick-action span {
-            font-size: 13px;
-            font-weight: 600;
-            color: #2D3436;
-        }
-        
-        /* Charts */
-        .chart-container {
-            position: relative;
-            height: 300px;
+        .search-box input {
             width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            transition: all 0.3s;
+            background: var(--white);
+            color: var(--dark);
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
+        }
+        
+        .search-box .search-clear {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 16px;
         }
         
         /* Tables */
         .table-container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
             overflow: hidden;
+            border: 1px solid var(--border);
         }
         
         .table-wrapper {
@@ -704,24 +1034,26 @@
         }
         
         thead {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, var(--light), var(--white));
         }
         
         th {
-            padding: 14px 16px;
+            padding: 16px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 13px;
-            color: #636E72;
-            border-bottom: 2px solid #E9ECEF;
+            color: var(--gray);
+            border-bottom: 2px solid var(--border);
             white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #E9ECEF;
-            font-size: 13px;
-            color: #2D3436;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--dark);
         }
         
         tr:last-child td {
@@ -729,196 +1061,39 @@
         }
         
         tr:hover {
-            background: #f8f9fa;
+            background: var(--light);
         }
         
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+        /* Product Cards */
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(108,92,231,0.4);
-        }
-        
-        .btn-danger {
-            background: #E17055;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background: #D63031;
-        }
-        
-        .btn-success {
-            background: #00B894;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #00A381;
-        }
-        
-        .btn-warning {
-            background: #FDCB6E;
-            color: #2D3436;
-        }
-        
-        .btn-warning:hover {
-            background: #F39C12;
-        }
-        
-        .btn-info {
-            background: #0984E3;
-            color: white;
-        }
-        
-        .btn-info:hover {
-            background: #0366D6;
-        }
-        
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 12px;
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            border-bottom: 1px solid #E9ECEF;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2D3436;
-        }
-        
-        .modal-close {
-            background: #f8f9fa;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .modal-close:hover {
-            background: #E17055;
-            color: white;
-        }
-        
-        .modal-body {
-            padding: 24px;
-        }
-        
-        .modal-footer {
-            padding: 20px 24px;
-            border-top: 1px solid #E9ECEF;
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-        
-        /* Search Box */
-        .search-box {
-            position: relative;
+            border: 1px solid var(--border);
             margin-bottom: 20px;
         }
         
-        .search-box i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #636E72;
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
         }
         
-        .search-box input {
-            width: 100%;
-            padding: 14px 16px 14px 48px;
-            border: 2px solid #E9ECEF;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: all 0.3s;
-            background: white;
-        }
-        
-        .search-box input:focus {
-            border-color: #6C5CE7;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
-        }
-        
-        /* Products */
-        .product-profile {
-            background: white;
-            border-radius: 16px;
+        .product-card-header {
+            background: linear-gradient(135deg, var(--light), var(--white));
             padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #E9ECEF;
-        }
-        
-        .product-profile-header {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
         }
         
         .product-avatar {
             width: 56px;
             height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
+            border-radius: var(--radius-lg);
+            background: var(--primary-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -934,53 +1109,63 @@
         .product-name {
             font-size: 18px;
             font-weight: 700;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .product-category {
             font-size: 13px;
-            color: #636E72;
+            color: var(--gray);
             margin-top: 4px;
         }
         
         .product-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            padding: 16px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            padding: 20px;
+            background: var(--light);
+        }
+        
+        .product-stat {
+            text-align: center;
         }
         
         .product-stat-label {
             font-size: 12px;
-            color: #636E72;
+            color: var(--gray);
             margin-bottom: 4px;
         }
         
         .product-stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2D3436;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
         }
         
         .product-actions {
+            padding: 16px;
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
         
         /* Customer Cards */
-        .customer-profile {
-            background: white;
-            border-radius: 16px;
+        .customer-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
             padding: 20px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #E9ECEF;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 16px;
+            transition: all 0.3s;
+        }
+        
+        .customer-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateX(4px);
         }
         
         .customer-avatar {
@@ -993,7 +1178,7 @@
             justify-content: center;
             color: white;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 700;
         }
         
         .customer-info {
@@ -1003,28 +1188,31 @@
         .customer-name {
             font-size: 16px;
             font-weight: 700;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .customer-contact {
             font-size: 13px;
-            color: #636E72;
+            color: var(--gray);
             margin-top: 4px;
         }
         
         .customer-due {
             text-align: right;
+            padding: 12px 20px;
+            background: var(--light);
+            border-radius: var(--radius);
         }
         
         .due-label {
             font-size: 12px;
-            color: #636E72;
+            color: var(--gray);
         }
         
         .due-amount {
-            font-size: 18px;
-            font-weight: 700;
-            color: #E17055;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--danger);
         }
         
         /* Notification */
@@ -1033,51 +1221,56 @@
             top: 80px;
             right: 20px;
             z-index: 3000;
-            max-width: 350px;
+            max-width: 400px;
+            width: 100%;
         }
         
         .notification {
-            background: white;
-            border-radius: 12px;
+            background: var(--white);
+            border-radius: var(--radius);
             padding: 16px;
             margin-bottom: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             gap: 12px;
-            animation: fadeInUp 0.3s ease;
-            border-left: 4px solid #00B894;
+            animation: slideInRight 0.3s ease;
+            border-left: 4px solid var(--success);
         }
         
         .notification.error {
-            border-left-color: #E17055;
+            border-left-color: var(--danger);
         }
         
         .notification.warning {
-            border-left-color: #FDCB6E;
+            border-left-color: var(--warning);
         }
         
         .notification.info {
-            border-left-color: #0984E3;
+            border-left-color: var(--info);
         }
         
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 40px;
-            color: #636E72;
+            padding: 60px 20px;
+            color: var(--gray);
         }
         
         .empty-state i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            color: #B2BEC3;
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: var(--gray-light);
         }
         
         .empty-state h4 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 8px;
-            color: #2D3436;
+            color: var(--dark);
+        }
+        
+        .empty-state p {
+            font-size: 14px;
         }
         
         /* Mobile Bottom Nav */
@@ -1087,11 +1280,11 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
-            border-top: 1px solid #E9ECEF;
+            background: var(--white);
+            border-top: 1px solid var(--border);
             padding: 8px;
             z-index: 999;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
         }
         
         .mobile-bottom-nav.active {
@@ -1103,14 +1296,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px;
+            padding: 10px;
             cursor: pointer;
             transition: all 0.3s;
             gap: 4px;
+            border-radius: 12px;
         }
         
         .mobile-nav-item.active {
-            color: #6C5CE7;
+            background: rgba(108,92,231,0.1);
+            color: var(--primary);
         }
         
         .mobile-nav-item i {
@@ -1130,20 +1325,26 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             z-index: 4000;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+        
+        .loading-content {
+            text-align: center;
         }
         
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #E9ECEF;
-            border-top: 4px solid #6C5CE7;
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--border);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
         
         @keyframes spin {
@@ -1152,17 +1353,99 @@
         }
         
         .loading-text {
-            margin-top: 16px;
-            font-size: 14px;
-            color: #636E72;
+            font-size: 16px;
+            color: var(--dark);
             font-weight: 600;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--light), var(--white));
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .modal-title i {
+            color: var(--primary);
+        }
+        
+        .modal-close {
+            background: var(--light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: var(--gray);
+        }
+        
+        .modal-close:hover {
+            background: var(--danger-gradient);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: var(--light);
         }
         
         /* Payment Methods */
         .payment-methods {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .payment-method {
@@ -1170,53 +1453,63 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            padding: 12px;
-            border: 2px solid #E9ECEF;
-            border-radius: 12px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
             cursor: pointer;
             transition: all 0.3s;
         }
         
+        .payment-method:hover {
+            border-color: var(--primary);
+            background: rgba(108,92,231,0.05);
+        }
+        
         .payment-method.active {
-            border-color: #6C5CE7;
+            border-color: var(--primary);
             background: rgba(108,92,231,0.1);
+            box-shadow: 0 4px 12px rgba(108,92,231,0.2);
         }
         
         .payment-method i {
-            font-size: 24px;
-            color: #636E72;
+            font-size: 28px;
+            color: var(--gray);
         }
         
         .payment-method.active i {
-            color: #6C5CE7;
+            color: var(--primary);
         }
         
         .payment-method span {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         /* Cart */
         .cart-items {
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
-            margin-bottom: 16px;
-            border: 2px solid #E9ECEF;
-            border-radius: 12px;
-            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            background: var(--light);
         }
         
         .cart-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px;
-            border-bottom: 1px solid #E9ECEF;
+            padding: 14px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            box-shadow: var(--shadow-sm);
         }
         
         .cart-item:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
         
         .cart-item-info {
@@ -1224,26 +1517,26 @@
         }
         
         .cart-item-name {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            color: #2D3436;
+            color: var(--dark);
         }
         
         .cart-item-price {
             font-size: 13px;
-            color: #636E72;
+            color: var(--gray);
             margin-top: 4px;
         }
         
         .cart-item-actions {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             align-items: center;
         }
         
         .cart-item-btn {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
@@ -1258,23 +1551,153 @@
             transform: scale(1.1);
         }
         
+        /* Settings */
+        .settings-section {
+            margin-bottom: 32px;
+        }
+        
+        .settings-section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .settings-section-title i {
+            color: var(--primary);
+            background: rgba(108,92,231,0.1);
+            padding: 12px;
+            border-radius: 12px;
+        }
+        
+        .settings-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-label {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .settings-description {
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 32px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        input:checked + .toggle-slider {
+            background: var(--primary-gradient);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(28px);
+        }
+        
+        /* Color Theme Options */
+        .color-theme-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 16px;
+        }
+        
+        .color-theme-option {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .color-theme-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-theme-option.active {
+            border-color: var(--dark);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+        
         /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
+            .main-content {
+                padding: 80px 16px 80px;
+            }
+            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
             
-            .investment-summary {
-                grid-template-columns: 1fr;
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .main-content {
-                padding: 80px 12px 80px;
+            .product-stats {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .mobile-bottom-nav.active {
@@ -1296,260 +1719,64 @@
                 gap: 8px;
             }
             
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .payment-methods {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
         
-        /* Settings */
-        .settings-section {
-            margin-bottom: 24px;
-        }
-        
-        .settings-section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2D3436;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .settings-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #E9ECEF;
-        }
-        
-        .settings-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #E9ECEF;
-        }
-        
-        .settings-row:last-child {
-            border-bottom: none;
-        }
-        
-        .settings-label {
-            font-weight: 600;
-            font-size: 14px;
-            color: #2D3436;
-        }
-        
-        .settings-description {
-            font-size: 12px;
-            color: #636E72;
-            margin-top: 4px;
-        }
-        
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 52px;
-            height: 28px;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #E9ECEF;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        input:checked + .toggle-slider {
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-        }
-        
-        input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-        }
-        
-        /* Color Theme Options */
-        .color-theme-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            padding: 16px;
-        }
-        
-        .color-theme-option {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .color-theme-option:hover {
-            transform: scale(1.1);
-        }
-        
-        .color-theme-option.active {
-            border-color: #6C5CE7;
-            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
-        }
-        
-        /* Export Options */
-        .export-options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 16px;
-        }
-        
-        .export-option {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .export-option:hover {
-            border-color: #6C5CE7;
-            background: rgba(108,92,231,0.1);
-            transform: translateY(-2px);
-        }
-        
-        .export-option i {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #6C5CE7;
-            display: block;
-        }
-        
-        .export-option span {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2D3436;
-        }
-        
-        /* Recycle Info */
-        .recycle-info {
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            border: 1px solid #E9ECEF;
-        }
-        
-        .recycle-info i {
-            font-size: 32px;
-            color: #00B894;
-        }
-        
-        .recycle-info-text h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2D3436;
-            margin-bottom: 4px;
-        }
-        
-        .recycle-info-text p {
-            font-size: 13px;
-            color: #636E72;
-        }
-        
-        /* Date Picker Buttons */
-        .date-picker-btn {
-            padding: 10px 16px;
-            border: 2px solid #E9ECEF;
-            border-radius: 10px;
-            background: white;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .date-picker-btn.active {
-            background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
-            color: white;
-            border-color: transparent;
-        }
-        
-        /* Language Toggle */
-        .lang-toggle {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .lang-btn {
-            padding: 8px 16px;
-            border: 2px solid #E9ECEF;
-            border-radius: 8px;
-            background: white;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .lang-btn.active {
-            background: #6C5CE7;
-            color: white;
-            border-color: transparent;
+        /* Print Styles */
+        @media print {
+            .main-header,
+            .main-sidebar,
+            .mobile-bottom-nav,
+            .action-btn-group,
+            .search-box,
+            .no-print {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            table {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
     <div id="loading" class="loading">
-        <div class="spinner"></div>
-        <p class="loading-text">লোড হচ্ছে...</p>
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">লোড হচ্ছে...</p>
+        </div>
     </div>
     
     <!-- Login Page -->
     <div id="login-page" class="login-wrapper">
+        <div class="login-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
         <div class="login-card">
             <div style="text-align: center; margin-bottom: 30px;">
                 <div class="login-logo">
                     <i class="fas fa-store"></i>
                 </div>
                 <h1 class="login-title">বসনীসে হেসাব খাতা</h1>
-                <p class="login-subtitle">আপনার দোকানের সম্পূর্ণ প্রফেশনাল ব্যবস্থাপনা</p>
+                <p class="login-subtitle">প্রিমিয়াম বিজনেস ম্যানেজমেন্ট স্যুট</p>
             </div>
             
             <form id="login-form">
@@ -1574,6 +1801,13 @@
                     লগইন করুন
                 </button>
             </form>
+            
+            <div class="forgot-password">
+                <a href="#" id="forgot-password-btn">
+                    <i class="fas fa-question-circle"></i>
+                    পাসওয়ার্ড ভুলে গেছেন?
+                </a>
+            </div>
             
             <div class="login-demo">
                 <strong>ডেমো অ্যাকাউন্ট:</strong><br>
@@ -1602,7 +1836,11 @@
                     <span class="notification-badge" id="notification-badge">0</span>
                 </button>
                 
-                <div class="user-profile">
+                <button class="header-btn" onclick="openQuickSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+                
+                <div class="user-profile" onclick="showUserProfile()">
                     <div class="user-avatar" id="user-avatar">A</div>
                     <span class="user-name" id="user-name">Admin</span>
                 </div>
@@ -1626,6 +1864,8 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
+            
+            <div class="sidebar-section-title">মূল মেনু</div>
             
             <div class="sidebar-item active" onclick="showSection('dashboard')">
                 <div class="sidebar-item-icon"><i class="fas fa-chart-pie"></i></div>
@@ -1658,6 +1898,8 @@
                 <span class="sidebar-item-text">খরচ</span>
             </div>
             
+            <div class="sidebar-section-title">রিপোর্ট ও সেটিংস</div>
+            
             <div class="sidebar-item" onclick="showSection('reports')">
                 <div class="sidebar-item-icon"><i class="fas fa-chart-line"></i></div>
                 <span class="sidebar-item-text">রিপোর্ট</span>
@@ -1679,34 +1921,61 @@
         <main class="main-content" id="main-content">
             <!-- Dashboard Section -->
             <div id="dashboard-section" class="content-section active">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <div>
-                        <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 4px;">স্বাগতম! 👋</h2>
-                        <p style="color: #636E72; font-size: 13px;">আজকের ব্যবসার সারসংক্ষেপ</p>
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-content">
+                        <h2 class="welcome-title">স্বাগতম! 👋</h2>
+                        <p class="welcome-subtitle">আপনার আজকের ব্যবসার সারসংক্ষেপ</p>
+                        <div class="welcome-stats">
+                            <div class="welcome-stat">
+                                <i class="fas fa-chart-line"></i>
+                                <div>
+                                    <div>আজকের বিক্রি</div>
+                                    <strong id="welcome-today-sales">৳0</strong>
+                                </div>
+                            </div>
+                            <div class="welcome-stat">
+                                <i class="fas fa-boxes"></i>
+                                <div>
+                                    <div>মোট পণ্য</div>
+                                    <strong id="welcome-total-products">0</strong>
+                                </div>
+                            </div>
+                            <div class="welcome-stat">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <div>কাস্টমার</div>
+                                    <strong id="welcome-total-customers">0</strong>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" onclick="openSaleModal()">
-                        <i class="fas fa-plus"></i> নতুন বিক্রি
-                    </button>
                 </div>
                 
                 <!-- Investment Summary -->
                 <div class="investment-summary">
                     <div class="investment-card">
-                        <i class="fas fa-chart-line" style="color: #6C5CE7;"></i>
+                        <div class="investment-icon purple">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <div>
                             <div class="investment-label">মোট ইনভেস্ট</div>
                             <div class="investment-value" id="total-investment">৳0</div>
                         </div>
                     </div>
                     <div class="investment-card">
-                        <i class="fas fa-coins" style="color: #00B894;"></i>
+                        <div class="investment-icon green">
+                            <i class="fas fa-coins"></i>
+                        </div>
                         <div>
                             <div class="investment-label">মোট লাভ</div>
                             <div class="investment-value" id="total-profit">৳0</div>
                         </div>
                     </div>
                     <div class="investment-card">
-                        <i class="fas fa-chart-bar" style="color: #E17055;"></i>
+                        <div class="investment-icon orange">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
                         <div>
                             <div class="investment-label">মোট বিক্রি</div>
                             <div class="investment-value" id="total-sales-value">৳0</div>
@@ -1717,27 +1986,39 @@
                 <!-- Quick Actions -->
                 <div class="quick-actions">
                     <div class="quick-action" onclick="openProductModal()">
-                        <i class="fas fa-box"></i>
+                        <div class="quick-action-icon purple">
+                            <i class="fas fa-box"></i>
+                        </div>
                         <span>পণ্য যোগ</span>
                     </div>
                     <div class="quick-action" onclick="openSaleModal()">
-                        <i class="fas fa-cart-plus"></i>
+                        <div class="quick-action-icon green">
+                            <i class="fas fa-cart-plus"></i>
+                        </div>
                         <span>বিক্রি</span>
                     </div>
                     <div class="quick-action" onclick="openPurchaseModal()">
-                        <i class="fas fa-cart-arrow-down"></i>
+                        <div class="quick-action-icon orange">
+                            <i class="fas fa-cart-arrow-down"></i>
+                        </div>
                         <span>ক্রয়</span>
                     </div>
                     <div class="quick-action" onclick="openCustomerModal()">
-                        <i class="fas fa-user-plus"></i>
+                        <div class="quick-action-icon blue">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
                         <span>কাস্টমার</span>
                     </div>
                     <div class="quick-action" onclick="openExpenseModal()">
-                        <i class="fas fa-wallet"></i>
+                        <div class="quick-action-icon red">
+                            <i class="fas fa-wallet"></i>
+                        </div>
                         <span>খরচ</span>
                     </div>
                     <div class="quick-action" onclick="showSection('reports')">
-                        <i class="fas fa-chart-line"></i>
+                        <div class="quick-action-icon purple">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <span>রিপোর্ট</span>
                     </div>
                 </div>
@@ -1750,6 +2031,10 @@
                         </div>
                         <div class="stat-label">আজকের বিক্রি</div>
                         <div class="stat-value" id="today-sales">৳0</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12%</span>
+                        </div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('products')">
@@ -1758,6 +2043,10 @@
                         </div>
                         <div class="stat-label">মোট পণ্য</div>
                         <div class="stat-value" id="total-products">0</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8%</span>
+                        </div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('customers')">
@@ -1766,6 +2055,10 @@
                         </div>
                         <div class="stat-label">কাস্টমার</div>
                         <div class="stat-value" id="total-customers">0</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+15%</span>
+                        </div>
                     </div>
                     
                     <div class="stat-card" onclick="showSection('expenses')">
@@ -1774,6 +2067,10 @@
                         </div>
                         <div class="stat-label">আজকের খরচ</div>
                         <div class="stat-value" id="today-expenses">৳0</div>
+                        <div class="stat-trend down">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>-5%</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -1784,9 +2081,18 @@
                             <h3 class="card-title">বিক্রির চার্ট</h3>
                             <p class="card-subtitle">গত ৭ দিনের বিক্রির পরিসংখ্যান</p>
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-sm btn-info" onclick="exportAsPDF('sales-chart')">
-                                <i class="fas fa-download"></i>
+                        <div class="action-btn-group">
+                            <button class="action-btn info" onclick="exportAsPDF('sales-chart')">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn success" onclick="exportAsExcel('sales-chart')">
+                                <i class="fas fa-file-excel"></i> Excel
+                            </button>
+                            <button class="action-btn primary" onclick="printSection('sales-chart')">
+                                <i class="fas fa-print"></i> প্রিন্ট
+                            </button>
+                            <button class="action-btn warning" onclick="shareSection('sales-chart')">
+                                <i class="fas fa-share-alt"></i> শেয়ার
                             </button>
                         </div>
                     </div>
@@ -1798,21 +2104,38 @@
             
             <!-- Products Section -->
             <div id="products-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <div>
-                        <h2 style="font-size: 20px; font-weight: 800;">
+                        <h2 style="font-size: 24px; font-weight: 800;">
                             <i class="fas fa-boxes"></i> পণ্য ব্যবস্থাপনা
                         </h2>
-                        <p style="color: #636E72; font-size: 13px; margin-top: 4px;">আপনার দোকানের পণ্য পরিচালনা করুন</p>
+                        <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">আপনার দোকানের পণ্য পরিচালনা করুন</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openProductModal()">
-                        <i class="fas fa-plus"></i> নতুন পণ্য
-                    </button>
+                    <div class="action-btn-group">
+                        <button class="action-btn" onclick="exportAsPDF('products')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="action-btn" onclick="exportAsExcel('products')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button class="action-btn" onclick="printSection('products')">
+                            <i class="fas fa-print"></i> প্রিন্ট
+                        </button>
+                        <button class="action-btn" onclick="shareSection('products')">
+                            <i class="fas fa-share-alt"></i> শেয়ার
+                        </button>
+                        <button class="action-btn primary" onclick="openProductModal()">
+                            <i class="fas fa-plus"></i> নতুন পণ্য
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="product-search" placeholder="পণ্য খুঁজুন..." oninput="filterProducts()">
+                    <button class="search-clear" onclick="clearSearch('product-search')">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 
                 <div id="products-list"></div>
@@ -1820,19 +2143,41 @@
             
             <!-- Sales Section -->
             <div id="sales-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <div>
-                        <h2 style="font-size: 20px; font-weight: 800;">
+                        <h2 style="font-size: 24px; font-weight: 800;">
                             <i class="fas fa-cart-plus"></i> বিক্রি ব্যবস্থাপনা
                         </h2>
-                        <p style="color: #636E72; font-size: 13px; margin-top: 4px;">সকল বিক্রির হিসাব রাখুন</p>
+                        <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">সকল বিক্রির হিসাব রাখুন</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openSaleModal()">
-                        <i class="fas fa-plus"></i> নতুন বিক্রি
+                    <div class="action-btn-group">
+                        <button class="action-btn" onclick="exportAsPDF('sales')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="action-btn" onclick="exportAsExcel('sales')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button class="action-btn" onclick="printSection('sales')">
+                            <i class="fas fa-print"></i> প্রিন্ট
+                        </button>
+                        <button class="action-btn" onclick="shareSection('sales')">
+                            <i class="fas fa-share-alt"></i> শেয়ার
+                        </button>
+                        <button class="action-btn primary" onclick="openSaleModal()">
+                            <i class="fas fa-plus"></i> নতুন বিক্রি
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="sales-search" placeholder="বিক্রি খুঁজুন..." oninput="filterSales()">
+                    <button class="search-clear" onclick="clearSearch('sales-search')">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
-                <div class="table-container">
+                <div class="table-container" id="sales-table">
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -1853,19 +2198,41 @@
             
             <!-- Purchases Section -->
             <div id="purchases-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <div>
-                        <h2 style="font-size: 20px; font-weight: 800;">
+                        <h2 style="font-size: 24px; font-weight: 800;">
                             <i class="fas fa-cart-arrow-down"></i> ক্রয় ব্যবস্থাপনা
                         </h2>
-                        <p style="color: #636E72; font-size: 13px; margin-top: 4px;">নতুন পণ্য ক্রয়ের হিসাব</p>
+                        <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">নতুন পণ্য ক্রয়ের হিসাব</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openPurchaseModal()">
-                        <i class="fas fa-plus"></i> নতুন ক্রয়
+                    <div class="action-btn-group">
+                        <button class="action-btn" onclick="exportAsPDF('purchases')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="action-btn" onclick="exportAsExcel('purchases')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button class="action-btn" onclick="printSection('purchases')">
+                            <i class="fas fa-print"></i> প্রিন্ট
+                        </button>
+                        <button class="action-btn" onclick="shareSection('purchases')">
+                            <i class="fas fa-share-alt"></i> শেয়ার
+                        </button>
+                        <button class="action-btn primary" onclick="openPurchaseModal()">
+                            <i class="fas fa-plus"></i> নতুন ক্রয়
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="purchases-search" placeholder="ক্রয় খুঁজুন..." oninput="filterPurchases()">
+                    <button class="search-clear" onclick="clearSearch('purchases-search')">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
-                <div class="table-container">
+                <div class="table-container" id="purchases-table">
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -1885,15 +2252,37 @@
             
             <!-- Customers Section -->
             <div id="customers-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <div>
-                        <h2 style="font-size: 20px; font-weight: 800;">
+                        <h2 style="font-size: 24px; font-weight: 800;">
                             <i class="fas fa-users"></i> কাস্টমার ব্যবস্থাপনা
                         </h2>
-                        <p style="color: #636E72; font-size: 13px; margin-top: 4px;">আপনার কাস্টমারদের সম্পূর্ণ তথ্য</p>
+                        <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">আপনার কাস্টমারদের সম্পূর্ণ তথ্য</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openCustomerModal()">
-                        <i class="fas fa-plus"></i> নতুন কাস্টমার
+                    <div class="action-btn-group">
+                        <button class="action-btn" onclick="exportAsPDF('customers')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="action-btn" onclick="exportAsExcel('customers')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button class="action-btn" onclick="printSection('customers')">
+                            <i class="fas fa-print"></i> প্রিন্ট
+                        </button>
+                        <button class="action-btn" onclick="shareSection('customers')">
+                            <i class="fas fa-share-alt"></i> শেয়ার
+                        </button>
+                        <button class="action-btn primary" onclick="openCustomerModal()">
+                            <i class="fas fa-plus"></i> নতুন কাস্টমার
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="customers-search" placeholder="কাস্টমার খুঁজুন..." oninput="filterCustomers()">
+                    <button class="search-clear" onclick="clearSearch('customers-search')">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
@@ -1902,19 +2291,41 @@
             
             <!-- Expenses Section -->
             <div id="expenses-section" class="content-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <div>
-                        <h2 style="font-size: 20px; font-weight: 800;">
+                        <h2 style="font-size: 24px; font-weight: 800;">
                             <i class="fas fa-wallet"></i> খরচ ব্যবস্থাপনা
                         </h2>
-                        <p style="color: #636E72; font-size: 13px; margin-top: 4px;">দোকানের খরচের হিসাব</p>
+                        <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">দোকানের খরচের হিসাব</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openExpenseModal()">
-                        <i class="fas fa-plus"></i> নতুন খরচ
+                    <div class="action-btn-group">
+                        <button class="action-btn" onclick="exportAsPDF('expenses')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="action-btn" onclick="exportAsExcel('expenses')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button class="action-btn" onclick="printSection('expenses')">
+                            <i class="fas fa-print"></i> প্রিন্ট
+                        </button>
+                        <button class="action-btn" onclick="shareSection('expenses')">
+                            <i class="fas fa-share-alt"></i> শেয়ার
+                        </button>
+                        <button class="action-btn primary" onclick="openExpenseModal()">
+                            <i class="fas fa-plus"></i> নতুন খরচ
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="expenses-search" placeholder="খরচ খুঁজুন..." oninput="filterExpenses()">
+                    <button class="search-clear" onclick="clearSearch('expenses-search')">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
-                <div class="table-container">
+                <div class="table-container" id="expenses-table">
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -1933,16 +2344,30 @@
             
             <!-- Reports Section -->
             <div id="reports-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
                     <i class="fas fa-chart-line"></i> রিপোর্ট ও বিশ্লেষণ
                 </h2>
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">বিক্রি রিপোর্ট</h3>
-                        <button class="btn btn-sm btn-info" onclick="exportAsPDF('sales-report')">
-                            <i class="fas fa-download"></i> PDF
-                        </button>
+                        <div>
+                            <h3 class="card-title">বিক্রি রিপোর্ট</h3>
+                            <p class="card-subtitle">বিক্রির বিশ্লেষণ</p>
+                        </div>
+                        <div class="action-btn-group">
+                            <button class="action-btn info" onclick="exportAsPDF('sales-report')">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn success" onclick="exportAsExcel('sales-report')">
+                                <i class="fas fa-file-excel"></i> Excel
+                            </button>
+                            <button class="action-btn primary" onclick="printSection('sales-report')">
+                                <i class="fas fa-print"></i> প্রিন্ট
+                            </button>
+                            <button class="action-btn warning" onclick="shareSection('sales-report')">
+                                <i class="fas fa-share-alt"></i> শেয়ার
+                            </button>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="salesReportChart"></canvas>
@@ -1951,20 +2376,41 @@
                 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">খরচ রিপোর্ট</h3>
-                        <button class="btn btn-sm btn-info" onclick="exportAsPDF('expense-report')">
-                            <i class="fas fa-download"></i> PDF
-                        </button>
+                        <div>
+                            <h3 class="card-title">খরচ রিপোর্ট</h3>
+                            <p class="card-subtitle">খরচের বিশ্লেষণ</p>
+                        </div>
+                        <div class="action-btn-group">
+                            <button class="action-btn info" onclick="exportAsPDF('expense-report')">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn success" onclick="exportAsExcel('expense-report')">
+                                <i class="fas fa-file-excel"></i> Excel
+                            </button>
+                            <button class="action-btn primary" onclick="printSection('expense-report')">
+                                <i class="fas fa-print"></i> প্রিন্ট
+                            </button>
+                            <button class="action-btn warning" onclick="shareSection('expense-report')">
+                                <i class="fas fa-share-alt"></i> শেয়ার
+                            </button>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="expenseReportChart"></canvas>
                     </div>
                 </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">ব্যবসার সারসংক্ষেপ</h3>
+                    </div>
+                    <div id="report-summary" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;"></div>
+                </div>
             </div>
             
             <!-- Recycle Section -->
             <div id="recycle-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
                     <i class="fas fa-recycle"></i> রিসাইকেল বিন
                 </h2>
                 
@@ -1995,14 +2441,15 @@
             
             <!-- Settings Section -->
             <div id="settings-section" class="content-section">
-                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 24px;">
                     <i class="fas fa-cog"></i> সেটিংস
                 </h2>
                 
                 <!-- Dark Mode -->
                 <div class="settings-section">
                     <div class="settings-section-title">
-                        <i class="fas fa-moon"></i> ডার্ক মোড
+                        <i class="fas fa-moon"></i>
+                        ডার্ক মোড
                     </div>
                     <div class="settings-card">
                         <div class="settings-row">
@@ -2021,7 +2468,8 @@
                 <!-- Color Theme -->
                 <div class="settings-section">
                     <div class="settings-section-title">
-                        <i class="fas fa-palette"></i> কালার থিম
+                        <i class="fas fa-palette"></i>
+                        কালার থিম
                     </div>
                     <div class="settings-card">
                         <div class="color-theme-grid">
@@ -2064,7 +2512,7 @@
     <div id="sale-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">নতুন বিক্রি</h3>
+                <h3 class="modal-title"><i class="fas fa-cart-plus"></i> নতুন বিক্রি</h3>
                 <button class="modal-close" onclick="closeModal('sale-modal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2091,18 +2539,18 @@
                         </div>
                     </div>
                     
-                    <div style="background: #f8f9fa; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                    <div style="background: var(--light); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                             <span>মোট পণ্য:</span>
                             <strong id="cart-total-items">0</strong>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                             <span>মোট মূল্য:</span>
-                            <strong style="color: #6C5CE7; font-size: 20px;" id="cart-total-amount">৳0</strong>
+                            <strong style="color: var(--primary); font-size: 24px;" id="cart-total-amount">৳0</strong>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
                             <span>মোট লাভ:</span>
-                            <strong style="color: #00B894; font-size: 20px;" id="cart-total-profit">৳0</strong>
+                            <strong style="color: var(--success); font-size: 24px;" id="cart-total-profit">৳0</strong>
                         </div>
                     </div>
                     
@@ -2142,7 +2590,7 @@
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">নতুন পণ্য যোগ করুন</h3>
+                <h3 class="modal-title"><i class="fas fa-box"></i> নতুন পণ্য যোগ করুন</h3>
                 <button class="modal-close" onclick="closeModal('product-modal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2190,7 +2638,7 @@
     <div id="purchase-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">নতুন ক্রয়</h3>
+                <h3 class="modal-title"><i class="fas fa-cart-arrow-down"></i> নতুন ক্রয়</h3>
                 <button class="modal-close" onclick="closeModal('purchase-modal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2235,7 +2683,7 @@
     <div id="customer-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">নতুন কাস্টমার</h3>
+                <h3 class="modal-title"><i class="fas fa-user-plus"></i> নতুন কাস্টমার</h3>
                 <button class="modal-close" onclick="closeModal('customer-modal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2273,7 +2721,7 @@
     <div id="expense-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">নতুন খরচ</h3>
+                <h3 class="modal-title"><i class="fas fa-wallet"></i> নতুন খরচ</h3>
                 <button class="modal-close" onclick="closeModal('expense-modal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -2327,9 +2775,11 @@
             projectId: "basnise-hesab-khata",
             storageBucket: "basnise-hesab-khata.firebasestorage.app",
             messagingSenderId: "707770414615",
-            appId: "1:707770414615:web:c64488a739122d1ed9ce52"
+            appId: "1:707770414615:web:c64488a739122d1ed9ce52",
+            measurementId: "G-J6BCTJ7B5G"
         };
         
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.database();
@@ -2341,6 +2791,7 @@
         let salesChart = null;
         let salesReportChart = null;
         let expenseReportChart = null;
+        let currentCurrency = 'BDT';
         
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -2409,6 +2860,7 @@
                         currentUser = null;
                         document.getElementById('dashboard').style.display = 'none';
                         document.getElementById('login-page').style.display = 'flex';
+                        showNotification('লগআউট সফল!', 'success');
                     });
                 }
             });
@@ -2529,6 +2981,7 @@
                         todaySales += child.val().total;
                     });
                     document.getElementById('today-sales').textContent = formatCurrency(todaySales);
+                    document.getElementById('welcome-today-sales').textContent = formatCurrency(todaySales);
                 });
             
             // Total products
@@ -2536,12 +2989,14 @@
                 .then((snapshot) => {
                     document.getElementById('total-products').textContent = snapshot.numChildren();
                     document.getElementById('product-badge').textContent = snapshot.numChildren();
+                    document.getElementById('welcome-total-products').textContent = snapshot.numChildren();
                 });
             
             // Total customers
             db.ref('customers').once('value')
                 .then((snapshot) => {
                     document.getElementById('total-customers').textContent = snapshot.numChildren();
+                    document.getElementById('welcome-total-customers').textContent = snapshot.numChildren();
                 });
             
             // Today's expenses
@@ -2607,21 +3062,23 @@
                     const product = child.val();
                     const productId = child.key;
                     
-                    const stockColor = product.stock <= 5 ? '#E17055' : '#00B894';
+                    if (product.deleted) return;
+                    
+                    const stockColor = product.stock <= 5 ? 'var(--danger)' : 'var(--success)';
                     
                     productsList.innerHTML += `
-                        <div class="product-profile">
-                            <div class="product-profile-header">
+                        <div class="product-card" data-name="${product.name.toLowerCase()}" data-category="${product.category.toLowerCase()}">
+                            <div class="product-card-header">
                                 <div class="product-avatar">${product.name.charAt(0).toUpperCase()}</div>
                                 <div class="product-info">
                                     <div class="product-name">${product.name}</div>
                                     <div class="product-category"><i class="fas fa-tag"></i> ${product.category}</div>
                                 </div>
-                                <div style="display: flex; gap: 8px;">
-                                    <button onclick="editProduct('${productId}')" class="btn btn-primary btn-sm" title="সম্পাদনা">
+                                <div class="action-btn-group">
+                                    <button onclick="editProduct('${productId}')" class="action-btn primary" title="সম্পাদনা">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button onclick="deleteProduct('${productId}')" class="btn btn-danger btn-sm" title="মুছুন">
+                                    <button onclick="deleteProduct('${productId}')" class="action-btn danger" title="মুছুন">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -2640,13 +3097,17 @@
                                     <div class="product-stat-label">স্টক</div>
                                     <div class="product-stat-value" style="color: ${stockColor};">${product.stock}</div>
                                 </div>
+                                <div class="product-stat">
+                                    <div class="product-stat-label">লাভ</div>
+                                    <div class="product-stat-value" style="color: var(--success);">${formatCurrency(product.salePrice - product.purchasePrice)}</div>
+                                </div>
                             </div>
                             
                             <div class="product-actions">
-                                <button onclick="openSaleModal()" class="btn btn-success btn-sm">
+                                <button onclick="openSaleModal()" class="action-btn success">
                                     <i class="fas fa-cart-plus"></i> বিক্রি করুন
                                 </button>
-                                <button onclick="openPurchaseModal()" class="btn btn-warning btn-sm">
+                                <button onclick="openPurchaseModal()" class="action-btn warning">
                                     <i class="fas fa-cart-arrow-down"></i> ক্রয় করুন
                                 </button>
                             </div>
@@ -2658,85 +3119,16 @@
         
         function filterProducts() {
             const searchTerm = document.getElementById('product-search').value.toLowerCase();
-            const products = document.querySelectorAll('.product-profile');
+            const products = document.querySelectorAll('.product-card');
             
             products.forEach(product => {
-                const name = product.querySelector('.product-name').textContent.toLowerCase();
-                const category = product.querySelector('.product-category').textContent.toLowerCase();
+                const name = product.dataset.name;
+                const category = product.dataset.category;
                 
                 if (name.includes(searchTerm) || category.includes(searchTerm)) {
                     product.style.display = 'block';
                 } else {
                     product.style.display = 'none';
-                }
-            });
-        }
-        
-        // Product Form
-        document.getElementById('product-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('product-name').value;
-            const category = document.getElementById('product-category').value;
-            const purchasePrice = parseFloat(document.getElementById('product-purchase-price').value);
-            const salePrice = parseFloat(document.getElementById('product-sale-price').value);
-            const stock = parseInt(document.getElementById('product-stock').value);
-            
-            showLoading('পণ্য যোগ হচ্ছে...');
-            
-            try {
-                const productData = {
-                    name,
-                    category,
-                    purchasePrice,
-                    salePrice,
-                    stock,
-                    createdAt: Date.now(),
-                    createdBy: currentUser ? currentUser.uid : 'anonymous'
-                };
-                
-                await db.ref('products').push(productData);
-                
-                hideLoading();
-                closeModal('product-modal');
-                document.getElementById('product-form').reset();
-                
-                Swal.fire({ 
-                    icon: 'success', 
-                    title: 'সফল!', 
-                    text: 'পণ্য সফলভাবে যোগ হয়েছে',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-                
-                loadProducts();
-                loadDashboardData();
-                updateProductDropdowns();
-            } catch (error) {
-                hideLoading();
-                showNotification('পণ্য যোগ করা যায়নি! ' + error.message, 'error');
-            }
-        });
-        
-        function deleteProduct(productId) {
-            Swal.fire({
-                title: 'পণ্য মুছবেন?',
-                text: 'এই পণ্যটি মুছে ফেলা হবে',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#E17055',
-                cancelButtonColor: '#636E72',
-                confirmButtonText: 'হ্যাঁ, মুছুন',
-                cancelButtonText: 'বাতিল'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    try {
-                        await db.ref('products/' + productId).update({ deleted: true });
-                        showNotification('পণ্য মুছে ফেলা হয়েছে', 'success');
-                        loadProducts();
-                    } catch (error) {
-                        showNotification('মুছে ফেলা যায়নি!', 'error');
-                    }
                 }
             });
         }
@@ -2764,16 +3156,30 @@
                     const dateStr = date.toLocaleDateString('bn-BD');
                     
                     tbody.innerHTML += `
-                        <tr>
+                        <tr data-search="${sale.productName.toLowerCase()}">
                             <td>${dateStr}</td>
-                            <td>${sale.productName}</td>
+                            <td><strong>${sale.productName}</strong></td>
                             <td>${sale.quantity}</td>
                             <td>${formatCurrency(sale.total)}</td>
-                            <td style="color: #00B894; font-weight: 600;">${formatCurrency(sale.profit || 0)}</td>
-                            <td>${getPaymentMethodName(sale.paymentMethod)}</td>
+                            <td style="color: var(--success); font-weight: 700;">${formatCurrency(sale.profit || 0)}</td>
+                            <td><span style="background: var(--light); padding: 4px 8px; border-radius: 6px;">${getPaymentMethodName(sale.paymentMethod)}</span></td>
                         </tr>
                     `;
                 });
+            });
+        }
+        
+        function filterSales() {
+            const searchTerm = document.getElementById('sales-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#sales-body tr');
+            
+            rows.forEach(row => {
+                const data = row.dataset.search || row.textContent.toLowerCase();
+                if (data.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
         }
         
@@ -2785,6 +3191,326 @@
                 bikash: 'বিকাশ'
             };
             return methods[method] || method;
+        }
+        
+        // Purchases
+        function loadPurchases() {
+            db.ref('purchases').on('value', (snapshot) => {
+                const tbody = document.getElementById('purchases-body');
+                tbody.innerHTML = '';
+                
+                if (snapshot.numChildren() === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">কোনো ক্রয় নেই</td></tr>';
+                    return;
+                }
+                
+                const purchases = [];
+                snapshot.forEach((child) => {
+                    purchases.push({ id: child.key, ...child.val() });
+                });
+                
+                purchases.sort((a, b) => b.timestamp - a.timestamp);
+                
+                purchases.forEach(purchase => {
+                    const date = new Date(purchase.timestamp);
+                    const dateStr = date.toLocaleDateString('bn-BD');
+                    
+                    tbody.innerHTML += `
+                        <tr data-search="${purchase.productName.toLowerCase()} ${purchase.supplier.toLowerCase()}">
+                            <td>${dateStr}</td>
+                            <td><strong>${purchase.productName}</strong></td>
+                            <td>${purchase.quantity}</td>
+                            <td>${formatCurrency(purchase.total)}</td>
+                            <td>${purchase.supplier}</td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+        
+        function filterPurchases() {
+            const searchTerm = document.getElementById('purchases-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#purchases-body tr');
+            
+            rows.forEach(row => {
+                const data = row.dataset.search || row.textContent.toLowerCase();
+                if (data.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Customers
+        function loadCustomers() {
+            const customersList = document.getElementById('customers-list');
+            customersList.innerHTML = '';
+            
+            db.ref('customers').on('value', (snapshot) => {
+                customersList.innerHTML = '';
+                
+                if (snapshot.numChildren() === 0) {
+                    customersList.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><h4>কোনো কাস্টমার নেই</h4><p>নতুন কাস্টমার যোগ করুন</p></div>';
+                    return;
+                }
+                
+                snapshot.forEach((child) => {
+                    const customer = child.val();
+                    const customerId = child.key;
+                    
+                    customersList.innerHTML += `
+                        <div class="customer-card" data-search="${customer.name.toLowerCase()} ${customer.phone || ''}">
+                            <div class="customer-avatar">${customer.name.charAt(0).toUpperCase()}</div>
+                            <div class="customer-info">
+                                <div class="customer-name">${customer.name}</div>
+                                <div class="customer-contact">
+                                    <i class="fas fa-phone"></i> ${customer.phone || 'N/A'}
+                                    ${customer.address ? ` | <i class="fas fa-map-marker-alt"></i> ${customer.address}` : ''}
+                                </div>
+                            </div>
+                            <div class="customer-due">
+                                <div class="due-label">বাকি</div>
+                                <div class="due-amount">${formatCurrency(customer.due || 0)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+        }
+        
+        function filterCustomers() {
+            const searchTerm = document.getElementById('customers-search').value.toLowerCase();
+            const customers = document.querySelectorAll('.customer-card');
+            
+            customers.forEach(customer => {
+                const data = customer.dataset.search;
+                if (data.includes(searchTerm)) {
+                    customer.style.display = 'flex';
+                } else {
+                    customer.style.display = 'none';
+                }
+            });
+        }
+        
+        // Expenses
+        function loadExpenses() {
+            db.ref('expenses').on('value', (snapshot) => {
+                const tbody = document.getElementById('expenses-body');
+                tbody.innerHTML = '';
+                
+                if (snapshot.numChildren() === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px;">কোনো খরচ নেই</td></tr>';
+                    return;
+                }
+                
+                const expenses = [];
+                snapshot.forEach((child) => {
+                    expenses.push({ id: child.key, ...child.val() });
+                });
+                
+                expenses.sort((a, b) => b.timestamp - a.timestamp);
+                
+                expenses.forEach(expense => {
+                    const date = new Date(expense.timestamp);
+                    const dateStr = date.toLocaleDateString('bn-BD');
+                    
+                    tbody.innerHTML += `
+                        <tr data-search="${getExpenseTypeName(expense.type).toLowerCase()} ${expense.description.toLowerCase()}">
+                            <td>${dateStr}</td>
+                            <td><span style="background: var(--warning-light); padding: 4px 8px; border-radius: 6px;">${getExpenseTypeName(expense.type)}</span></td>
+                            <td>${expense.description}</td>
+                            <td style="font-weight: 700;">${formatCurrency(expense.amount)}</td>
+                        </tr>
+                    `;
+                });
+            });
+        }
+        
+        function filterExpenses() {
+            const searchTerm = document.getElementById('expenses-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#expenses-body tr');
+            
+            rows.forEach(row => {
+                const data = row.dataset.search || row.textContent.toLowerCase();
+                if (data.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        function getExpenseTypeName(type) {
+            const types = {
+                rent: 'ভাড়া',
+                salary: 'বেতন',
+                electricity: 'বিদ্যুৎ',
+                water: 'পানি',
+                internet: 'ইন্টারনেট',
+                other: 'অন্যান্য'
+            };
+            return types[type] || type;
+        }
+        
+        // Export Functions
+        function exportAsPDF(type) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            if (type === 'products') {
+                doc.text('পণ্য তালিকা', 14, 15);
+                doc.text(new Date().toLocaleDateString('bn-BD'), 14, 25);
+                
+                db.ref('products').once('value', (snapshot) => {
+                    const data = [];
+                    snapshot.forEach((child) => {
+                        const product = child.val();
+                        if (!product.deleted) {
+                            data.push([
+                                product.name,
+                                product.category,
+                                '৳' + product.purchasePrice.toFixed(2),
+                                '৳' + product.salePrice.toFixed(2),
+                                product.stock
+                            ]);
+                        }
+                    });
+                    
+                    doc.autoTable({
+                        head: [['পণ্য', 'ক্যাটাগরি', 'ক্রয় মূল্য', 'বিক্রয় মূল্য', 'স্টক']],
+                        body: data,
+                        startY: 35,
+                        theme: 'striped',
+                        headStyles: { fillColor: [108, 92, 231] }
+                    });
+                    
+                    doc.save('products_report.pdf');
+                });
+            } else if (type === 'sales') {
+                doc.text('বিক্রি রিপোর্ট', 14, 15);
+                doc.text(new Date().toLocaleDateString('bn-BD'), 14, 25);
+                
+                db.ref('sales').once('value', (snapshot) => {
+                    const data = [];
+                    snapshot.forEach((child) => {
+                        const sale = child.val();
+                        data.push([
+                            new Date(sale.timestamp).toLocaleDateString('bn-BD'),
+                            sale.productName,
+                            sale.quantity,
+                            '৳' + sale.total.toFixed(2),
+                            '৳' + (sale.profit || 0).toFixed(2),
+                            getPaymentMethodName(sale.paymentMethod)
+                        ]);
+                    });
+                    
+                    doc.autoTable({
+                        head: [['তারিখ', 'পণ্য', 'পরিমাণ', 'মূল্য', 'লাভ', 'পেমেন্ট']],
+                        body: data,
+                        startY: 35,
+                        theme: 'striped',
+                        headStyles: { fillColor: [108, 92, 231] }
+                    });
+                    
+                    doc.save('sales_report.pdf');
+                });
+            }
+            
+            showNotification('PDF ডাউনলোড হচ্ছে...', 'info');
+        }
+        
+        function exportAsExcel(type) {
+            const wb = XLSX.utils.book_new();
+            
+            if (type === 'products') {
+                db.ref('products').once('value', (snapshot) => {
+                    const data = [];
+                    snapshot.forEach((child) => {
+                        const product = child.val();
+                        if (!product.deleted) {
+                            data.push({
+                                'নাম': product.name,
+                                'ক্যাটাগরি': product.category,
+                                'ক্রয় মূল্য': product.purchasePrice,
+                                'বিক্রয় মূল্য': product.salePrice,
+                                'স্টক': product.stock,
+                                'লাভ': product.salePrice - product.purchasePrice
+                            });
+                        }
+                    });
+                    
+                    const ws = XLSX.utils.json_to_sheet(data);
+                    XLSX.utils.book_append_sheet(wb, ws, 'পণ্য');
+                    XLSX.writeFile(wb, 'products.xlsx');
+                    showNotification('Excel ডাউনলোড হয়েছে!', 'success');
+                });
+            } else if (type === 'sales') {
+                db.ref('sales').once('value', (snapshot) => {
+                    const data = [];
+                    snapshot.forEach((child) => {
+                        const sale = child.val();
+                        data.push({
+                            'তারিখ': new Date(sale.timestamp).toLocaleDateString('bn-BD'),
+                            'পণ্য': sale.productName,
+                            'পরিমাণ': sale.quantity,
+                            'মূল্য': sale.total,
+                            'লাভ': sale.profit,
+                            'পেমেন্ট': getPaymentMethodName(sale.paymentMethod)
+                        });
+                    });
+                    
+                    const ws = XLSX.utils.json_to_sheet(data);
+                    XLSX.utils.book_append_sheet(wb, ws, 'বিক্রি');
+                    XLSX.writeFile(wb, 'sales.xlsx');
+                    showNotification('Excel ডাউনলোড হয়েছে!', 'success');
+                });
+            }
+        }
+        
+        // Print Section
+        function printSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            
+            const printContent = section.innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `<div class="print-area">${printContent}</div>`;
+            window.print();
+            document.body.innerHTML = originalContent;
+            
+            // Reload the page to restore functionality
+            location.reload();
+        }
+        
+        // Share Section
+        function shareSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            
+            const text = section.textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'বসনীসে হেসাব খাতা',
+                    text: text.substring(0, 500)
+                }).catch((error) => console.log('Error sharing:', error));
+            } else {
+                navigator.clipboard.writeText(text.substring(0, 500))
+                    .then(() => showNotification('কন্টেন্ট কপি হয়েছে!', 'success'))
+                    .catch(() => showNotification('শেয়ার করা যায়নি!', 'error'));
+            }
+        }
+        
+        // Clear Search
+        function clearSearch(inputId) {
+            document.getElementById(inputId).value = '';
+            if (inputId === 'product-search') filterProducts();
+            if (inputId === 'sales-search') filterSales();
+            if (inputId === 'purchases-search') filterPurchases();
+            if (inputId === 'customers-search') filterCustomers();
+            if (inputId === 'expenses-search') filterExpenses();
         }
         
         // Sale Form
@@ -2843,9 +3569,9 @@
                                 <div class="cart-item-price">${formatCurrency(item.price)} × ${item.quantity} = ${formatCurrency(itemTotal)}</div>
                             </div>
                             <div class="cart-item-actions">
-                                <button type="button" class="cart-item-btn" style="background: #E8F5E9; color: #00B894;" onclick="updateCartQuantity(${index}, 1)">+</button>
-                                <button type="button" class="cart-item-btn" style="background: #FFF3E0; color: #F39C12;" onclick="updateCartQuantity(${index}, -1)">-</button>
-                                <button type="button" class="cart-item-btn" style="background: #FFEBEE; color: #E17055;" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="cart-item-btn" style="background: rgba(0,184,148,0.1); color: var(--success);" onclick="updateCartQuantity(${index}, 1)">+</button>
+                                <button type="button" class="cart-item-btn" style="background: rgba(253,203,110,0.1); color: var(--warning-dark);" onclick="updateCartQuantity(${index}, -1)">-</button>
+                                <button type="button" class="cart-item-btn" style="background: rgba(225,112,85,0.1); color: var(--danger);" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -2977,41 +3703,53 @@
             }
         });
         
-        // Purchases
-        function loadPurchases() {
-            db.ref('purchases').on('value', (snapshot) => {
-                const tbody = document.getElementById('purchases-body');
-                tbody.innerHTML = '';
+        // Product Form
+        document.getElementById('product-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('product-name').value;
+            const category = document.getElementById('product-category').value;
+            const purchasePrice = parseFloat(document.getElementById('product-purchase-price').value);
+            const salePrice = parseFloat(document.getElementById('product-sale-price').value);
+            const stock = parseInt(document.getElementById('product-stock').value);
+            
+            showLoading('পণ্য যোগ হচ্ছে...');
+            
+            try {
+                const productData = {
+                    name,
+                    category,
+                    purchasePrice,
+                    salePrice,
+                    stock,
+                    createdAt: Date.now(),
+                    createdBy: currentUser ? currentUser.uid : 'anonymous'
+                };
                 
-                if (snapshot.numChildren() === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">কোনো ক্রয় নেই</td></tr>';
-                    return;
-                }
+                await db.ref('products').push(productData);
                 
-                const purchases = [];
-                snapshot.forEach((child) => {
-                    purchases.push({ id: child.key, ...child.val() });
+                hideLoading();
+                closeModal('product-modal');
+                document.getElementById('product-form').reset();
+                
+                Swal.fire({ 
+                    icon: 'success', 
+                    title: 'সফল!', 
+                    text: 'পণ্য সফলভাবে যোগ হয়েছে',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
                 
-                purchases.sort((a, b) => b.timestamp - a.timestamp);
-                
-                purchases.forEach(purchase => {
-                    const date = new Date(purchase.timestamp);
-                    const dateStr = date.toLocaleDateString('bn-BD');
-                    
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${dateStr}</td>
-                            <td>${purchase.productName}</td>
-                            <td>${purchase.quantity}</td>
-                            <td>${formatCurrency(purchase.total)}</td>
-                            <td>${purchase.supplier}</td>
-                        </tr>
-                    `;
-                });
-            });
-        }
+                loadProducts();
+                loadDashboardData();
+                updateProductDropdowns();
+            } catch (error) {
+                hideLoading();
+                showNotification('পণ্য যোগ করা যায়নি! ' + error.message, 'error');
+            }
+        });
         
+        // Purchase Form
         document.getElementById('purchase-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3072,43 +3810,7 @@
             }
         });
         
-        // Customers
-        function loadCustomers() {
-            const customersList = document.getElementById('customers-list');
-            customersList.innerHTML = '';
-            
-            db.ref('customers').on('value', (snapshot) => {
-                customersList.innerHTML = '';
-                
-                if (snapshot.numChildren() === 0) {
-                    customersList.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><h4>কোনো কাস্টমার নেই</h4><p>নতুন কাস্টমার যোগ করুন</p></div>';
-                    return;
-                }
-                
-                snapshot.forEach((child) => {
-                    const customer = child.val();
-                    const customerId = child.key;
-                    
-                    customersList.innerHTML += `
-                        <div class="customer-profile">
-                            <div class="customer-avatar">${customer.name.charAt(0).toUpperCase()}</div>
-                            <div class="customer-info">
-                                <div class="customer-name">${customer.name}</div>
-                                <div class="customer-contact">
-                                    <i class="fas fa-phone"></i> ${customer.phone || 'N/A'}
-                                    ${customer.address ? ` | <i class="fas fa-map-marker-alt"></i> ${customer.address}` : ''}
-                                </div>
-                            </div>
-                            <div class="customer-due">
-                                <div class="due-label">বাকি</div>
-                                <div class="due-amount">${formatCurrency(customer.due || 0)}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
-        }
-        
+        // Customer Form
         document.getElementById('customer-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3150,52 +3852,7 @@
             }
         });
         
-        // Expenses
-        function loadExpenses() {
-            db.ref('expenses').on('value', (snapshot) => {
-                const tbody = document.getElementById('expenses-body');
-                tbody.innerHTML = '';
-                
-                if (snapshot.numChildren() === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px;">কোনো খরচ নেই</td></tr>';
-                    return;
-                }
-                
-                const expenses = [];
-                snapshot.forEach((child) => {
-                    expenses.push({ id: child.key, ...child.val() });
-                });
-                
-                expenses.sort((a, b) => b.timestamp - a.timestamp);
-                
-                expenses.forEach(expense => {
-                    const date = new Date(expense.timestamp);
-                    const dateStr = date.toLocaleDateString('bn-BD');
-                    
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${dateStr}</td>
-                            <td>${getExpenseTypeName(expense.type)}</td>
-                            <td>${expense.description}</td>
-                            <td>${formatCurrency(expense.amount)}</td>
-                        </tr>
-                    `;
-                });
-            });
-        }
-        
-        function getExpenseTypeName(type) {
-            const types = {
-                rent: 'ভাড়া',
-                salary: 'বেতন',
-                electricity: 'বিদ্যুৎ',
-                water: 'পানি',
-                internet: 'ইন্টারনেট',
-                other: 'অন্যান্য'
-            };
-            return types[type] || type;
-        }
-        
+        // Expense Form
         document.getElementById('expense-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -3280,8 +3937,10 @@
                     const product = child.val();
                     const productId = child.key;
                     
-                    saleSelect.innerHTML += `<option value="${productId}" data-name="${product.name}" data-price="${product.salePrice}" data-purchase-price="${product.purchasePrice}">${product.name} - ${formatCurrency(product.salePrice)}</option>`;
-                    purchaseSelect.innerHTML += `<option value="${productId}">${product.name}</option>`;
+                    if (!product.deleted) {
+                        saleSelect.innerHTML += `<option value="${productId}" data-name="${product.name}" data-price="${product.salePrice}" data-purchase-price="${product.purchasePrice}">${product.name} - ${formatCurrency(product.salePrice)}</option>`;
+                        purchaseSelect.innerHTML += `<option value="${productId}">${product.name}</option>`;
+                    }
                 });
             });
             
@@ -3302,6 +3961,7 @@
         function loadReports() {
             loadSalesReportChart();
             loadExpenseReportChart();
+            loadReportSummary();
         }
         
         function loadSalesChart() {
@@ -3349,7 +4009,8 @@
                             fill: true,
                             tension: 0.4,
                             pointRadius: 5,
-                            pointBackgroundColor: '#6C5CE7'
+                            pointBackgroundColor: '#6C5CE7',
+                            borderWidth: 3
                         }]
                     },
                     options: {
@@ -3365,6 +4026,11 @@
                                 beginAtZero: true,
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '৳' + value;
+                                    }
                                 }
                             },
                             x: {
@@ -3436,6 +4102,11 @@
                                 beginAtZero: true,
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '৳' + value;
+                                    }
                                 }
                             },
                             x: {
@@ -3491,7 +4162,8 @@
                             borderColor: '#E17055',
                             backgroundColor: 'rgba(225,112,85,0.1)',
                             fill: true,
-                            tension: 0.4
+                            tension: 0.4,
+                            borderWidth: 3
                         }]
                     },
                     options: {
@@ -3507,6 +4179,11 @@
                                 beginAtZero: true,
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '৳' + value;
+                                    }
                                 }
                             },
                             x: {
@@ -3516,6 +4193,46 @@
                             }
                         }
                     }
+                });
+            });
+        }
+        
+        function loadReportSummary() {
+            const summaryDiv = document.getElementById('report-summary');
+            
+            db.ref('sales').once('value', (salesSnapshot) => {
+                db.ref('expenses').once('value', (expensesSnapshot) => {
+                    let totalSales = 0;
+                    let totalProfit = 0;
+                    let totalExpenses = 0;
+                    
+                    salesSnapshot.forEach((child) => {
+                        totalSales += child.val().total;
+                        totalProfit += child.val().profit || 0;
+                    });
+                    
+                    expensesSnapshot.forEach((child) => {
+                        totalExpenses += child.val().amount;
+                    });
+                    
+                    summaryDiv.innerHTML = `
+                        <div style="text-align: center; padding: 20px; background: rgba(108,92,231,0.1); border-radius: 12px;">
+                            <div style="font-size: 13px; color: var(--gray);">মোট বিক্রি</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--primary);">${formatCurrency(totalSales)}</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(0,184,148,0.1); border-radius: 12px;">
+                            <div style="font-size: 13px; color: var(--gray);">মোট লাভ</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--success);">${formatCurrency(totalProfit)}</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(225,112,85,0.1); border-radius: 12px;">
+                            <div style="font-size: 13px; color: var(--gray);">মোট খরচ</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--danger);">${formatCurrency(totalExpenses)}</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(253,203,110,0.1); border-radius: 12px;">
+                            <div style="font-size: 13px; color: var(--gray);">নিট লাভ</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--warning-dark);">${formatCurrency(totalProfit - totalExpenses)}</div>
+                        </div>
+                    `;
                 });
             });
         }
@@ -3540,10 +4257,10 @@
                     tbody.innerHTML += `
                         <tr>
                             <td>পণ্য</td>
-                            <td>${product.name}</td>
+                            <td><strong>${product.name}</strong></td>
                             <td>${new Date(product.createdAt).toLocaleDateString('bn-BD')}</td>
                             <td>
-                                <button onclick="restoreProduct('${productId}')" class="btn btn-success btn-sm">
+                                <button onclick="restoreProduct('${productId}')" class="action-btn success">
                                     <i class="fas fa-undo"></i> রিস্টোর
                                 </button>
                             </td>
@@ -3559,56 +4276,11 @@
                     showNotification('পণ্য রিস্টোর করা হয়েছে', 'success');
                     loadProducts();
                     loadRecycleBin();
+                    updateProductDropdowns();
                 })
                 .catch((error) => {
                     showNotification('রিস্টোর করা যায়নি!', 'error');
                 });
-        }
-        
-        // Export
-        function exportAsPDF(type) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            let title = '';
-            let data = [];
-            
-            if (type === 'sales-chart') {
-                title = 'বিক্রি রিপোর্ট';
-                doc.text(title, 14, 15);
-                doc.text('গত ৭ দিনের বিক্রির পরিসংখ্যান', 14, 25);
-                
-                db.ref('sales').once('value', (snapshot) => {
-                    const sales = [];
-                    snapshot.forEach((child) => {
-                        const sale = child.val();
-                        sales.push(sale);
-                    });
-                    
-                    sales.sort((a, b) => a.timestamp - b.timestamp);
-                    
-                    sales.forEach(sale => {
-                        data.push([
-                            new Date(sale.timestamp).toLocaleDateString('bn-BD'),
-                            sale.productName,
-                            sale.quantity,
-                            formatCurrency(sale.total)
-                        ]);
-                    });
-                    
-                    doc.autoTable({
-                        head: [['তারিখ', 'পণ্য', 'পরিমাণ', 'মূল্য']],
-                        body: data,
-                        startY: 35,
-                        theme: 'striped',
-                        headStyles: { fillColor: [108, 92, 231] }
-                    });
-                    
-                    doc.save('sales_report.pdf');
-                });
-            }
-            
-            showNotification('PDF ডাউনলোড হচ্ছে...', 'info');
         }
         
         // Settings
@@ -3625,21 +4297,24 @@
         
         function changeColorTheme(theme, element) {
             const themes = {
-                purple: { primary: '#6C5CE7', primaryDark: '#5A4BD1' },
-                blue: { primary: '#0984E3', primaryDark: '#0366D6' },
-                green: { primary: '#00B894', primaryDark: '#00A381' },
-                red: { primary: '#E17055', primaryDark: '#D63031' }
+                purple: { primary: '#6C5CE7', primaryDark: '#5A4BD1', primaryLight: '#A29BFE' },
+                blue: { primary: '#0984E3', primaryDark: '#0366D6', primaryLight: '#74B9FF' },
+                green: { primary: '#00B894', primaryDark: '#00A381', primaryLight: '#55EFC4' },
+                red: { primary: '#E17055', primaryDark: '#D63031', primaryLight: '#FF7675' }
             };
             
             const themeColors = themes[theme];
             if (themeColors) {
                 document.documentElement.style.setProperty('--primary', themeColors.primary);
                 document.documentElement.style.setProperty('--primary-dark', themeColors.primaryDark);
+                document.documentElement.style.setProperty('--primary-light', themeColors.primaryLight);
                 
                 document.querySelectorAll('.color-theme-option').forEach(option => {
                     option.classList.remove('active');
                 });
-                element.classList.add('active');
+                if (element) {
+                    element.classList.add('active');
+                }
                 
                 localStorage.setItem('color_theme', theme);
             }
@@ -3660,9 +4335,9 @@
             };
             
             notification.innerHTML = `
-                <i class="fas ${icons[type] || icons.info}" style="font-size: 18px;"></i>
-                <span style="flex: 1; font-size: 13px;">${message}</span>
-                <button onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; color: #636E72;"><i class="fas fa-times"></i></button>
+                <i class="fas ${icons[type] || icons.info}" style="font-size: 20px;"></i>
+                <span style="flex: 1; font-size: 14px; font-weight: 500;">${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; color: var(--gray); font-size: 16px;"><i class="fas fa-times"></i></button>
             `;
             
             container.appendChild(notification);
@@ -3686,16 +4361,88 @@
         
         // Format Currency
         function formatCurrency(amount) {
-            return '৳' + parseFloat(amount).toFixed(2);
+            const symbols = {
+                'BDT': '৳',
+                'USD': '$',
+                'EUR': '€'
+            };
+            return (symbols[currentCurrency] || '৳') + parseFloat(amount).toFixed(2);
         }
         
-        // Show Notifications (Header)
-        function showNotifications() {
+        // Quick Search
+        function openQuickSearch() {
             Swal.fire({
-                title: 'নোটিফিকেশন',
-                html: '<p style="text-align: center; color: #636E72;">আপনার কোনো নতুন নোটিফিকেশন নেই</p>',
-                timer: 2000,
+                title: 'দ্রুত খুঁজুন',
+                input: 'text',
+                inputPlaceholder: 'পণ্য, কাস্টমার, বিক্রি...',
+                showCancelButton: true,
+                confirmButtonText: 'খুঁজুন',
+                cancelButtonText: 'বাতিল'
+            }).then((result) => {
+                if (result.value) {
+                    const searchTerm = result.value.toLowerCase();
+                    
+                    // Search products
+                    db.ref('products').once('value', (snapshot) => {
+                        let found = false;
+                        snapshot.forEach((child) => {
+                            const product = child.val();
+                            if (product.name.toLowerCase().includes(searchTerm)) {
+                                found = true;
+                                showNotification(`পণ্য পাওয়া গেছে: ${product.name}`, 'info');
+                            }
+                        });
+                        
+                        if (!found) {
+                            showNotification('কোনো পণ্য পাওয়া যায়নি', 'warning');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // User Profile
+        function showUserProfile() {
+            Swal.fire({
+                title: 'প্রোফাইল',
+                html: `
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #6C5CE7, #5A4BD1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700; margin: 0 auto 20px;">
+                            ${currentUser ? currentUser.email[0].toUpperCase() : 'A'}
+                        </div>
+                        <h3 style="margin-bottom: 10px;">${currentUser ? currentUser.email : 'Unknown'}</h3>
+                        <p style="color: var(--gray);">প্রিমিয়াম ইউজার</p>
+                    </div>
+                `,
+                showCloseButton: true,
                 showConfirmButton: false
+            });
+        }
+        
+        // Delete Product
+        function deleteProduct(productId) {
+            Swal.fire({
+                title: 'পণ্য মুছবেন?',
+                text: 'এই পণ্যটি রিসাইকেল বিনে রাখা হবে',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#E17055',
+                cancelButtonColor: '#636E72',
+                confirmButtonText: 'হ্যাঁ, মুছুন',
+                cancelButtonText: 'বাতিল'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await db.ref('products/' + productId).update({ deleted: true });
+                        showNotification('পণ্য মুছে ফেলা হয়েছে', 'success');
+                        loadProducts();
+                        loadRecycleBin();
+                        loadDashboardData();
+                        updateProductDropdowns();
+                    } catch (error) {
+                        showNotification('মুছে ফেলা যায়নি!', 'error');
+                    }
+                }
             });
         }
         
@@ -3747,6 +4494,50 @@
                 });
             });
         }
+        
+        // Show Notifications
+        function showNotifications() {
+            Swal.fire({
+                title: 'নোটিফিকেশন',
+                html: '<p style="text-align: center; color: var(--gray);">আপনার কোনো নতুন নোটিফিকেশন নেই</p>',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+        
+        // Forgot Password
+        document.getElementById('forgot-password-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            Swal.fire({
+                title: 'পাসওয়ার্ড রিসেট',
+                input: 'email',
+                inputPlaceholder: 'আপনার ইমেইল',
+                showCancelButton: true,
+                confirmButtonText: 'রিসেট লিংক পাঠান',
+                cancelButtonText: 'বাতিল',
+                showLoaderOnConfirm: true,
+                preConfirm: async (email) => {
+                    try {
+                        await auth.sendPasswordResetEmail(email);
+                        return true;
+                    } catch (error) {
+                        Swal.showValidationMessage(`ভুল হয়েছে: ${error.message}`);
+                        return false;
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে!',
+                        text: 'আপনার ইমেইল চেক করুন',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>

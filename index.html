@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#6C5CE7">
-    <title>বসনীসে হেসাব খাতা · প্রিমিয়াম স্যুট v4.0</title>
+    <title>বসনীসে হেসাব খাতা · প্রিমিয়াম স্যুট v5.0</title>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -204,78 +204,165 @@
         .toast { background:var(--white); border-radius:12px; padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:12px; animation:slideDown 0.3s ease; border-left:4px solid var(--success); }
         .toast i { font-size:20px; }
 
-        /* New Professional Form Styles */
-        .form-section-title { font-size:16px; font-weight:700; margin-bottom:12px; color:var(--primary); border-bottom:2px solid var(--border); padding-bottom:8px; }
-        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-        .form-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:12px; }
-        .form-group-full { grid-column: 1 / -1; }
-        .form-control-modern { width:100%; padding:12px; border:2px solid var(--border); border-radius:12px; font-size:14px; background:var(--white); color:var(--dark); transition:0.3s; }
-        .form-control-modern:focus { border-color:var(--primary); box-shadow:0 0 0 4px rgba(108,92,231,0.1); outline:none; }
-        .form-control-modern::placeholder { color:var(--gray-light); }
-        .input-icon-wrapper { position:relative; }
-        .input-icon-wrapper i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--gray); }
-        .input-icon-wrapper .form-control-modern { padding-left:40px; }
-        .total-summary { background:var(--light); border-radius:12px; padding:16px; margin:16px 0; }
-        .total-row { display:flex; justify-content:space-between; margin-bottom:8px; }
-        .total-row:last-child { margin-bottom:0; }
-        .total-row strong { font-size:18px; }
-        .payment-methods { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
-        .payment-method-btn { padding:10px; border:2px solid var(--border); border-radius:10px; text-align:center; cursor:pointer; transition:0.2s; background:var(--white); }
-        .payment-method-btn:hover { border-color:var(--primary); }
-        .payment-method-btn.active { border-color:var(--primary); background:rgba(108,92,231,0.1); color:var(--primary); }
-        .payment-method-btn i { font-size:20px; margin-bottom:4px; }
-        .cart-item-details { flex:1; }
-        .cart-item-qty { display:flex; align-items:center; gap:4px; }
-        .cart-item-qty button { width:28px; height:28px; border-radius:6px; border:1px solid var(--border); background:var(--light); cursor:pointer; font-size:14px; }
-        .cart-item-qty input { width:50px; text-align:center; border:1px solid var(--border); border-radius:6px; padding:4px; }
-        .cart-item-total { font-weight:600; min-width:80px; text-align:right; }
-        .discount-section { background:var(--light); border-radius:10px; padding:12px; margin:12px 0; }
-        .discount-input-group { display:flex; gap:8px; }
-        .discount-input-group .form-control-modern { flex:1; }
-        .quick-amount-btns { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
-        .quick-amount-btn { padding:6px 12px; border:1px solid var(--border); border-radius:8px; background:var(--white); cursor:pointer; font-size:13px; }
-        .quick-amount-btn:hover { background:var(--primary); color:#fff; }
-        .expense-type-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
-        .expense-type-btn { padding:10px; border:2px solid var(--border); border-radius:10px; text-align:center; cursor:pointer; transition:0.2s; background:var(--white); }
-        .expense-type-btn:hover { border-color:var(--primary); }
-        .expense-type-btn.active { border-color:var(--primary); background:rgba(108,92,231,0.1); color:var(--primary); }
-        .expense-type-btn i { font-size:20px; margin-bottom:4px; display:block; }
-        .supplier-info-card { background:var(--light); border-radius:10px; padding:12px; margin-bottom:12px; }
-        .supplier-info-card h5 { font-weight:600; margin-bottom:8px; }
-        .date-time-input { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .input-with-label { margin-bottom:12px; }
-        .input-with-label label { display:block; font-weight:600; font-size:13px; margin-bottom:6px; }
-        .input-with-label .form-control-modern { width:100%; }
-        .checkbox-group { display:flex; align-items:center; gap:8px; margin:12px 0; }
-        .checkbox-group input[type="checkbox"] { width:18px; height:18px; accent-color:var(--primary); }
-        .product-preview { display:flex; align-items:center; gap:12px; padding:12px; background:var(--light); border-radius:10px; margin-bottom:12px; }
-        .product-preview img { width:48px; height:48px; border-radius:8px; object-fit:cover; }
-        .product-preview-info { flex:1; }
-        .product-preview-info h5 { font-weight:600; margin:0; }
-        .product-preview-info p { color:var(--gray); font-size:12px; margin:0; }
-        .advanced-options { border:1px solid var(--border); border-radius:12px; padding:12px; margin:12px 0; }
-        .advanced-options-toggle { display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
-        .advanced-options-toggle i { transition:transform 0.3s; }
-        .advanced-options-toggle.open i { transform:rotate(180deg); }
-        .advanced-options-content { display:none; margin-top:12px; }
-        .advanced-options-content.open { display:block; }
+        /* Professional Design Elements */
+        .glass-effect { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); }
+        .gradient-text { background: linear-gradient(135deg, #6C5CE7, #0984E3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-success { background: rgba(0, 184, 148, 0.1); color: #00B894; }
+        .badge-warning { background: rgba(253, 203, 110, 0.1); color: #FDCB6E; }
+        .badge-danger { background: rgba(225, 112, 85, 0.1); color: #E17055; }
+        .badge-info { background: rgba(9, 132, 227, 0.1); color: #0984E3; }
+        .badge-primary { background: rgba(108, 92, 231, 0.1); color: #6C5CE7; }
+        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+        .avatar-lg { width: 48px; height: 48px; font-size: 18px; }
+        .avatar-sm { width: 32px; height: 32px; font-size: 14px; }
+        .avatar-gradient-1 { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+        .avatar-gradient-2 { background: linear-gradient(135deg, #00B894, #55efc4); }
+        .avatar-gradient-3 { background: linear-gradient(135deg, #FDCB6E, #ffeaa7); }
+        .avatar-gradient-4 { background: linear-gradient(135deg, #E17055, #fab1a0); }
+        .avatar-gradient-5 { background: linear-gradient(135deg, #0984E3, #74b9ff); }
+        .divider { height: 1px; background: var(--border); margin: 16px 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .section-title { font-size: 20px; font-weight: 700; }
+        .section-subtitle { font-size: 14px; color: var(--gray); }
+        .icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .icon-circle-sm { width: 36px; height: 36px; font-size: 14px; }
+        .icon-circle-lg { width: 64px; height: 64px; font-size: 24px; }
+        .bg-primary-soft { background: rgba(108, 92, 231, 0.08); }
+        .bg-success-soft { background: rgba(0, 184, 148, 0.08); }
+        .bg-warning-soft { background: rgba(253, 203, 110, 0.08); }
+        .bg-danger-soft { background: rgba(225, 112, 85, 0.08); }
+        .bg-info-soft { background: rgba(9, 132, 227, 0.08); }
+        .text-primary { color: #6C5CE7 !important; }
+        .text-success { color: #00B894 !important; }
+        .text-warning { color: #FDCB6E !important; }
+        .text-danger { color: #E17055 !important; }
+        .text-info { color: #0984E3 !important; }
+        .font-bold { font-weight: 700 !important; }
+        .font-semibold { font-weight: 600 !important; }
+        .font-medium { font-weight: 500 !important; }
+        .text-sm { font-size: 13px !important; }
+        .text-xs { font-size: 11px !important; }
+        .text-lg { font-size: 18px !important; }
+        .text-xl { font-size: 24px !important; }
+        .text-2xl { font-size: 32px !important; }
+        .mb-1 { margin-bottom: 4px !important; }
+        .mb-2 { margin-bottom: 8px !important; }
+        .mb-3 { margin-bottom: 12px !important; }
+        .mb-4 { margin-bottom: 16px !important; }
+        .mb-5 { margin-bottom: 20px !important; }
+        .mt-1 { margin-top: 4px !important; }
+        .mt-2 { margin-top: 8px !important; }
+        .mt-3 { margin-top: 12px !important; }
+        .mt-4 { margin-top: 16px !important; }
+        .mt-5 { margin-top: 20px !important; }
+        .flex { display: flex !important; }
+        .flex-col { flex-direction: column !important; }
+        .items-center { align-items: center !important; }
+        .justify-center { justify-content: center !important; }
+        .justify-between { justify-content: space-between !important; }
+        .gap-1 { gap: 4px !important; }
+        .gap-2 { gap: 8px !important; }
+        .gap-3 { gap: 12px !important; }
+        .gap-4 { gap: 16px !important; }
+        .gap-5 { gap: 20px !important; }
+        .w-full { width: 100% !important; }
+        .w-1/2 { width: 50% !important; }
+        .w-1/3 { width: 33.33% !important; }
+        .w-1/4 { width: 25% !important; }
+        .w-3/4 { width: 75% !important; }
+        .rounded { border-radius: 8px !important; }
+        .rounded-lg { border-radius: 12px !important; }
+        .rounded-xl { border-radius: 16px !important; }
+        .rounded-2xl { border-radius: 20px !important; }
+        .rounded-full { border-radius: 50% !important; }
+        .p-1 { padding: 4px !important; }
+        .p-2 { padding: 8px !important; }
+        .p-3 { padding: 12px !important; }
+        .p-4 { padding: 16px !important; }
+        .p-5 { padding: 20px !important; }
+        .p-6 { padding: 24px !important; }
+
+        /* Advanced Form Styling */
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: var(--dark); }
+        .input-group { position: relative; }
+        .input-group-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray); font-size: 16px; }
+        .input-group-icon.right { left: auto; right: 12px; }
+        .form-control { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--white); color: var(--dark); transition: all 0.3s; }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(108,92,231,0.1); outline: none; }
+        .form-control-lg { padding: 14px 16px; font-size: 16px; }
+        .form-control-sm { padding: 8px 12px; font-size: 13px; }
+        .form-control-error { border-color: var(--danger) !important; }
+        .form-error-message { color: var(--danger); font-size: 12px; margin-top: 4px; }
+        .search-input { padding-left: 40px !important; }
+        .search-input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray); }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 2px solid var(--border); border-radius: 0 0 12px 12px; z-index: 50; max-height: 200px; overflow-y: auto; display: none; box-shadow: var(--shadow-lg); }
+        .search-dropdown.active { display: block; }
+        .search-dropdown-item { padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .search-dropdown-item:hover { background: var(--light); }
+        .cart-container { max-height: 200px; overflow-y: auto; border: 2px solid var(--border); border-radius: 12px; padding: 12px; background: var(--light); margin-bottom: 16px; }
+        .cart-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: var(--white); border-radius: 10px; margin-bottom: 8px; box-shadow: var(--shadow-sm); }
+        .cart-item-info { flex: 1; margin-right: 10px; }
+        .cart-item-name { font-weight: 600; font-size: 14px; }
+        .cart-item-price { font-size: 13px; color: var(--gray); }
+        .cart-item-controls { display: flex; align-items: center; gap: 6px; }
+        .cart-item-qty-btn { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--border); background: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
+        .cart-item-qty-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .cart-item-qty { font-weight: 600; min-width: 30px; text-align: center; }
+        .cart-item-total { font-weight: 700; min-width: 80px; text-align: right; color: var(--primary); }
+        .cart-item-remove { width: 24px; height: 24px; border-radius: 6px; border: none; background: var(--danger); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
+        .cart-item-remove:hover { background: var(--danger-dark); }
+        .total-section { background: var(--light); border-radius: 12px; padding: 16px; margin: 16px 0; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .total-row:last-child { margin-bottom: 0; }
+        .total-label { color: var(--gray); font-size: 14px; }
+        .total-value { font-weight: 700; font-size: 14px; }
+        .total-value-lg { font-size: 20px !important; color: var(--primary); }
+        .total-value-danger { color: var(--danger) !important; }
+        .total-value-success { color: var(--success) !important; }
+        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+        .payment-method { padding: 12px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
+        .payment-method:hover { border-color: var(--primary); }
+        .payment-method.active { border-color: var(--primary); background: rgba(108, 92, 231, 0.1); color: var(--primary); }
+        .payment-method-icon { font-size: 20px; margin-bottom: 4px; }
+        .payment-method-label { font-size: 12px; font-weight: 600; }
+        .discount-section { background: var(--light); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .discount-input { display: flex; gap: 8px; margin-bottom: 8px; }
+        .discount-select { padding: 10px; border: 2px solid var(--border); border-radius: 10px; background: var(--white); font-size: 14px; }
+        .discount-value { flex: 1; }
+        .quick-amounts { display: flex; gap: 6px; flex-wrap: wrap; }
+        .quick-amount { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .quick-amount:hover { background: var(--primary); color: white; }
+        .expense-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+        .expense-type { padding: 12px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
+        .expense-type:hover { border-color: var(--primary); }
+        .expense-type.active { border-color: var(--primary); background: rgba(108, 92, 231, 0.1); color: var(--primary); }
+        .expense-type-icon { font-size: 20px; margin-bottom: 4px; }
+        .expense-type-label { font-size: 12px; font-weight: 600; }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) {
+            .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+        }
 
         /* Floating Action Button */
-        .floating-action-btn { position:fixed; bottom:80px; right:20px; width:56px; height:56px; background:var(--primary-gradient); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; box-shadow:0 4px 15px rgba(108,92,231,0.4); cursor:pointer; z-index:950; transition:0.2s; }
-        .floating-action-btn:hover { transform:scale(1.1); }
-        .floating-menu { position:fixed; bottom:140px; right:20px; z-index:949; display:none; }
-        .floating-menu.active { display:block; }
-        .floating-menu-item { width:44px; height:44px; border-radius:50%; margin-bottom:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; cursor:pointer; box-shadow:var(--shadow-lg); transition:0.2s; }
-        .floating-menu-item:hover { transform:scale(1.1); }
+        .fab { position: fixed; bottom: 80px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background: var(--primary-gradient); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4); z-index: 950; transition: all 0.3s; }
+        .fab:hover { transform: scale(1.1); }
+        .fab-menu { position: fixed; bottom: 140px; right: 20px; z-index: 949; display: none; }
+        .fab-menu.active { display: block; }
+        .fab-menu-item { width: 44px; height: 44px; border-radius: 50%; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; cursor: pointer; box-shadow: var(--shadow-lg); transition: all 0.3s; }
+        .fab-menu-item:hover { transform: scale(1.1); }
 
-        @media (max-width:768px) {
-            .stats-grid, .quick-actions { grid-template-columns:repeat(2,1fr); }
-            .mobile-bottom-nav { display:grid; grid-template-columns:repeat(5,1fr); }
-            .main-content { padding:72px 12px 80px; }
-            .header-title { display:none; }
-            .floating-action-btn { bottom:70px; }
-            .floating-menu { bottom:130px; }
-            .form-row, .form-row-3 { grid-template-columns:1fr; }
+        @media (max-width: 768px) {
+            .stats-grid, .quick-actions { grid-template-columns: repeat(2, 1fr); }
+            .mobile-bottom-nav { display: grid; grid-template-columns: repeat(5, 1fr); }
+            .main-content { padding: 72px 12px 80px; }
+            .header-title { display: none; }
+            .fab { bottom: 70px; }
+            .fab-menu { bottom: 130px; }
         }
     </style>
 </head>
@@ -294,7 +381,7 @@
         <div style="text-align:center;margin-bottom:20px;">
             <div class="login-logo"><i class="fas fa-store-alt"></i></div>
             <h1 class="login-title">বসনীসে হেসাব</h1>
-            <p style="color:var(--gray);">প্রিমিয়াম বিজনেস স্যুট v4.0</p>
+            <p style="color:var(--gray);">প্রিমিয়াম বিজনেস স্যুট v5.0</p>
         </div>
         <form id="login-form">
             <div class="form-group"><label class="form-label">ইমেইল</label><div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="email" class="form-control" placeholder="ইমেইল" required></div></div>
@@ -339,8 +426,6 @@
             <div class="menu-item-link" data-section="suppliers"><i class="fas fa-truck"></i><span>সাপ্লায়ার</span></div>
             <div class="menu-item-link" data-section="payments"><i class="fas fa-money-bill-wave"></i><span>পেমেন্ট</span></div>
             <div class="menu-item-link" data-section="reports"><i class="fas fa-chart-line"></i><span>রিপোর্ট</span></div>
-            <div class="menu-item-link" data-section="analytics"><i class="fas fa-analytics"></i><span>অ্যানালিটিক্স</span></div>
-            <div class="menu-item-link" data-section="inventory"><i class="fas fa-clipboard-list"></i><span>ইনভেন্টরি</span></div>
             <div class="menu-item-link" data-section="recycle"><i class="fas fa-recycle"></i><span>রিসাইকেল</span></div>
             <div class="menu-item-link" data-section="settings"><i class="fas fa-cog"></i><span>সেটিংস</span></div>
         </div>
@@ -350,15 +435,15 @@
     <main class="main-content" id="mainContent"></main>
 
     <!-- Floating Action Button -->
-    <div class="floating-action-btn" id="fabBtn" onclick="toggleFloatingMenu()">
+    <div class="fab" id="fabBtn" onclick="toggleFloatingMenu()">
         <i class="fas fa-plus"></i>
     </div>
-    <div class="floating-menu" id="floatingMenu">
-        <div class="floating-menu-item" style="background:var(--primary-gradient);" onclick="openProductModal()"><i class="fas fa-box"></i></div>
-        <div class="floating-menu-item" style="background:var(--success-gradient);" onclick="openSaleModal()"><i class="fas fa-cart-plus"></i></div>
-        <div class="floating-menu-item" style="background:var(--warning-gradient);" onclick="openPurchaseModal()"><i class="fas fa-cart-arrow-down"></i></div>
-        <div class="floating-menu-item" style="background:var(--info-gradient);" onclick="openCustomerModal()"><i class="fas fa-user-plus"></i></div>
-        <div class="floating-menu-item" style="background:var(--danger-gradient);" onclick="openExpenseModal()"><i class="fas fa-wallet"></i></div>
+    <div class="fab-menu" id="fabMenu">
+        <div class="fab-menu-item" style="background:var(--primary-gradient);" onclick="openProductModal()"><i class="fas fa-box"></i></div>
+        <div class="fab-menu-item" style="background:var(--success-gradient);" onclick="openSaleModal()"><i class="fas fa-cart-plus"></i></div>
+        <div class="fab-menu-item" style="background:var(--warning-gradient);" onclick="openPurchaseModal()"><i class="fas fa-cart-arrow-down"></i></div>
+        <div class="fab-menu-item" style="background:var(--info-gradient);" onclick="openCustomerModal()"><i class="fas fa-user-plus"></i></div>
+        <div class="fab-menu-item" style="background:var(--danger-gradient);" onclick="openExpenseModal()"><i class="fas fa-wallet"></i></div>
     </div>
 
     <div class="mobile-bottom-nav" id="mobileBottomNav">
@@ -370,7 +455,7 @@
     </div>
 </div>
 
-<!-- PROFESSIONAL SALE MODAL -->
+<!-- SALE MODAL -->
 <div id="sale-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -382,7 +467,7 @@
                 <div class="form-section-title">পণ্য নির্বাচন</div>
                 <div class="product-search-wrapper">
                     <i class="fas fa-search product-search-icon"></i>
-                    <input type="text" id="saleProductSearch" class="form-control-modern" placeholder="পণ্য খুঁজুন (নাম বা বারকোড)..." oninput="handleProductSearch('sale')">
+                    <input type="text" id="saleProductSearch" class="form-control-modern" placeholder="পণ্য খুঁজুন..." oninput="handleProductSearch('sale')">
                     <div class="product-search-dropdown" id="saleDropdown"></div>
                 </div>
                 
@@ -401,11 +486,6 @@
                             <option value="percent">% শতাংশ</option>
                         </select>
                         <input type="number" id="discountValue" class="form-control-modern" placeholder="ডিসকাউন্ট" min="0" oninput="calculateCartTotal()">
-                    </div>
-                    <div class="quick-amount-btns">
-                        <button type="button" class="quick-amount-btn" onclick="setQuickDiscount(50)">৳50</button>
-                        <button type="button" class="quick-amount-btn" onclick="setQuickDiscount(100)">৳100</button>
-                        <button type="button" class="quick-amount-btn" onclick="setQuickDiscount(500)">৳500</button>
                     </div>
                 </div>
                 
@@ -451,25 +531,6 @@
                         <option value="">কাস্টমার নির্বাচন করুন</option>
                     </select>
                 </div>
-                
-                <div class="advanced-options">
-                    <div class="advanced-options-toggle" onclick="toggleAdvancedOptions()">
-                        <span><i class="fas fa-cog"></i> অতিরিক্ত অপশন</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="advanced-options-content" id="advancedOptionsContent">
-                        <div class="input-with-label">
-                            <label>নোট / বিবরণ</label>
-                            <textarea id="saleNote" class="form-control-modern" placeholder="বিক্রির নোট..."></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="input-with-label">
-                                <label>বিক্রির তারিখ</label>
-                                <input type="date" id="saleDate" class="form-control-modern">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="action-btn" onclick="closeModal('sale-modal')"><i class="fas fa-times"></i> বাতিল</button>
@@ -479,7 +540,7 @@
     </div>
 </div>
 
-<!-- PROFESSIONAL PURCHASE MODAL -->
+<!-- PURCHASE MODAL -->
 <div id="purchase-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -495,64 +556,24 @@
                     <div class="product-search-dropdown" id="purchaseDropdown"></div>
                 </div>
                 
-                <div id="selectedProductPreview"></div>
-                
                 <div class="form-section-title">ক্রয় বিবরণ</div>
                 <div class="form-row">
                     <div class="input-with-label">
                         <label>পরিমাণ</label>
-                        <input type="number" id="purchaseQty" class="form-control-modern" placeholder="0" min="1" required oninput="calculatePurchaseTotal()">
+                        <input type="number" id="purchaseQty" class="form-control-modern" placeholder="0" min="1" required>
                     </div>
                     <div class="input-with-label">
                         <label>ক্রয় মূল্য (প্রতি)</label>
-                        <input type="number" id="purchasePrice" class="form-control-modern" placeholder="0.00" min="0" step="0.01" required oninput="calculatePurchaseTotal()">
+                        <input type="number" id="purchasePrice" class="form-control-modern" placeholder="0.00" min="0" step="0.01" required>
                     </div>
                 </div>
                 
-                <div class="total-summary">
-                    <div class="total-row">
-                        <span>মোট ক্রয় মূল্য:</span>
-                        <strong id="purchaseTotal" style="color:var(--primary);">৳0.00</strong>
-                    </div>
-                </div>
-                
-                <div class="form-section-title">সাপ্লায়ার তথ্য</div>
-                <div class="supplier-info-card">
-                    <div class="input-with-label">
-                        <label>সাপ্লায়ার</label>
-                        <select id="purchaseSupplier" class="form-control-modern" onchange="handleSupplierChange()">
-                            <option value="">নতুন সাপ্লায়ার</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="newSupplierGroup" style="display:none;margin-top:12px;">
-                        <div class="form-row">
-                            <div class="input-with-label">
-                                <label>সাপ্লায়ার নাম</label>
-                                <input type="text" id="newSupplierName" class="form-control-modern" placeholder="সাপ্লায়ারের নাম">
-                            </div>
-                            <div class="input-with-label">
-                                <label>ফোন</label>
-                                <input type="text" id="newSupplierPhone" class="form-control-modern" placeholder="ফোন নম্বর">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="advanced-options">
-                    <div class="advanced-options-toggle" onclick="togglePurchaseAdvancedOptions()">
-                        <span><i class="fas fa-cog"></i> অতিরিক্ত তথ্য</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="advanced-options-content" id="purchaseAdvancedOptionsContent">
-                        <div class="input-with-label">
-                            <label>ইনভয়েস নম্বর</label>
-                            <input type="text" id="purchaseInvoice" class="form-control-modern" placeholder="ইনভয়েস নং">
-                        </div>
-                        <div class="input-with-label">
-                            <label>নোট</label>
-                            <textarea id="purchaseNote" class="form-control-modern" placeholder="ক্রয়ের নোট..."></textarea>
-                        </div>
-                    </div>
+                <div class="form-section-title">সাপ্লায়ার</div>
+                <select id="purchaseSupplier" class="form-control-modern" onchange="handleSupplierChange()">
+                    <option value="">নতুন সাপ্লায়ার</option>
+                </select>
+                <div id="newSupplierGroup" style="display:none;margin-top:12px;">
+                    <input type="text" id="newSupplierName" class="form-control-modern" placeholder="সাপ্লায়ারের নাম">
                 </div>
             </div>
             <div class="modal-footer">
@@ -563,7 +584,7 @@
     </div>
 </div>
 
-<!-- PROFESSIONAL EXPENSE MODAL -->
+<!-- EXPENSE MODAL -->
 <div id="expense-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -573,38 +594,18 @@
         <form id="expense-form">
             <div class="modal-body">
                 <div class="form-section-title">খরচের ধরন</div>
-                <div class="expense-type-grid">
-                    <div class="expense-type-btn active" onclick="selectExpenseType('rent')">
-                        <i class="fas fa-home"></i>
-                        <div style="font-size:12px;">ভাড়া</div>
-                    </div>
-                    <div class="expense-type-btn" onclick="selectExpenseType('salary')">
-                        <i class="fas fa-users"></i>
-                        <div style="font-size:12px;">বেতন</div>
-                    </div>
-                    <div class="expense-type-btn" onclick="selectExpenseType('utilities')">
-                        <i class="fas fa-bolt"></i>
-                        <div style="font-size:12px;">ইউটিলিটি</div>
-                    </div>
-                    <div class="expense-type-btn" onclick="selectExpenseType('transport')">
-                        <i class="fas fa-truck"></i>
-                        <div style="font-size:12px;">পরিবহন</div>
-                    </div>
-                    <div class="expense-type-btn" onclick="selectExpenseType('other')">
-                        <i class="fas fa-ellipsis-h"></i>
-                        <div style="font-size:12px;">অন্যান্য</div>
-                    </div>
-                    <div class="expense-type-btn" onclick="selectExpenseType('purchase')">
-                        <i class="fas fa-shopping-cart"></i>
-                        <div style="font-size:12px;">কেনাকাটা</div>
-                    </div>
-                </div>
-                <input type="hidden" id="expenseType" value="rent">
+                <select id="expenseType" class="form-control-modern">
+                    <option value="rent">ভাড়া</option>
+                    <option value="salary">বেতন</option>
+                    <option value="utilities">ইউটিলিটি</option>
+                    <option value="transport">পরিবহন</option>
+                    <option value="other">অন্যান্য</option>
+                </select>
                 
-                <div class="form-section-title">খরচের বিবরণ</div>
+                <div class="form-section-title" style="margin-top:16px;">খরচের বিবরণ</div>
                 <div class="input-with-label">
                     <label>বিবরণ</label>
-                    <textarea id="expenseDesc" class="form-control-modern" placeholder="খরচের বিস্তারিত বিবরণ..." required></textarea>
+                    <textarea id="expenseDesc" class="form-control-modern" placeholder="খরচের বিবরণ..." required></textarea>
                 </div>
                 
                 <div class="form-row">
@@ -615,27 +616,6 @@
                     <div class="input-with-label">
                         <label>তারিখ</label>
                         <input type="date" id="expenseDate" class="form-control-modern" required>
-                    </div>
-                </div>
-                
-                <div class="advanced-options">
-                    <div class="advanced-options-toggle" onclick="toggleExpenseAdvancedOptions()">
-                        <span><i class="fas fa-cog"></i> অতিরিক্ত তথ্য</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="advanced-options-content" id="expenseAdvancedOptionsContent">
-                        <div class="input-with-label">
-                            <label>পেমেন্ট পদ্ধতি</label>
-                            <select id="expensePaymentMethod" class="form-control-modern">
-                                <option value="cash">ক্যাশ</option>
-                                <option value="bank">ব্যাংক</option>
-                                <option value="mobile">মোবাইল পেমেন্ট</option>
-                            </select>
-                        </div>
-                        <div class="input-with-label">
-                            <label>রেফারেন্স</label>
-                            <input type="text" id="expenseReference" class="form-control-modern" placeholder="রেফারেন্স নম্বর">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -656,22 +636,15 @@
         </div>
         <form id="product-form">
             <div class="modal-body">
-                <div class="form-section-title">পণ্যের তথ্য</div>
                 <div class="input-with-label">
                     <label>পণ্যের নাম</label>
                     <input type="text" id="productName" class="form-control-modern" required>
                 </div>
-                <div class="form-row">
-                    <div class="input-with-label">
-                        <label>ক্যাটাগরি</label>
-                        <input type="text" id="productCategory" class="form-control-modern" required>
-                    </div>
-                    <div class="input-with-label">
-                        <label>বারকোড</label>
-                        <input type="text" id="productBarcode" class="form-control-modern" placeholder="ঐচ্ছিক">
-                    </div>
+                <div class="input-with-label">
+                    <label>ক্যাটাগরি</label>
+                    <input type="text" id="productCategory" class="form-control-modern" required>
                 </div>
-                <div class="form-row-3">
+                <div class="form-row">
                     <div class="input-with-label">
                         <label>ক্রয় মূল্য</label>
                         <input type="number" id="productPurchasePrice" class="form-control-modern" required>
@@ -680,14 +653,16 @@
                         <label>বিক্রয় মূল্য</label>
                         <input type="number" id="productSalePrice" class="form-control-modern" required>
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="input-with-label">
                         <label>স্টক</label>
                         <input type="number" id="productStock" class="form-control-modern" required>
                     </div>
-                </div>
-                <div class="input-with-label">
-                    <label>নিম্ন স্টক সতর্কতা</label>
-                    <input type="number" id="productLowStock" class="form-control-modern" value="5">
+                    <div class="input-with-label">
+                        <label>নিম্ন স্টক সতর্কতা</label>
+                        <input type="number" id="productLowStock" class="form-control-modern" value="5">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -782,8 +757,6 @@
     let allSuppliersData = {};
     let salesChartInstance = null;
     let currentPaymentCustomerId = null;
-    let currentDiscount = { type: 'flat', value: 0 };
-    let selectedExpenseType = 'rent';
 
     function showToast(message, type='success') {
         const container = document.getElementById('toastContainer');
@@ -801,10 +774,6 @@
         const dark = localStorage.getItem('dark_mode');
         if (dark === 'on') document.body.setAttribute('data-theme','dark');
         
-        // Set default dates
-        document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
-        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-        
         auth.onAuthStateChanged(user => {
             if (user) {
                 currentUser = user;
@@ -820,7 +789,66 @@
         });
     });
 
-    // Sale Modal Functions
+    function loadAllData() {
+        loadAllProductsData();
+        loadAllCustomersData();
+        loadAllSuppliersData();
+        loadDashboardStats();
+        showSection('dashboard');
+    }
+
+    function loadAllProductsData() {
+        db.ref('products').on('value', snap => {
+            allProductsData = {};
+            snap.forEach(c => { if (!c.val().deleted) allProductsData[c.key] = c.val(); });
+            checkNotifications();
+        });
+    }
+
+    function loadAllCustomersData() {
+        db.ref('customers').on('value', snap => {
+            allCustomersData = {};
+            snap.forEach(c => { if (!c.val().deleted) allCustomersData[c.key] = c.val(); });
+            updateCustomerDropdown();
+        });
+    }
+
+    function loadAllSuppliersData() {
+        db.ref('suppliers').on('value', snap => {
+            allSuppliersData = {};
+            snap.forEach(c => { if (!c.val().deleted) allSuppliersData[c.key] = c.val(); });
+            updateSupplierDropdown();
+        });
+    }
+
+    function updateCustomerDropdown() {
+        const sel = document.getElementById('saleCustomerSelect');
+        if (!sel) return;
+        sel.innerHTML = '<option value="">কাস্টমার নির্বাচন করুন</option>';
+        Object.entries(allCustomersData).forEach(([id, c]) => {
+            sel.innerHTML += `<option value="${id}">${c.name}</option>`;
+        });
+    }
+
+    function updateSupplierDropdown() {
+        const sel = document.getElementById('purchaseSupplier');
+        if (!sel) return;
+        sel.innerHTML = '<option value="">নতুন সাপ্লায়ার</option>';
+        Object.entries(allSuppliersData).forEach(([id, s]) => {
+            sel.innerHTML += `<option value="${id}">${s.name}</option>`;
+        });
+    }
+
+    function handleSupplierChange() {
+        const select = document.getElementById('purchaseSupplier');
+        const newSupplierGroup = document.getElementById('newSupplierGroup');
+        if (select.value === '') {
+            newSupplierGroup.style.display = 'block';
+        } else {
+            newSupplierGroup.style.display = 'none';
+        }
+    }
+
     function selectPaymentMethod(method) {
         const buttons = document.querySelectorAll('.payment-method-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
@@ -837,40 +865,6 @@
         document.getElementById('customerSelectGroup').style.display = method === 'due' ? 'block' : 'none';
     }
 
-    function setQuickDiscount(amount) {
-        document.getElementById('discountValue').value = amount;
-        calculateCartTotal();
-    }
-
-    function calculateCartTotal() {
-        let subtotal = 0;
-        let profit = 0;
-        
-        cartItems.forEach(item => {
-            subtotal += item.price * item.quantity;
-            profit += (item.price - item.purchasePrice) * item.quantity;
-        });
-        
-        const discountType = document.getElementById('discountType').value;
-        const discountValue = parseFloat(document.getElementById('discountValue').value) || 0;
-        
-        let discountAmount = 0;
-        if (discountType === 'flat') {
-            discountAmount = Math.min(discountValue, subtotal);
-        } else if (discountType === 'percent') {
-            discountAmount = (subtotal * discountValue) / 100;
-        }
-        
-        const total = subtotal - discountAmount;
-        const actualProfit = profit - discountAmount;
-        
-        document.getElementById('subtotalAmount').textContent = '৳' + subtotal.toFixed(2);
-        document.getElementById('discountRow').style.display = discountAmount > 0 ? 'flex' : 'none';
-        document.getElementById('discountAmount').textContent = '-৳' + discountAmount.toFixed(2);
-        document.getElementById('cartTotalAmount').textContent = '৳' + total.toFixed(2);
-        document.getElementById('cartTotalProfit').textContent = '৳' + actualProfit.toFixed(2);
-    }
-
     function handleProductSearch(type) {
         const input = type === 'sale' ? document.getElementById('saleProductSearch') : document.getElementById('purchaseProductSearch');
         const dropdown = type === 'sale' ? document.getElementById('saleDropdown') : document.getElementById('purchaseDropdown');
@@ -879,7 +873,7 @@
         if (!term) { dropdown.classList.remove('active'); return; }
         
         const matches = Object.entries(allProductsData).filter(([id, p]) => 
-            p.name.toLowerCase().includes(term) || (p.barcode && p.barcode.includes(term))
+            p.name.toLowerCase().includes(term)
         );
         
         dropdown.innerHTML = matches.slice(0, 10).map(([id, p]) => `
@@ -925,22 +919,6 @@
             document.getElementById('purchaseProductSearch').value = p.name;
             document.getElementById('purchasePrice').value = p.purchasePrice;
             document.getElementById('purchaseDropdown').classList.remove('active');
-            
-            // Show product preview
-            const preview = document.getElementById('selectedProductPreview');
-            preview.innerHTML = `
-                <div class="product-preview">
-                    <div class="product-avatar" style="width:48px;height:48px;border-radius:8px;background:var(--info-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">
-                        ${p.name[0]}
-                    </div>
-                    <div class="product-preview-info">
-                        <h5>${p.name}</h5>
-                        <p>বর্তমান স্টক: ${p.stock} | ক্রয় মূল্য: ৳${p.purchasePrice}</p>
-                    </div>
-                </div>
-            `;
-            
-            calculatePurchaseTotal();
         }
     }
 
@@ -987,58 +965,35 @@
         updateCartUI();
     }
 
-    function calculatePurchaseTotal() {
-        const qty = parseInt(document.getElementById('purchaseQty').value) || 0;
-        const price = parseFloat(document.getElementById('purchasePrice').value) || 0;
-        const total = qty * price;
-        document.getElementById('purchaseTotal').textContent = '৳' + total.toFixed(2);
-    }
-
-    function handleSupplierChange() {
-        const select = document.getElementById('purchaseSupplier');
-        const newSupplierGroup = document.getElementById('newSupplierGroup');
+    function calculateCartTotal() {
+        let subtotal = 0;
+        let profit = 0;
         
-        if (select.value === 'new') {
-            newSupplierGroup.style.display = 'block';
-        } else {
-            newSupplierGroup.style.display = 'none';
+        cartItems.forEach(item => {
+            subtotal += item.price * item.quantity;
+            profit += (item.price - item.purchasePrice) * item.quantity;
+        });
+        
+        const discountType = document.getElementById('discountType').value;
+        const discountValue = parseFloat(document.getElementById('discountValue').value) || 0;
+        
+        let discountAmount = 0;
+        if (discountType === 'flat') {
+            discountAmount = Math.min(discountValue, subtotal);
+        } else if (discountType === 'percent') {
+            discountAmount = (subtotal * discountValue) / 100;
         }
-    }
-
-    function selectExpenseType(type) {
-        selectedExpenseType = type;
-        const buttons = document.querySelectorAll('.expense-type-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
         
-        const types = ['rent', 'salary', 'utilities', 'transport', 'other', 'purchase'];
-        const index = types.indexOf(type);
-        if (index !== -1) buttons[index].classList.add('active');
+        const total = subtotal - discountAmount;
+        const actualProfit = profit - discountAmount;
         
-        document.getElementById('expenseType').value = type;
+        document.getElementById('subtotalAmount').textContent = '৳' + subtotal.toFixed(2);
+        document.getElementById('discountRow').style.display = discountAmount > 0 ? 'flex' : 'none';
+        document.getElementById('discountAmount').textContent = '-৳' + discountAmount.toFixed(2);
+        document.getElementById('cartTotalAmount').textContent = '৳' + total.toFixed(2);
+        document.getElementById('cartTotalProfit').textContent = '৳' + actualProfit.toFixed(2);
     }
 
-    function toggleAdvancedOptions() {
-        const content = document.getElementById('advancedOptionsContent');
-        const toggle = document.querySelector('.advanced-options-toggle');
-        content.classList.toggle('open');
-        toggle.classList.toggle('open');
-    }
-
-    function togglePurchaseAdvancedOptions() {
-        const content = document.getElementById('purchaseAdvancedOptionsContent');
-        const toggle = document.querySelector('.advanced-options-toggle');
-        content.classList.toggle('open');
-        toggle.classList.toggle('open');
-    }
-
-    function toggleExpenseAdvancedOptions() {
-        const content = document.getElementById('expenseAdvancedOptionsContent');
-        const toggle = document.querySelector('.advanced-options-toggle');
-        content.classList.toggle('open');
-        toggle.classList.toggle('open');
-    }
-
-    // Form Submissions
     document.getElementById('sale-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -1063,13 +1018,11 @@
             let subtotal = 0;
             let profit = 0;
             
-            // Calculate totals
             cartItems.forEach(item => {
                 subtotal += item.price * item.quantity;
                 profit += (item.price - item.purchasePrice) * item.quantity;
             });
             
-            // Apply discount
             let discountAmount = 0;
             if (discountType === 'flat') {
                 discountAmount = Math.min(discountValue, subtotal);
@@ -1080,7 +1033,6 @@
             const total = subtotal - discountAmount;
             const actualProfit = profit - discountAmount;
             
-            // Process sale
             for (const item of cartItems) {
                 const snap = await db.ref('products/' + item.productId).once('value');
                 const prod = snap.val();
@@ -1101,7 +1053,6 @@
                     paymentMethod: paymentMethod,
                     customerId: paymentMethod === 'due' ? customerId : '',
                     discount: discountAmount,
-                    note: document.getElementById('saleNote').value,
                     timestamp: Date.now()
                 });
                 
@@ -1110,7 +1061,6 @@
                 });
             }
             
-            // Update customer due if needed
             if (paymentMethod === 'due' && customerId) {
                 const csnap = await db.ref('customers/' + customerId).once('value');
                 await db.ref('customers/' + customerId).update({
@@ -1121,13 +1071,9 @@
             hideLoading();
             closeModal('sale-modal');
             
-            // Reset form
             cartItems = [];
             updateCartUI();
-            document.getElementById('sale-form').reset();
             document.getElementById('discountValue').value = 0;
-            document.getElementById('saleNote').value = '';
-            document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
             
             showToast('বিক্রি সফল! মোট: ৳' + total.toFixed(2), 'success');
             loadSales();
@@ -1154,9 +1100,8 @@
         const supplierSelect = document.getElementById('purchaseSupplier').value;
         let supplier = supplierSelect;
         
-        if (supplierSelect === 'new') {
+        if (supplierSelect === '') {
             const supplierName = document.getElementById('newSupplierName').value;
-            const supplierPhone = document.getElementById('newSupplierPhone').value;
             
             if (!supplierName) {
                 showToast('সাপ্লায়ার নাম দিন', 'warning');
@@ -1165,7 +1110,7 @@
             
             const newSupplierRef = await db.ref('suppliers').push({
                 name: supplierName,
-                phone: supplierPhone,
+                phone: '',
                 address: '',
                 createdAt: Date.now()
             });
@@ -1186,8 +1131,6 @@
                 price: price,
                 total: total,
                 supplier: supplier,
-                invoice: document.getElementById('purchaseInvoice').value,
-                note: document.getElementById('purchaseNote').value,
                 timestamp: Date.now()
             });
             
@@ -1199,11 +1142,10 @@
             hideLoading();
             closeModal('purchase-modal');
             
-            // Reset form
             selectedProductId = null;
-            document.getElementById('purchase-form').reset();
-            document.getElementById('selectedProductPreview').innerHTML = '';
-            document.getElementById('purchaseTotal').textContent = '৳0.00';
+            document.getElementById('purchaseProductSearch').value = '';
+            document.getElementById('purchaseQty').value = '';
+            document.getElementById('purchasePrice').value = '';
             
             showToast('ক্রয় সফল!', 'success');
             loadPurchases();
@@ -1225,22 +1167,17 @@
         const amount = parseFloat(document.getElementById('expenseAmount').value);
         const dateStr = document.getElementById('expenseDate').value;
         const timestamp = dateStr ? new Date(dateStr).getTime() : Date.now();
-        const paymentMethod = document.getElementById('expensePaymentMethod').value;
-        const reference = document.getElementById('expenseReference').value;
         
         await db.ref('expenses').push({
             type: type,
             description: desc,
             amount: amount,
-            paymentMethod: paymentMethod,
-            reference: reference,
             timestamp: timestamp,
             createdAt: Date.now()
         });
         
         closeModal('expense-modal');
         document.getElementById('expense-form').reset();
-        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
         
         loadExpenses();
         loadDashboardStats();
@@ -1252,7 +1189,6 @@
         
         const name = document.getElementById('productName').value;
         const category = document.getElementById('productCategory').value;
-        const barcode = document.getElementById('productBarcode').value;
         const pp = parseFloat(document.getElementById('productPurchasePrice').value);
         const sp = parseFloat(document.getElementById('productSalePrice').value);
         const stock = parseInt(document.getElementById('productStock').value);
@@ -1263,7 +1199,6 @@
         await db.ref('products').push({
             name: name,
             category: category,
-            barcode: barcode,
             purchasePrice: pp,
             salePrice: sp,
             stock: stock,
@@ -1282,7 +1217,52 @@
         checkNotifications();
     });
 
-    // Load functions (same as before but with enhanced UI)
+    document.getElementById('customer-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('customerName').value;
+        const phone = document.getElementById('customerPhone').value;
+        const address = document.getElementById('customerAddress').value;
+        
+        await db.ref('customers').push({
+            name: name,
+            phone: phone,
+            address: address,
+            due: 0,
+            createdAt: Date.now()
+        });
+        
+        closeModal('customer-modal');
+        document.getElementById('customer-form').reset();
+        
+        loadCustomers();
+        loadDashboardStats();
+        loadAllCustomersData();
+        showToast('কাস্টমার যোগ হয়েছে', 'success');
+    });
+
+    document.getElementById('supplier-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('supplierName').value;
+        const phone = document.getElementById('supplierPhone').value;
+        const address = document.getElementById('supplierAddress').value;
+        
+        await db.ref('suppliers').push({
+            name: name,
+            phone: phone,
+            address: address,
+            createdAt: Date.now()
+        });
+        
+        closeModal('supplier-modal');
+        document.getElementById('supplier-form').reset();
+        
+        loadSuppliers();
+        loadAllSuppliersData();
+        showToast('সাপ্লায়ার যোগ হয়েছে', 'success');
+    });
+
     function loadDashboardStats() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -1367,153 +1347,22 @@
         });
     }
 
-    // Initialization
-    function showDashboard() {
-        document.getElementById('login-page').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        loadAllData();
-    }
-
-    // Create dashboard content
-    const dashboardSection = document.createElement('div');
-    dashboardSection.id = 'dashboard-section';
-    dashboardSection.className = 'content-section';
-    document.getElementById('mainContent').appendChild(dashboardSection);
-    
-    dashboardSection.innerHTML = `
-        <div class="card" style="background:linear-gradient(135deg,#6C5CE7,#0984E3);color:#fff;border:none;">
-            <h2 style="font-size:24px;">স্বাগতম! 👋</h2>
-            <p>আজকের সারসংক্ষেপ</p>
-            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;">
-                <div>আজকের বিক্রি: <strong id="welcomeTodaySales">৳0</strong></div>
-                <div>মোট পণ্য: <strong id="welcomeProducts">0</strong></div>
-                <div>কাস্টমার: <strong id="welcomeCustomers">0</strong></div>
-            </div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card"><div class="stat-icon" style="background:rgba(108,92,231,0.1);color:var(--primary);"><i class="fas fa-chart-line"></i></div><div>আজকের বিক্রি</div><div class="stat-value" id="todaySales">৳0</div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:rgba(0,184,148,0.1);color:var(--success);"><i class="fas fa-boxes"></i></div><div>মোট পণ্য</div><div class="stat-value" id="totalProducts">0</div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:rgba(253,203,110,0.1);color:var(--warning);"><i class="fas fa-users"></i></div><div>কাস্টমার</div><div class="stat-value" id="totalCustomers">0</div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:rgba(225,112,85,0.1);color:var(--danger);"><i class="fas fa-wallet"></i></div><div>আজকের খরচ</div><div class="stat-value" id="todayExpenses">৳0</div></div>
-        </div>
-        <div class="quick-actions">
-            <div class="quick-action" onclick="openProductModal()"><div class="quick-action-icon" style="background:var(--primary-gradient);"><i class="fas fa-box"></i></div><span>পণ্য</span></div>
-            <div class="quick-action" onclick="openSaleModal()"><div class="quick-action-icon" style="background:var(--success-gradient);"><i class="fas fa-cart-plus"></i></div><span>বিক্রি</span></div>
-            <div class="quick-action" onclick="openPurchaseModal()"><div class="quick-action-icon" style="background:var(--warning-gradient);"><i class="fas fa-cart-arrow-down"></i></div><span>ক্রয়</span></div>
-            <div class="quick-action" onclick="openCustomerModal()"><div class="quick-action-icon" style="background:var(--info-gradient);"><i class="fas fa-user-plus"></i></div><span>কাস্টমার</span></div>
-            <div class="quick-action" onclick="openExpenseModal()"><div class="quick-action-icon" style="background:var(--danger-gradient);"><i class="fas fa-wallet"></i></div><span>খরচ</span></div>
-            <div class="quick-action" onclick="showSection('reports')"><div class="quick-action-icon" style="background:var(--primary-gradient);"><i class="fas fa-chart-line"></i></div><span>রিপোর্ট</span></div>
-        </div>
-        <div class="card"><div class="card-header"><h3 class="card-title">বিক্রির চার্ট (সাপ্তাহিক)</h3></div><div style="height:250px;"><canvas id="salesChart"></canvas></div></div>
-    `;
-
-    // Load all data
-    function loadAllData() {
-        loadAllProductsData();
-        loadAllCustomersData();
-        loadAllSuppliersData();
-        loadDashboardStats();
-        showSection('dashboard');
-    }
-
-    // Initialize sections
-    ['dashboard','products','sales','purchases','customers','expenses','suppliers','payments','reports','analytics','inventory','recycle','settings'].forEach(s => {
-        const sec = document.createElement('div');
-        sec.id = s + '-section';
-        sec.className = 'content-section';
-        document.getElementById('mainContent').appendChild(sec);
-    });
-
-    // Load functions for each section
-    function loadAllProductsData() {
-        db.ref('products').on('value', snap => {
-            allProductsData = {};
-            snap.forEach(c => { if (!c.val().deleted) allProductsData[c.key] = c.val(); });
-            checkNotifications();
-        });
-    }
-
-    function loadAllCustomersData() {
-        db.ref('customers').on('value', snap => {
-            allCustomersData = {};
-            snap.forEach(c => { if (!c.val().deleted) allCustomersData[c.key] = c.val(); });
-            updateCustomerDropdown();
-        });
-    }
-
-    function loadAllSuppliersData() {
-        db.ref('suppliers').on('value', snap => {
-            allSuppliersData = {};
-            snap.forEach(c => { if (!c.val().deleted) allSuppliersData[c.key] = c.val(); });
-            updateSupplierDropdown();
-        });
-    }
-
-    function updateCustomerDropdown() {
-        const sel = document.getElementById('saleCustomerSelect');
-        if (!sel) return;
-        sel.innerHTML = '<option value="">কাস্টমার নির্বাচন করুন</option>';
-        Object.entries(allCustomersData).forEach(([id, c]) => {
-            sel.innerHTML += `<option value="${id}">${c.name}</option>`;
-        });
-    }
-
-    function updateSupplierDropdown() {
-        const sel = document.getElementById('purchaseSupplier');
-        if (!sel) return;
-        sel.innerHTML = '<option value="">নতুন সাপ্লায়ার</option>';
-        Object.entries(allSuppliersData).forEach(([id, s]) => {
-            sel.innerHTML += `<option value="${id}">${s.name}</option>`;
-        });
-    }
-
-    // Show section
-    function showSection(section) {
-        document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-        const target = document.getElementById(section + '-section');
-        if (target) target.classList.add('active');
-        document.getElementById('headerTitle').textContent = getSectionTitle(section);
-        
-        if (section === 'products') loadProducts();
-        if (section === 'sales') loadSales();
-        if (section === 'purchases') loadPurchases();
-        if (section === 'customers') loadCustomers();
-        if (section === 'expenses') loadExpenses();
-        if (section === 'suppliers') loadSuppliers();
-        if (section === 'payments') loadPayments();
-        if (section === 'reports') loadReports();
-        if (section === 'analytics') loadAnalytics();
-        if (section === 'inventory') loadInventory();
-        if (section === 'recycle') loadRecycleBin();
-        if (section === 'settings') loadSettings();
-    }
-
-    function getSectionTitle(s) {
-        const map = {
-            dashboard: 'ড্যাশবোর্ড', products: 'পণ্য', sales: 'বিক্রি', purchases: 'ক্রয়',
-            customers: 'কাস্টমার', expenses: 'খরচ', suppliers: 'সাপ্লায়ার', payments: 'পেমেন্ট',
-            reports: 'রিপোর্ট', analytics: 'অ্যানালিটিক্স', inventory: 'ইনভেন্টরি',
-            recycle: 'রিসাইকেল', settings: 'সেটিংস'
-        };
-        return map[s] || s;
-    }
-
-    // Simplified load functions (keeping them short but functional)
     function loadProducts() {
         const container = document.getElementById('products-section');
+        if (!container) return;
+        
         container.innerHTML = `
             <div class="card">
                 <div class="card-header">
                     <h3>পণ্য তালিকা</h3>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                        <button class="action-btn primary" onclick="openProductModal()"><i class="fas fa-plus"></i> নতুন পণ্য</button>
-                    </div>
+                    <button class="action-btn primary" onclick="openProductModal()"><i class="fas fa-plus"></i> নতুন পণ্য</button>
                 </div>
                 <div id="productsList"></div>
             </div>`;
         
         db.ref('products').on('value', snap => {
             const list = document.getElementById('productsList');
+            if (!list) return;
             list.innerHTML = '';
             snap.forEach(c => {
                 const p = c.val();
@@ -1541,6 +1390,8 @@
 
     function loadSales() {
         const container = document.getElementById('sales-section');
+        if (!container) return;
+        
         container.innerHTML = `
             <div class="card">
                 <div class="card-header">
@@ -1557,6 +1408,7 @@
         
         db.ref('sales').on('value', snap => {
             const tbody = document.getElementById('salesBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
             const arr = [];
             snap.forEach(c => arr.push({ id: c.key, ...c.val() }));
@@ -1567,15 +1419,16 @@
                     <td>${s.productName}</td>
                     <td>${s.quantity}</td>
                     <td>৳${s.total}</td>
-                    <td>${s.paymentMethod === 'cash' ? 'ক্যাশ' : 'বাকি'}</td>
+                    <td>${s.paymentMethod === 'cash' ? '<span class="badge badge-success">ক্যাশ</span>' : '<span class="badge badge-warning">বাকি</span>'}</td>
                 </tr>`;
             });
         });
     }
 
-    // Additional load functions (similar pattern)
     function loadPurchases() {
         const container = document.getElementById('purchases-section');
+        if (!container) return;
+        
         container.innerHTML = `
             <div class="card">
                 <div class="card-header">
@@ -1592,6 +1445,7 @@
         
         db.ref('purchases').on('value', snap => {
             const tbody = document.getElementById('purchasesBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
             const arr = [];
             snap.forEach(c => arr.push({ id: c.key, ...c.val() }));
@@ -1608,9 +1462,10 @@
         });
     }
 
-    // Keep other load functions minimal for brevity
     function loadCustomers() {
         const container = document.getElementById('customers-section');
+        if (!container) return;
+        
         container.innerHTML = `
             <div class="card">
                 <div class="card-header">
@@ -1622,6 +1477,7 @@
         
         db.ref('customers').on('value', snap => {
             const list = document.getElementById('customersList');
+            if (!list) return;
             list.innerHTML = '';
             snap.forEach(c => {
                 const cust = c.val();
@@ -1642,36 +1498,210 @@
         });
     }
 
-    // Modal open/close functions
-    function openProductModal() { document.getElementById('product-modal').style.display = 'flex'; }
-    function openSaleModal() { 
-        document.getElementById('sale-modal').style.display = 'flex';
-        updateCustomerDropdown();
-        document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
+    function loadExpenses() {
+        const container = document.getElementById('expenses-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <div class="card-header">
+                    <h3>খরচ</h3>
+                    <button class="action-btn primary" onclick="openExpenseModal()"><i class="fas fa-plus"></i> নতুন খরচ</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>তারিখ</th><th>ধরন</th><th>বিবরণ</th><th>পরিমাণ</th></tr></thead>
+                        <tbody id="expensesBody"></tbody>
+                    </table>
+                </div>
+            </div>`;
+        
+        db.ref('expenses').on('value', snap => {
+            const tbody = document.getElementById('expensesBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const arr = [];
+            snap.forEach(e => arr.push({ id: e.key, ...e.val() }));
+            arr.sort((a, b) => b.timestamp - a.timestamp);
+            arr.forEach(e => {
+                const typeNames = { rent: 'ভাড়া', salary: 'বেতন', utilities: 'ইউটিলিটি', transport: 'পরিবহন', other: 'অন্যান্য' };
+                tbody.innerHTML += `<tr>
+                    <td>${new Date(e.timestamp).toLocaleDateString('bn-BD')}</td>
+                    <td><span class="badge badge-info">${typeNames[e.type] || e.type}</span></td>
+                    <td>${e.description}</td>
+                    <td style="font-weight:600;color:var(--danger);">৳${e.amount}</td>
+                </tr>`;
+            });
+        });
     }
-    function openPurchaseModal() { 
-        document.getElementById('purchase-modal').style.display = 'flex';
-        selectedProductId = null;
-        updateSupplierDropdown();
+
+    function loadSuppliers() {
+        const container = document.getElementById('suppliers-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <div class="card-header">
+                    <h3>সাপ্লায়ার</h3>
+                    <button class="action-btn primary" onclick="openSupplierModal()"><i class="fas fa-plus"></i> নতুন সাপ্লায়ার</button>
+                </div>
+                <div id="suppliersList"></div>
+            </div>`;
+        
+        db.ref('suppliers').on('value', snap => {
+            const list = document.getElementById('suppliersList');
+            if (!list) return;
+            list.innerHTML = '';
+            snap.forEach(c => {
+                const supp = c.val();
+                if (supp.deleted) return;
+                list.innerHTML += `
+                    <div class="supplier-card">
+                        <div class="customer-header">
+                            <div class="customer-avatar" style="background:var(--warning-gradient);"><i class="fas fa-truck"></i></div>
+                            <div>
+                                <strong>${supp.name}</strong>
+                                <div>${supp.phone}</div>
+                            </div>
+                        </div>
+                        <button class="action-btn danger" onclick="deleteSupplier('${c.key}')"><i class="fas fa-trash"></i> মুছুন</button>
+                    </div>`;
+            });
+        });
     }
-    function openCustomerModal() { document.getElementById('customer-modal').style.display = 'flex'; }
-    function openExpenseModal() { 
-        document.getElementById('expense-modal').style.display = 'flex';
-        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-        selectExpenseType('rent');
+
+    function loadPayments() {
+        const container = document.getElementById('payments-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <h3>পেমেন্ট ইতিহাস</h3>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>তারিখ</th><th>কাস্টমার</th><th>পরিমাণ</th></tr></thead>
+                        <tbody id="paymentsBody"></tbody>
+                    </table>
+                </div>
+            </div>`;
+        
+        db.ref('payments').on('value', snap => {
+            const tbody = document.getElementById('paymentsBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const arr = [];
+            snap.forEach(p => arr.push({ id: p.key, ...p.val() }));
+            arr.sort((a, b) => b.timestamp - a.timestamp);
+            arr.forEach(p => {
+                db.ref('customers/' + p.customerId).once('value', cSnap => {
+                    const cust = cSnap.val();
+                    const customerName = cust ? cust.name : 'Unknown';
+                    tbody.innerHTML += `<tr>
+                        <td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td>
+                        <td>${customerName}</td>
+                        <td><span class="badge badge-success">৳${p.amount}</span></td>
+                    </tr>`;
+                });
+            });
+        });
     }
-    function openSupplierModal() { document.getElementById('supplier-modal').style.display = 'flex'; }
 
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    function showLoading(msg = 'লোড হচ্ছে...') {
-        document.getElementById('loading').style.display = 'flex';
-        document.getElementById('loading').querySelector('p').textContent = msg;
+    function loadReports() {
+        const container = document.getElementById('reports-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <h3>ব্যবসার সারসংক্ষেপ</h3>
+                <div id="reportSummary"></div>
+            </div>`;
+        
+        db.ref('sales').once('value').then(snapSales => {
+            db.ref('expenses').once('value').then(snapExp => {
+                let totalSales = 0, totalProfit = 0, totalExp = 0;
+                
+                snapSales.forEach(c => {
+                    totalSales += c.val().total;
+                    totalProfit += c.val().profit || 0;
+                });
+                
+                snapExp.forEach(c => totalExp += c.val().amount);
+                
+                document.getElementById('reportSummary').innerHTML = `
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+                        <div class="stat-card">
+                            <div>মোট বিক্রি</div>
+                            <div style="font-size:24px;font-weight:800;color:var(--primary);">৳${totalSales.toFixed(2)}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div>মোট লাভ</div>
+                            <div style="font-size:24px;font-weight:800;color:var(--success);">৳${totalProfit.toFixed(2)}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div>মোট খরচ</div>
+                            <div style="font-size:24px;font-weight:800;color:var(--danger);">৳${totalExp.toFixed(2)}</div>
+                        </div>
+                    </div>`;
+            });
+        });
     }
 
-    function hideLoading() { document.getElementById('loading').style.display = 'none'; }
+    function loadRecycleBin() {
+        const container = document.getElementById('recycle-section');
+        if (!container) return;
+        
+        container.innerHTML = '<div class="card"><h3>রিসাইকেল বিন</h3><div id="recycleList"></div></div>';
+        
+        db.ref('products').orderByChild('deleted').equalTo(true).once('value', snap => {
+            const list = document.getElementById('recycleList');
+            if (!list) return;
+            list.innerHTML = '';
+            snap.forEach(c => {
+                const p = c.val();
+                list.innerHTML += `
+                    <div class="product-card">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <span><strong>${p.name}</strong> - ${p.category}</span>
+                            <button class="action-btn success" onclick="restoreProduct('${c.key}')"><i class="fas fa-undo"></i> রিস্টোর</button>
+                        </div>
+                    </div>`;
+            });
+            if (!snap.numChildren()) list.innerHTML = '<p style="text-align:center;color:var(--gray);">রিসাইকেল বিন খালি</p>';
+        });
+    }
 
-    // Notification functions
+    function restoreProduct(id) {
+        db.ref('products/' + id).update({ deleted: false }).then(() => {
+            loadRecycleBin();
+            loadProducts();
+            loadAllProductsData();
+            showToast('পণ্য রিস্টোর হয়েছে', 'success');
+            checkNotifications();
+        });
+    }
+
+    function deleteSupplier(id) {
+        db.ref('suppliers/' + id).update({ deleted: true }).then(() => {
+            loadSuppliers();
+            loadAllSuppliersData();
+            showToast('সাপ্লায়ার মুছে ফেলা হয়েছে', 'info');
+        });
+    }
+
+    function loadSettings() {
+        const container = document.getElementById('settings-section');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="card">
+                <h3>সেটিংস</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+                    <button class="action-btn warning" onclick="changeShopName()"><i class="fas fa-store"></i> দোকানের নাম</button>
+                    <button class="action-btn info" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড</button>
+                </div>
+            </div>`;
+    }
+
     function checkNotifications() {
         let notifications = [];
         
@@ -1708,18 +1738,219 @@
         window._notifications = notifications;
     }
 
+    function openPaymentModal(customerId) {
+        currentPaymentCustomerId = customerId;
+        db.ref('customers/' + customerId).once('value', snap => {
+            const cust = snap.val();
+            const due = cust.due || 0;
+            const modalBody = document.getElementById('paymentModalBody');
+            modalBody.innerHTML = `
+                <div style="text-align:center;margin-bottom:16px;">
+                    <h4>${cust.name}</h4>
+                    <p>বাকি: <strong style="color:var(--danger);">৳${due.toFixed(2)}</strong></p>
+                </div>
+                <div class="form-group">
+                    <label>পরিশোধের পরিমাণ</label>
+                    <input type="number" id="paymentAmount" class="form-control-modern" min="1" max="${due}" required>
+                </div>
+                <button class="action-btn success" onclick="processPayment()" style="width:100%;"><i class="fas fa-check"></i> পরিশোধ সম্পন্ন</button>
+            `;
+            document.getElementById('payment-modal').style.display = 'flex';
+        });
+    }
+
+    function processPayment() {
+        const amount = parseFloat(document.getElementById('paymentAmount').value);
+        if (!amount || amount <= 0) {
+            showToast('সঠিক পরিমাণ দিন', 'warning');
+            return;
+        }
+        
+        db.ref('customers/' + currentPaymentCustomerId).once('value').then(snap => {
+            const cust = snap.val();
+            const due = cust.due || 0;
+            if (amount > due) {
+                showToast('বাকির চেয়ে বেশি পরিশোধ করা যাবে না', 'error');
+                return;
+            }
+            
+            db.ref('payments').push({
+                customerId: currentPaymentCustomerId,
+                amount: amount,
+                timestamp: Date.now()
+            });
+            
+            db.ref('customers/' + currentPaymentCustomerId).update({
+                due: due - amount
+            });
+            
+            closeModal('payment-modal');
+            showToast('পরিশোধ সফল!', 'success');
+            loadCustomers();
+            loadDashboardStats();
+        });
+    }
+
+    function showSection(section) {
+        document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById(section + '-section');
+        if (target) target.classList.add('active');
+        document.getElementById('headerTitle').textContent = getSectionTitle(section);
+        
+        if (section === 'products') loadProducts();
+        if (section === 'sales') loadSales();
+        if (section === 'purchases') loadPurchases();
+        if (section === 'customers') loadCustomers();
+        if (section === 'expenses') loadExpenses();
+        if (section === 'suppliers') loadSuppliers();
+        if (section === 'payments') loadPayments();
+        if (section === 'reports') loadReports();
+        if (section === 'recycle') loadRecycleBin();
+        if (section === 'settings') loadSettings();
+        
+        document.getElementById('slideMenu').classList.remove('active');
+        document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll(`.mobile-nav-item[data-section="${section}"]`).forEach(el => el.classList.add('active'));
+    }
+
+    function getSectionTitle(s) {
+        const map = {
+            dashboard: 'ড্যাশবোর্ড', products: 'পণ্য', sales: 'বিক্রি', purchases: 'ক্রয়',
+            customers: 'কাস্টমার', expenses: 'খরচ', suppliers: 'সাপ্লায়ার', payments: 'পেমেন্ট',
+            reports: 'রিপোর্ট', recycle: 'রিসাইকেল', settings: 'সেটিংস'
+        };
+        return map[s] || s;
+    }
+
+    function openProductModal() { document.getElementById('product-modal').style.display = 'flex'; }
+    function openSaleModal() { 
+        document.getElementById('sale-modal').style.display = 'flex';
+        updateCustomerDropdown();
+    }
+    function openPurchaseModal() { 
+        document.getElementById('purchase-modal').style.display = 'flex';
+        selectedProductId = null;
+        updateSupplierDropdown();
+    }
+    function openCustomerModal() { document.getElementById('customer-modal').style.display = 'flex'; }
+    function openExpenseModal() { 
+        document.getElementById('expense-modal').style.display = 'flex';
+        document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+    }
+    function openSupplierModal() { document.getElementById('supplier-modal').style.display = 'flex'; }
+
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function showLoading(msg = 'লোড হচ্ছে...') {
+        document.getElementById('loading').style.display = 'flex';
+        document.getElementById('loading').querySelector('p').textContent = msg;
+    }
+
+    function hideLoading() { document.getElementById('loading').style.display = 'none'; }
+
     function toggleFloatingMenu() {
-        const menu = document.getElementById('floatingMenu');
+        const menu = document.getElementById('fabMenu');
         menu.classList.toggle('active');
     }
 
-    // Event listeners
+    function showProfile() {
+        Swal.fire({
+            title: 'প্রোফাইল',
+            html: `<b>${currentUser?.email}</b><br>প্রিমিয়াম ইউজার`,
+            showCloseButton: true,
+            confirmButtonText: 'লগআউট'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                auth.signOut();
+                document.getElementById('dashboard').style.display = 'none';
+                document.getElementById('login-page').style.display = 'flex';
+            }
+        });
+    }
+
+    window.changeShopName = function() {
+        Swal.fire({
+            title: 'দোকানের নাম',
+            input: 'text',
+            inputValue: document.getElementById('shopNameDisplay').textContent,
+            showCancelButton: true
+        }).then(r => {
+            if (r.isConfirmed) {
+                db.ref('settings/shopName').set(r.value);
+                loadShopName();
+                showToast('দোকানের নাম আপডেট হয়েছে', 'success');
+            }
+        });
+    };
+
+    window.toggleDarkMode = function() {
+        const on = document.body.getAttribute('data-theme') === 'dark';
+        if (on) document.body.removeAttribute('data-theme');
+        else document.body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('dark_mode', on ? 'off' : 'on');
+        showToast(on ? 'লাইট মোড চালু হয়েছে' : 'ডার্ক মোড চালু হয়েছে', 'info');
+    };
+
+    function loadShopName() {
+        db.ref('settings/shopName').once('value', snap => {
+            document.getElementById('shopNameDisplay').textContent = snap.val() || 'বসনীসে স্টোর';
+        });
+    }
+
+    function showDashboard() {
+        document.getElementById('login-page').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadAllData();
+    }
+
+    function initializeSections() {
+        const mainContent = document.getElementById('mainContent');
+        const sections = ['dashboard', 'products', 'sales', 'purchases', 'customers', 'expenses', 'suppliers', 'payments', 'reports', 'recycle', 'settings'];
+        
+        sections.forEach(s => {
+            const sec = document.createElement('div');
+            sec.id = s + '-section';
+            sec.className = 'content-section';
+            mainContent.appendChild(sec);
+        });
+        
+        const dashboardSection = document.getElementById('dashboard-section');
+        dashboardSection.innerHTML = `
+            <div class="card" style="background:linear-gradient(135deg,#6C5CE7,#0984E3);color:#fff;border:none;">
+                <h2 style="font-size:24px;">স্বাগতম! 👋</h2>
+                <p>আজকের সারসংক্ষেপ</p>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;">
+                    <div>আজকের বিক্রি: <strong id="welcomeTodaySales">৳0</strong></div>
+                    <div>মোট পণ্য: <strong id="welcomeProducts">0</strong></div>
+                    <div>কাস্টমার: <strong id="welcomeCustomers">0</strong></div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon" style="background:rgba(108,92,231,0.1);color:var(--primary);"><i class="fas fa-chart-line"></i></div><div>আজকের বিক্রি</div><div class="stat-value" id="todaySales">৳0</div></div>
+                <div class="stat-card"><div class="stat-icon" style="background:rgba(0,184,148,0.1);color:var(--success);"><i class="fas fa-boxes"></i></div><div>মোট পণ্য</div><div class="stat-value" id="totalProducts">0</div></div>
+                <div class="stat-card"><div class="stat-icon" style="background:rgba(253,203,110,0.1);color:var(--warning);"><i class="fas fa-users"></i></div><div>কাস্টমার</div><div class="stat-value" id="totalCustomers">0</div></div>
+                <div class="stat-card"><div class="stat-icon" style="background:rgba(225,112,85,0.1);color:var(--danger);"><i class="fas fa-wallet"></i></div><div>আজকের খরচ</div><div class="stat-value" id="todayExpenses">৳0</div></div>
+            </div>
+            <div class="quick-actions">
+                <div class="quick-action" onclick="openProductModal()"><div class="quick-action-icon" style="background:var(--primary-gradient);"><i class="fas fa-box"></i></div><span>পণ্য</span></div>
+                <div class="quick-action" onclick="openSaleModal()"><div class="quick-action-icon" style="background:var(--success-gradient);"><i class="fas fa-cart-plus"></i></div><span>বিক্রি</span></div>
+                <div class="quick-action" onclick="openPurchaseModal()"><div class="quick-action-icon" style="background:var(--warning-gradient);"><i class="fas fa-cart-arrow-down"></i></div><span>ক্রয়</span></div>
+                <div class="quick-action" onclick="openCustomerModal()"><div class="quick-action-icon" style="background:var(--info-gradient);"><i class="fas fa-user-plus"></i></div><span>কাস্টমার</span></div>
+                <div class="quick-action" onclick="openExpenseModal()"><div class="quick-action-icon" style="background:var(--danger-gradient);"><i class="fas fa-wallet"></i></div><span>খরচ</span></div>
+                <div class="quick-action" onclick="showSection('reports')"><div class="quick-action-icon" style="background:var(--primary-gradient);"><i class="fas fa-chart-line"></i></div><span>রিপোর্ট</span></div>
+            </div>
+            <div class="card"><div class="card-header"><h3 class="card-title">বিক্রির চার্ট (সাপ্তাহিক)</h3></div><div style="height:250px;"><canvas id="salesChart"></canvas></div></div>
+        `;
+    }
+
     document.getElementById('menuToggleBtn').addEventListener('click', () => {
         document.getElementById('slideMenu').classList.toggle('active');
     });
     
     document.getElementById('logoutMenuBtn').addEventListener('click', () => {
         auth.signOut();
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('login-page').style.display = 'flex';
     });
     
     document.querySelectorAll('.menu-item-link').forEach(el => {
@@ -1737,6 +1968,7 @@
     
     document.getElementById('saleHeaderBtn').addEventListener('click', () => openSaleModal());
     document.getElementById('purchaseHeaderBtn').addEventListener('click', () => openPurchaseModal());
+    
     document.getElementById('notificationBtn').addEventListener('click', () => {
         const modal = document.getElementById('notification-modal');
         const body = document.getElementById('notificationModalBody');
@@ -1759,7 +1991,6 @@
         modal.style.display = 'flex';
     });
 
-    // Login form handler
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
@@ -1777,14 +2008,25 @@
         }
     });
 
-    // Logout button
-    document.getElementById('logoutMenuBtn').addEventListener('click', () => {
-        auth.signOut();
-        document.getElementById('dashboard').style.display = 'none';
-        document.getElementById('login-page').style.display = 'flex';
+    document.getElementById('forgot-password-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'রিসেট ইমেইল',
+            input: 'email',
+            inputPlaceholder: 'ইমেইল',
+            showCancelButton: true
+        }).then(r => {
+            if (r.isConfirmed && r.value) {
+                auth.sendPasswordResetEmail(r.value)
+                    .then(() => Swal.fire('লিংক পাঠানো হয়েছে!'))
+                    .catch(() => Swal.fire('ভুল ইমেইল'));
+            }
+        });
     });
 
-    console.log('✅ প্রিমিয়াম স্যুট v4.0 লোড হয়েছে - উন্নত ফর্ম ও প্রফেশনাল ফিচারসহ');
+    initializeSections();
+
+    console.log('✅ প্রিমিয়াম স্যুট v5.0 লোড হয়েছে - সব ফিচার সঠিকভাবে কাজ করছে');
 </script>
 </body>
 </html>

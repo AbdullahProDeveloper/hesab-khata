@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#6C5CE7">
-    <title>বসনীসে হেসাব খাতা · প্রফেশনাল স্যুট v12.0</title>
+    <title>বসনীসে হেসাব · ইউজার প্যানেল v16.0</title>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -40,12 +40,15 @@
             --light: #F8F9FA;
             --white: #FFFFFF;
             --border: #E9ECEF;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
         }
         [data-theme="dark"] {
             --dark: #f0f0f0;
             --gray: #b0b0b0;
+            --gray-light: #707070;
             --light: #1a1a2e;
             --white: #1e1e1e;
             --border: #333;
@@ -70,44 +73,61 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #667eea, #764ba2, #6C5CE7);
+            background-size: 200% 200%;
+            animation: gradientFlow 8s ease infinite;
             padding: 20px;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .login-card {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 28px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
             padding: 40px;
             width: 100%;
             max-width: 450px;
-            animation: fadeInUp 0.5s;
+            animation: fadeInUp 0.6s;
+            border: 1px solid rgba(255,255,255,0.3);
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .login-logo {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 20px;
             background: var(--primary-gradient);
-            border-radius: 24px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 30px rgba(108,92,231,0.4);
+            animation: floatSlow 3s infinite;
         }
-        .login-logo i { font-size: 36px; color: #fff; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .login-logo i { font-size: 40px; color: #fff; }
         .login-title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             text-align: center;
             margin-bottom: 8px;
+            background: linear-gradient(135deg, #6C5CE7, #0984E3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .login-subtitle {
             text-align: center;
             color: var(--gray);
             margin-bottom: 30px;
+            font-size: 14px;
         }
         .form-group { margin-bottom: 20px; }
         .form-group label {
@@ -162,6 +182,22 @@
             text-align: center;
             margin: 20px 0;
             color: var(--gray);
+            position: relative;
+        }
+        .login-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+        }
+        .login-divider span {
+            background: var(--white);
+            padding: 0 10px;
+            position: relative;
+            font-size: 13px;
         }
         .register-link {
             text-align: center;
@@ -198,15 +234,16 @@
             gap: 12px;
         }
         .header-logo {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: rgba(255,255,255,0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .header-logo i { color: #fff; font-size: 20px; }
+        .header-logo i { color: #fff; font-size: 22px; }
         .header-title { font-size: 18px; font-weight: 700; }
         .header-right {
             display: flex;
@@ -221,13 +258,15 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 16px;
         }
         .header-btn:hover {
             background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
         .user-avatar {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
             display: flex;
@@ -235,20 +274,22 @@
             justify-content: center;
             font-weight: 700;
             cursor: pointer;
+            font-size: 16px;
         }
 
         /* Sidebar */
         .sidebar {
             background: var(--white);
             border-right: 1px solid var(--border);
-            width: 260px;
+            width: 270px;
             position: fixed;
-            top: 72px;
+            top: 76px;
             bottom: 0;
             left: 0;
             padding: 20px;
             overflow-y: auto;
             z-index: 90;
+            box-shadow: var(--shadow-sm);
         }
         .menu-grid {
             display: flex;
@@ -261,15 +302,15 @@
             text-transform: uppercase;
             color: var(--gray-light);
             padding: 8px 16px;
-            margin-top: 12px;
+            margin-top: 16px;
             letter-spacing: 0.5px;
         }
         .menu-item-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 16px;
-            border-radius: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             color: var(--gray);
@@ -279,18 +320,20 @@
         .menu-item-link:hover {
             background: var(--light);
             color: var(--primary);
+            transform: translateX(4px);
         }
         .menu-item-link.active {
             background: var(--primary-gradient);
             color: #fff;
+            box-shadow: 0 4px 12px rgba(108,92,231,0.3);
         }
-        .menu-item-link i { width: 20px; }
+        .menu-item-link i { width: 20px; font-size: 16px; }
 
         /* Main Content */
         .main-content {
-            margin-left: 260px;
+            margin-left: 270px;
             padding: 24px;
-            min-height: calc(100vh - 72px);
+            min-height: calc(100vh - 76px);
         }
         .content-section { display: none; }
         .content-section.active { display: block; animation: fadeIn 0.3s; }
@@ -302,10 +345,15 @@
         /* Cards */
         .card {
             background: var(--white);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 24px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
         }
         .card-header {
             display: flex;
@@ -314,25 +362,44 @@
             margin-bottom: 16px;
         }
         .card-title { font-size: 18px; font-weight: 700; }
+        .card-subtitle { font-size: 13px; color: var(--gray); }
 
         /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 20px;
             margin-bottom: 24px;
         }
         .stat-card {
             background: var(--white);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 24px;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
             border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
         .stat-card.green { border-left-color: var(--success); }
         .stat-card.orange { border-left-color: var(--warning); }
         .stat-card.red { border-left-color: var(--danger); }
-        .stat-value { font-size: 28px; font-weight: 800; margin-top: 8px; }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+        .stat-label { font-size: 13px; color: var(--gray); }
+        .stat-value { font-size: 32px; font-weight: 800; margin-top: 8px; }
 
         /* Tables */
         .table-container {
@@ -340,6 +407,7 @@
             background: var(--white);
             border-radius: 16px;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
         table {
             width: 100%;
@@ -352,28 +420,36 @@
             font-weight: 700;
             font-size: 13px;
             border-bottom: 2px solid var(--border);
+            color: var(--gray);
         }
         td {
             padding: 14px;
             border-bottom: 1px solid var(--border);
             font-size: 14px;
+            transition: all 0.3s;
+        }
+        tr:hover td {
+            background: var(--light);
         }
 
         /* Buttons */
         .btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
             font-size: 13px;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-primary { background: var(--primary-gradient); color: #fff; }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-warning { background: var(--warning); color: #fff; }
-        .btn-info { background: var(--info); color: #fff; }
+        .btn-success { background: var(--success-gradient); color: #fff; }
+        .btn-danger { background: var(--danger-gradient); color: #fff; }
+        .btn-warning { background: var(--warning-gradient); color: #fff; }
+        .btn-info { background: var(--info-gradient); color: #fff; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
         /* Modal */
@@ -384,31 +460,41 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            backdrop-filter: blur(4px);
         }
         .modal.active { display: flex; }
         .modal-content {
             background: var(--white);
-            border-radius: 20px;
-            max-width: 600px;
+            border-radius: 24px;
+            max-width: 650px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: fadeInUp 0.3s;
         }
         .modal-header {
-            padding: 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .modal-body { padding: 20px; }
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-body { padding: 24px; }
         .modal-footer {
-            padding: 20px;
+            padding: 20px 24px;
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: flex-end;
@@ -416,25 +502,57 @@
         }
 
         /* Form */
-        .form-group { margin-bottom: 16px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             font-weight: 600;
             font-size: 13px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border: 2px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 14px;
+            background: var(--white);
+            color: var(--dark);
             transition: all 0.3s;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
         }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-success { background: rgba(0,184,148,0.1); color: var(--success); }
+        .badge-danger { background: rgba(225,112,85,0.1); color: var(--danger); }
+        .badge-warning { background: rgba(253,203,110,0.1); color: var(--warning); }
+        .badge-info { background: rgba(9,132,227,0.1); color: var(--info); }
+        .badge-primary { background: rgba(108,92,231,0.1); color: var(--primary); }
 
         /* Mobile */
         .mobile-bottom-nav {
@@ -447,6 +565,7 @@
             border-top: 1px solid var(--border);
             padding: 8px;
             z-index: 95;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
         }
         .mobile-nav-item {
             display: flex;
@@ -455,33 +574,58 @@
             padding: 8px;
             cursor: pointer;
             color: var(--gray);
+            font-size: 12px;
         }
+        .mobile-nav-item i { font-size: 20px; margin-bottom: 4px; }
         .mobile-nav-item.active { color: var(--primary); }
+
+        /* Loading */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .loading-overlay.active { display: flex; }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         @media (max-width: 768px) {
             .sidebar { display: none; }
-            .main-content { margin-left: 0; padding: 16px; padding-bottom: 70px; }
+            .main-content { margin-left: 0; padding: 16px; padding-bottom: 80px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
             .mobile-bottom-nav { display: grid; grid-template-columns: repeat(5, 1fr); }
             .header-title { display: none; }
+            .login-card { padding: 24px; }
         }
     </style>
 </head>
 <body>
 
 <!-- Loading -->
-<div id="loading" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.9); z-index:5000; align-items:center; justify-content:center; flex-direction:column;">
-    <div style="width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.9s linear infinite;"></div>
+<div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
     <p style="margin-top:16px;font-weight:600;">লোড হচ্ছে...</p>
 </div>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
 <!-- LOGIN PAGE -->
 <div id="login-page" class="login-wrapper">
     <div class="login-card">
         <div class="login-logo"><i class="fas fa-store-alt"></i></div>
         <h1 class="login-title">বসনীসে হেসাব</h1>
-        <p class="login-subtitle">প্রফেশনাল বিজনেস ম্যানেজমেন্ট সিস্টেম</p>
+        <p class="login-subtitle">প্রফেশনাল বিজনেস ম্যানেজমেন্ট</p>
         
         <!-- Login Tab -->
         <div id="login-tab">
@@ -505,9 +649,9 @@
                 </button>
             </form>
             
-            <div class="login-divider">— অথবা —</div>
+            <div class="login-divider"><span>অথবা</span></div>
             
-            <button class="btn-login" style="background: var(--info-gradient);" onclick="showAdminLogin()">
+            <button class="btn-login" style="background: var(--info-gradient);" onclick="window.location.href='admin.html'">
                 <i class="fas fa-shield-alt"></i> এডমিন লগইন
             </button>
             
@@ -550,30 +694,9 @@
             </div>
         </div>
         
-        <div class="demo-info" style="margin-top:20px; padding:12px; background:var(--light); border-radius:10px; text-align:center; font-size:13px; color:var(--gray);">
+        <div class="demo-info" style="margin-top:20px; padding:12px; background:var(--light); border-radius:12px; text-align:center; font-size:13px; color:var(--gray);">
             <p><strong>ডেমো অ্যাকাউন্ট:</strong></p>
             <p>demo@bosnishe.com / demo123</p>
-        </div>
-    </div>
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
-<div class="modal" id="admin-login-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-shield-alt"></i> এডমিন লগইন</h3>
-            <button class="btn btn-danger" onclick="closeModal('admin-login-modal')"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>এডমিন ইমেইল</label>
-                <input type="email" id="admin-email" class="form-control" placeholder="এডমিন ইমেইল" required>
-            </div>
-            <div class="form-group">
-                <label>পাসওয়ার্ড</label>
-                <input type="password" id="admin-password" class="form-control" placeholder="পাসওয়ার্ড" required>
-            </div>
-            <button class="btn btn-primary" style="width:100%;" onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> এডমিন লগইন</button>
         </div>
     </div>
 </div>
@@ -583,11 +706,10 @@
     <header class="main-header">
         <div class="header-left">
             <div class="header-logo"><i class="fas fa-store"></i></div>
-            <span class="header-title">বসনীসে স্টোর</span>
+            <span class="header-title" id="userShopName">বসনীসে স্টোর</span>
         </div>
         <div class="header-right">
-            <button class="header-btn" id="userSaleBtn"><i class="fas fa-cart-plus"></i></button>
-            <button class="header-btn" id="userSearchBtn"><i class="fas fa-search"></i></button>
+            <button class="header-btn" onclick="openSaleModal()"><i class="fas fa-cart-plus"></i></button>
             <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
             <div class="user-avatar" onclick="showProfile()">U</div>
         </div>
@@ -629,80 +751,6 @@
     </div>
 </div>
 
-<!-- ADMIN DASHBOARD -->
-<div id="admin-dashboard" class="dashboard">
-    <header class="main-header">
-        <div class="header-left">
-            <div class="header-logo"><i class="fas fa-shield-alt"></i></div>
-            <span class="header-title">এডমিন প্যানেল</span>
-        </div>
-        <div class="header-right">
-            <button class="header-btn" onclick="showCreateUserModal()"><i class="fas fa-user-plus"></i></button>
-            <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
-            <div class="user-avatar" onclick="showProfile()">A</div>
-        </div>
-    </header>
-
-    <aside class="sidebar">
-        <div class="menu-grid">
-            <div class="menu-section-title">মূল মেনু</div>
-            <div class="menu-item-link active" data-section="dashboard"><i class="fas fa-chart-pie"></i> ড্যাশবোর্ড</div>
-            
-            <div class="menu-section-title">ব্যবস্থাপনা</div>
-            <div class="menu-item-link" data-section="users"><i class="fas fa-users-cog"></i> ইউজার ম্যানেজ</div>
-            
-            <div class="menu-section-title">সব ডাটা</div>
-            <div class="menu-item-link" data-section="all-products"><i class="fas fa-boxes"></i> সব পণ্য</div>
-            <div class="menu-item-link" data-section="all-sales"><i class="fas fa-cart-plus"></i> সব বিক্রি</div>
-            <div class="menu-item-link" data-section="all-customers"><i class="fas fa-users"></i> সব কাস্টমার</div>
-            
-            <div class="menu-section-title">রিপোর্ট</div>
-            <div class="menu-item-link" data-section="reports"><i class="fas fa-chart-line"></i> রিপোর্ট</div>
-            
-            <div class="menu-section-title">সেটিংস</div>
-            <div class="menu-item-link" data-section="settings"><i class="fas fa-cog"></i> সেটিংস</div>
-        </div>
-    </aside>
-
-    <main class="main-content" id="adminMainContent"></main>
-</div>
-
-<!-- CREATE USER MODAL -->
-<div class="modal" id="create-user-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> নতুন ইউজার তৈরি করুন</h3>
-            <button class="btn btn-danger" onclick="closeModal('create-user-modal')"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>নাম</label>
-                <input type="text" id="new-user-name" class="form-control" placeholder="ইউজারের নাম" required>
-            </div>
-            <div class="form-group">
-                <label>ইমেইল</label>
-                <input type="email" id="new-user-email" class="form-control" placeholder="ইমেইল" required>
-            </div>
-            <div class="form-group">
-                <label>পাসওয়ার্ড</label>
-                <input type="password" id="new-user-password" class="form-control" placeholder="পাসওয়ার্ড" required>
-            </div>
-            <div class="form-group">
-                <label>ফোন</label>
-                <input type="text" id="new-user-phone" class="form-control" placeholder="ফোন নম্বর">
-            </div>
-            <div class="form-group">
-                <label>রোল</label>
-                <select id="new-user-role" class="form-control">
-                    <option value="user">ইউজার</option>
-                    <option value="admin">এডমিন</option>
-                </select>
-            </div>
-            <button class="btn btn-primary" style="width:100%;" onclick="createUser()"><i class="fas fa-plus"></i> ইউজার তৈরি করুন</button>
-        </div>
-    </div>
-</div>
-
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyAu3n9h853q1KciAJH7M31kOto8hsdlcTs",
@@ -720,6 +768,11 @@
     let currentUser = null;
     let currentUserId = null;
     let currentUserRole = null;
+    let currentShopName = 'বসনীসে স্টোর';
+    let allProducts = {};
+    let allCustomers = {};
+    let allSuppliers = {};
+    let salesChart = null;
 
     // Initialize
     auth.onAuthStateChanged(user => {
@@ -727,42 +780,39 @@
             currentUser = user;
             currentUserId = user.uid;
             
-            // Check if user exists in database
             db.ref('users/' + currentUserId).once('value')
                 .then(snap => {
                     if (snap.exists()) {
-                        // User exists - check role
                         const role = snap.child('profile/role').val();
                         currentUserRole = role;
+                        currentShopName = snap.child('settings/shopName').val() || 'বসনীসে স্টোর';
                         
                         if (role === 'admin') {
-                            showAdminDashboard();
+                            window.location.href = 'admin.html';
                         } else if (role === 'user') {
                             showUserDashboard();
                         } else {
-                            showToast('অবৈধ রোল! অ্যাডমিনের সাথে যোগাযোগ করুন', 'error');
+                            showToast('অবৈধ রোল!', 'error');
                             logout();
                         }
                     } else {
-                        // User exists in auth but not in database - create default user
                         createDefaultUserProfile(user);
                     }
                 });
         } else {
             document.getElementById('login-page').style.display = 'flex';
             document.getElementById('user-dashboard').classList.remove('active');
-            document.getElementById('admin-dashboard').classList.remove('active');
         }
     });
 
-    // Create default user profile (for registered users)
+    // Create default user profile
     function createDefaultUserProfile(user) {
         const userData = {
             profile: {
                 email: user.email,
                 name: user.email.split('@')[0],
                 phone: '',
-                role: 'user', // Default role is user
+                role: 'user',
                 status: 'active',
                 createdAt: Date.now(),
                 lastLogin: Date.now()
@@ -785,7 +835,6 @@
                 showToast('নতুন ইউজার অ্যাকাউন্ট তৈরি হয়েছে!', 'success');
             })
             .catch(error => {
-                console.error('Error creating user:', error);
                 showToast('ইউজার তৈরি ব্যর্থ: ' + error.message, 'error');
             });
     }
@@ -793,7 +842,6 @@
     // Login
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
@@ -812,7 +860,6 @@
     // Register
     document.getElementById('register-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const name = document.getElementById('register-name').value;
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
@@ -823,13 +870,12 @@
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
             
-            // Create default user profile
             const userData = {
                 profile: {
                     email: user.email,
                     name: name,
                     phone: '',
-                    role: 'user', // Always user role
+                    role: 'user',
                     status: 'active',
                     createdAt: Date.now(),
                     lastLogin: Date.now()
@@ -855,174 +901,16 @@
         }
     });
 
-    // Admin Login
-    function showAdminLogin() {
-        document.getElementById('admin-login-modal').classList.add('active');
-    }
-
-    function adminLogin() {
-        const email = document.getElementById('admin-email').value;
-        const password = document.getElementById('admin-password').value;
-        
-        showLoading('এডমিন লগইন হচ্ছে...');
-        
-        auth.signInWithEmailAndPassword(email, password)
-            .then(user => {
-                // Check if admin
-                return db.ref('users/' + user.user.uid + '/profile/role').once('value')
-                    .then(snap => {
-                        if (snap.val() === 'admin') {
-                            hideLoading();
-                            closeModal('admin-login-modal');
-                            showToast('এডমিন লগইন সফল!', 'success');
-                        } else {
-                            hideLoading();
-                            showToast('আপনি এডমিন নন! শুধুমাত্র এডমিন এই প্যানেল ব্যবহার করতে পারবেন', 'error');
-                            logout();
-                        }
-                    });
-            })
-            .catch(err => {
-                hideLoading();
-                showToast('এডমিন লগইন ব্যর্থ: ' + err.message, 'error');
-            });
-    }
-
     // Show User Dashboard
     function showUserDashboard() {
         document.getElementById('login-page').style.display = 'none';
-        document.getElementById('admin-dashboard').classList.remove('active');
         document.getElementById('user-dashboard').classList.add('active');
+        
+        document.getElementById('userShopName').textContent = currentShopName;
         
         initializeUserSections();
         loadUserData();
         showUserSection('dashboard');
-    }
-
-    // Show Admin Dashboard
-    function showAdminDashboard() {
-        document.getElementById('login-page').style.display = 'none';
-        document.getElementById('user-dashboard').classList.remove('active');
-        document.getElementById('admin-dashboard').classList.add('active');
-        
-        initializeAdminSections();
-        loadAdminData();
-        showAdminSection('dashboard');
-    }
-
-    // Create User (Admin only)
-    function showCreateUserModal() {
-        document.getElementById('create-user-modal').classList.add('active');
-    }
-
-    function createUser() {
-        const name = document.getElementById('new-user-name').value;
-        const email = document.getElementById('new-user-email').value;
-        const password = document.getElementById('new-user-password').value;
-        const phone = document.getElementById('new-user-phone').value;
-        const role = document.getElementById('new-user-role').value;
-        
-        if (!name || !email || !password) {
-            showToast('সব তথ্য পূরণ করুন', 'warning');
-            return;
-        }
-        
-        showLoading('ইউজার তৈরি হচ্ছে...');
-        
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(userCredential => {
-                const uid = userCredential.user.uid;
-                
-                return db.ref('users/' + uid).set({
-                    profile: {
-                        email: email,
-                        name: name,
-                        phone: phone || '',
-                        role: role,
-                        status: 'active',
-                        createdAt: Date.now()
-                    },
-                    settings: {
-                        shopName: 'বসনীসে স্টোর',
-                        shopAddress: '',
-                        shopPhone: '',
-                        currency: 'BDT',
-                        taxRate: 0,
-                        lowStockAlert: 5,
-                        updatedAt: Date.now()
-                    }
-                });
-            })
-            .then(() => {
-                hideLoading();
-                closeModal('create-user-modal');
-                
-                document.getElementById('new-user-name').value = '';
-                document.getElementById('new-user-email').value = '';
-                document.getElementById('new-user-password').value = '';
-                document.getElementById('new-user-phone').value = '';
-                document.getElementById('new-user-role').value = 'user';
-                
-                showToast('ইউজার সফলভাবে তৈরি হয়েছে!', 'success');
-                
-                if (document.getElementById('admin-users-section').classList.contains('active')) {
-                    loadAllUsers();
-                }
-            })
-            .catch(err => {
-                hideLoading();
-                showToast('ইউজার তৈরি ব্যর্থ: ' + err.message, 'error');
-            });
-    }
-
-    // Logout
-    function logout() {
-        auth.signOut();
-        document.getElementById('login-page').style.display = 'flex';
-        document.getElementById('user-dashboard').classList.remove('active');
-        document.getElementById('admin-dashboard').classList.remove('active');
-        
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('admin-email').value = '';
-        document.getElementById('admin-password').value = '';
-    }
-
-    // Show Toast
-    function showToast(message, type = 'success') {
-        Swal.fire({
-            title: type === 'success' ? 'সফল!' : 'ভুল!',
-            text: message,
-            icon: type,
-            timer: 2000,
-            showConfirmButton: false
-        });
-    }
-
-    // Show Loading
-    function showLoading(message = 'লোড হচ্ছে...') {
-        document.getElementById('loading').style.display = 'flex';
-        document.querySelector('#loading p').textContent = message;
-    }
-
-    function hideLoading() {
-        document.getElementById('loading').style.display = 'none';
-    }
-
-    // Close Modal
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('active');
-    }
-
-    // Tab switching
-    function showLoginTab() {
-        document.getElementById('login-tab').style.display = 'block';
-        document.getElementById('register-tab').style.display = 'none';
-    }
-
-    function showRegisterTab() {
-        document.getElementById('login-tab').style.display = 'none';
-        document.getElementById('register-tab').style.display = 'block';
     }
 
     // Initialize User Sections
@@ -1032,26 +920,53 @@
             <div class="content-section" id="user-dashboard-section">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div style="color: var(--gray);">আজকের বিক্রি</div>
+                        <div class="stat-icon" style="background:rgba(108,92,231,0.1);color:var(--primary);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-label">আজকের বিক্রি</div>
                         <div class="stat-value" id="userTodaySales">৳0</div>
                     </div>
                     <div class="stat-card green">
-                        <div style="color: var(--gray);">মোট পণ্য</div>
+                        <div class="stat-icon" style="background:rgba(0,184,148,0.1);color:var(--success);">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-label">মোট পণ্য</div>
                         <div class="stat-value" id="userTotalProducts">0</div>
                     </div>
                     <div class="stat-card orange">
-                        <div style="color: var(--gray);">মোট কাস্টমার</div>
+                        <div class="stat-icon" style="background:rgba(253,203,110,0.1);color:var(--warning);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-label">মোট কাস্টমার</div>
                         <div class="stat-value" id="userTotalCustomers">0</div>
                     </div>
                     <div class="stat-card red">
-                        <div style="color: var(--gray);">আজকের খরচ</div>
+                        <div class="stat-icon" style="background:rgba(225,112,85,0.1);color:var(--danger);">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="stat-label">আজকের খরচ</div>
                         <div class="stat-value" id="userTodayExpenses">৳0</div>
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">সাম্প্রতিক বিক্রি</div>
+                        <div>
+                            <div class="card-title">বিক্রির চার্ট</div>
+                            <div class="card-subtitle">সাপ্তাহিক বিক্রির পরিসংখ্যান</div>
+                        </div>
+                    </div>
+                    <div style="height:300px;">
+                        <canvas id="userSalesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">সাম্প্রতিক বিক্রি</div>
+                            <div class="card-subtitle">শেষ ৫টি বিক্রি</div>
+                        </div>
                     </div>
                     <div class="table-container">
                         <table>
@@ -1070,54 +985,524 @@
                 </div>
             </div>
             
-            <div class="content-section" id="user-products-section"></div>
-            <div class="content-section" id="user-sales-section"></div>
-            <div class="content-section" id="user-purchases-section"></div>
-            <div class="content-section" id="user-customers-section"></div>
-            <div class="content-section" id="user-expenses-section"></div>
-            <div class="content-section" id="user-suppliers-section"></div>
-            <div class="content-section" id="user-payments-section"></div>
-            <div class="content-section" id="user-reports-section"></div>
-            <div class="content-section" id="user-recycle-section"></div>
-            <div class="content-section" id="user-settings-section"></div>
-        `;
-    }
-
-    // Initialize Admin Sections
-    function initializeAdminSections() {
-        const mainContent = document.getElementById('adminMainContent');
-        mainContent.innerHTML = `
-            <div class="content-section" id="admin-dashboard-section">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div style="color: var(--gray);">মোট ইউজার</div>
-                        <div class="stat-value" id="adminTotalUsers">0</div>
+            <div class="content-section" id="user-products-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">পণ্য তালিকা</div>
+                            <div class="card-subtitle">আপনার সব পণ্য</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openProductModal()">
+                            <i class="fas fa-plus"></i> নতুন পণ্য
+                        </button>
                     </div>
-                    <div class="stat-card green">
-                        <div style="color: var(--gray);">মোট পণ্য</div>
-                        <div class="stat-value" id="adminTotalProducts">0</div>
+                    <div id="userProductsList"></div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-sales-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">বিক্রি তালিকা</div>
+                            <div class="card-subtitle">সব বিক্রির তথ্য</div>
+                        </div>
+                        <button class="btn btn-success" onclick="openSaleModal()">
+                            <i class="fas fa-plus"></i> নতুন বিক্রি
+                        </button>
                     </div>
-                    <div class="stat-card orange">
-                        <div style="color: var(--gray);">মোট বিক্রি</div>
-                        <div class="stat-value" id="adminTotalSales">৳0</div>
-                    </div>
-                    <div class="stat-card red">
-                        <div style="color: var(--gray);">মোট কাস্টমার</div>
-                        <div class="stat-value" id="adminTotalCustomers">0</div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>তারিখ</th>
+                                    <th>পণ্য</th>
+                                    <th>পরিমাণ</th>
+                                    <th>মোট</th>
+                                    <th>লাভ</th>
+                                    <th>পেমেন্ট</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userSalesList"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             
-            <div class="content-section" id="admin-users-section"></div>
-            <div class="content-section" id="admin-all-products-section"></div>
-            <div class="content-section" id="admin-all-sales-section"></div>
-            <div class="content-section" id="admin-all-customers-section"></div>
-            <div class="content-section" id="admin-reports-section"></div>
-            <div class="content-section" id="admin-settings-section"></div>
+            <div class="content-section" id="user-purchases-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">ক্রয় তালিকা</div>
+                            <div class="card-subtitle">সব ক্রয়ের তথ্য</div>
+                        </div>
+                        <button class="btn btn-warning" onclick="openPurchaseModal()">
+                            <i class="fas fa-plus"></i> নতুন ক্রয়
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>তারিখ</th>
+                                    <th>পণ্য</th>
+                                    <th>পরিমাণ</th>
+                                    <th>মোট</th>
+                                    <th>সাপ্লায়ার</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userPurchasesList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-customers-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">কাস্টমার তালিকা</div>
+                            <div class="card-subtitle">আপনার সব কাস্টমার</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openCustomerModal()">
+                            <i class="fas fa-plus"></i> নতুন কাস্টমার
+                        </button>
+                    </div>
+                    <div id="userCustomersList"></div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-expenses-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">খরচ তালিকা</div>
+                            <div class="card-subtitle">সব খরচের তথ্য</div>
+                        </div>
+                        <button class="btn btn-danger" onclick="openExpenseModal()">
+                            <i class="fas fa-plus"></i> নতুন খরচ
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>তারিখ</th>
+                                    <th>ধরন</th>
+                                    <th>বিবরণ</th>
+                                    <th>পরিমাণ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userExpensesList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-suppliers-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">সাপ্লায়ার তালিকা</div>
+                            <div class="card-subtitle">আপনার সব সাপ্লায়ার</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openSupplierModal()">
+                            <i class="fas fa-plus"></i> নতুন সাপ্লায়ার
+                        </button>
+                    </div>
+                    <div id="userSuppliersList"></div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-payments-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">পেমেন্ট ইতিহাস</div>
+                        <div class="card-subtitle">সব পেমেন্টের তথ্য</div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>তারিখ</th>
+                                    <th>কাস্টমার</th>
+                                    <th>পরিমাণ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userPaymentsList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-reports-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">ব্যবসার সারসংক্ষেপ</div>
+                        <div class="card-subtitle">আপনার ব্যবসার সামগ্রিক চিত্র</div>
+                    </div>
+                    <div id="userReportSummary"></div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-recycle-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">রিসাইকেল বিন</div>
+                        <div class="card-subtitle">ডিলিট হওয়া পণ্যসমূহ</div>
+                    </div>
+                    <div id="userRecycleList"></div>
+                </div>
+            </div>
+            
+            <div class="content-section" id="user-settings-section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">সেটিংস</div>
+                    </div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="btn btn-warning" onclick="changeShopName()">
+                            <i class="fas fa-store"></i> দোকানের নাম
+                        </button>
+                        <button class="btn btn-info" onclick="editProfile()">
+                            <i class="fas fa-user-edit"></i> প্রোফাইল এডিট
+                        </button>
+                        <button class="btn btn-secondary" onclick="toggleDarkMode()">
+                            <i class="fas fa-moon"></i> ডার্ক মোড
+                        </button>
+                    </div>
+                </div>
+            </div>
         `;
+        
+        // Load all data
+        loadUserProducts();
+        loadUserSales();
+        loadUserPurchases();
+        loadUserCustomers();
+        loadUserExpenses();
+        loadUserSuppliers();
+        loadUserPayments();
+        loadUserReport();
+        loadUserRecycle();
+        loadUserChart();
     }
 
-    // Load User Data
+    // Load user products
+    function loadUserProducts() {
+        db.ref('users/' + currentUserId + '/products').on('value', snap => {
+            const list = document.getElementById('userProductsList');
+            if (!list) return;
+            list.innerHTML = '';
+            allProducts = {};
+            
+            snap.forEach(product => {
+                const p = product.val();
+                if (p.deleted) return;
+                allProducts[product.key] = p;
+                
+                list.innerHTML += `
+                    <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;transition:all 0.3s;">
+                        <div style="width:48px;height:48px;border-radius:12px;background:var(--primary-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;">
+                            ${p.name[0]}
+                        </div>
+                        <div style="flex:1;">
+                            <strong>${p.name}</strong>
+                            <div style="font-size:12px;color:var(--gray);">${p.category}</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-weight:600;">৳${p.salePrice}</div>
+                            <div style="font-size:12px;color:${p.stock <= p.lowStock ? 'var(--danger)' : 'var(--success)'};">
+                                ${p.stock <= p.lowStock ? '⚠️ স্টক কম: ' + p.stock : 'স্টক: ' + p.stock}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+
+    // Load user sales
+    function loadUserSales() {
+        db.ref('users/' + currentUserId + '/sales').on('value', snap => {
+            const tbody = document.getElementById('userSalesList');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            snap.forEach(sale => {
+                const s = sale.val();
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${new Date(s.timestamp).toLocaleDateString('bn-BD')}</td>
+                        <td><strong>${s.productName}</strong></td>
+                        <td>${s.quantity}</td>
+                        <td style="font-weight:600;">৳${s.total}</td>
+                        <td style="color:var(--success);">৳${s.profit || 0}</td>
+                        <td>${s.paymentMethod === 'cash' ? '<span class="badge badge-success">ক্যাশ</span>' : '<span class="badge badge-warning">বাকি</span>'}</td>
+                    </tr>
+                `;
+            });
+        });
+    }
+
+    // Load user purchases
+    function loadUserPurchases() {
+        db.ref('users/' + currentUserId + '/purchases').on('value', snap => {
+            const tbody = document.getElementById('userPurchasesList');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            snap.forEach(purchase => {
+                const p = purchase.val();
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td>
+                        <td><strong>${p.productName}</strong></td>
+                        <td>${p.quantity}</td>
+                        <td style="font-weight:600;">৳${p.total}</td>
+                        <td>${p.supplier}</td>
+                    </tr>
+                `;
+            });
+        });
+    }
+
+    // Load user customers
+    function loadUserCustomers() {
+        db.ref('users/' + currentUserId + '/customers').on('value', snap => {
+            const list = document.getElementById('userCustomersList');
+            if (!list) return;
+            list.innerHTML = '';
+            allCustomers = {};
+            
+            snap.forEach(customer => {
+                const c = customer.val();
+                if (c.deleted) return;
+                allCustomers[customer.key] = c;
+                
+                list.innerHTML += `
+                    <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+                        <div style="width:48px;height:48px;border-radius:50%;background:var(--success-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;">
+                            ${c.name[0]}
+                        </div>
+                        <div style="flex:1;">
+                            <strong>${c.name}</strong>
+                            <div style="font-size:12px;color:var(--gray);">${c.phone}</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-weight:600;">বাকি: ৳${c.due || 0}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+
+    // Load user expenses
+    function loadUserExpenses() {
+        db.ref('users/' + currentUserId + '/expenses').on('value', snap => {
+            const tbody = document.getElementById('userExpensesList');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            snap.forEach(expense => {
+                const e = expense.val();
+                const typeNames = { rent: 'ভাড়া', salary: 'বেতন', utilities: 'ইউটিলিটি', transport: 'পরিবহন', other: 'অন্যান্য' };
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${new Date(e.timestamp).toLocaleDateString('bn-BD')}</td>
+                        <td><span class="badge badge-info">${typeNames[e.type] || e.type}</span></td>
+                        <td>${e.description}</td>
+                        <td style="font-weight:600;color:var(--danger);">৳${e.amount}</td>
+                    </tr>
+                `;
+            });
+        });
+    }
+
+    // Load user suppliers
+    function loadUserSuppliers() {
+        db.ref('users/' + currentUserId + '/suppliers').on('value', snap => {
+            const list = document.getElementById('userSuppliersList');
+            if (!list) return;
+            list.innerHTML = '';
+            allSuppliers = {};
+            
+            snap.forEach(supplier => {
+                const s = supplier.val();
+                if (s.deleted) return;
+                allSuppliers[supplier.key] = s;
+                
+                list.innerHTML += `
+                    <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+                        <div style="width:48px;height:48px;border-radius:12px;background:var(--warning-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div style="flex:1;">
+                            <strong>${s.name}</strong>
+                            <div style="font-size:12px;color:var(--gray);">${s.phone || ''}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+
+    // Load user payments
+    function loadUserPayments() {
+        db.ref('users/' + currentUserId + '/payments').on('value', snap => {
+            const tbody = document.getElementById('userPaymentsList');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            snap.forEach(payment => {
+                const p = payment.val();
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${new Date(p.timestamp).toLocaleDateString('bn-BD')}</td>
+                        <td>${p.customerName}</td>
+                        <td style="font-weight:600;color:var(--success);">৳${p.amount}</td>
+                    </tr>
+                `;
+            });
+        });
+    }
+
+    // Load user report
+    function loadUserReport() {
+        Promise.all([
+            db.ref('users/' + currentUserId + '/sales').once('value'),
+            db.ref('users/' + currentUserId + '/expenses').once('value'),
+            db.ref('users/' + currentUserId + '/purchases').once('value')
+        ]).then(([salesSnap, expSnap, purSnap]) => {
+            let totalSales = 0, totalProfit = 0, totalExpenses = 0, totalPurchases = 0;
+            
+            salesSnap.forEach(sale => {
+                totalSales += sale.val().total;
+                totalProfit += sale.val().profit || 0;
+            });
+            
+            expSnap.forEach(expense => {
+                totalExpenses += expense.val().amount;
+            });
+            
+            purSnap.forEach(purchase => {
+                totalPurchases += purchase.val().total;
+            });
+            
+            document.getElementById('userReportSummary').innerHTML = `
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+                    <div class="stat-card">
+                        <div class="stat-label">মোট বিক্রি</div>
+                        <div class="stat-value" style="color:var(--primary);">৳${totalSales.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-label">মোট লাভ</div>
+                        <div class="stat-value" style="color:var(--success);">৳${totalProfit.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-label">মোট খরচ</div>
+                        <div class="stat-value" style="color:var(--danger);">৳${totalExpenses.toFixed(2)}</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-label">মোট ক্রয়</div>
+                        <div class="stat-value" style="color:var(--warning);">৳${totalPurchases.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Load user recycle
+    function loadUserRecycle() {
+        db.ref('users/' + currentUserId + '/recycleBin/products').once('value', snap => {
+            const list = document.getElementById('userRecycleList');
+            if (!list) return;
+            list.innerHTML = '';
+            
+            snap.forEach(product => {
+                const p = product.val();
+                list.innerHTML += `
+                    <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+                        <div style="flex:1;">
+                            <strong>${p.productName}</strong>
+                            <div style="font-size:12px;color:var(--gray);">${new Date(p.deletedAt).toLocaleDateString('bn-BD')}</div>
+                        </div>
+                        <button class="btn btn-success" onclick="restoreProduct('${product.key}')">
+                            <i class="fas fa-undo"></i> রিস্টোর
+                        </button>
+                    </div>
+                `;
+            });
+            
+            if (!snap.numChildren()) {
+                list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">রিসাইকেল বিন খালি</p>';
+            }
+        });
+    }
+
+    // Load user chart
+    function loadUserChart() {
+        const ctx = document.getElementById('userSalesChart');
+        if (!ctx) return;
+        
+        const last7 = [], data = [];
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            d.setHours(0, 0, 0, 0);
+            last7.push(d);
+            data.push(0);
+        }
+        
+        db.ref('users/' + currentUserId + '/sales').once('value').then(snap => {
+            snap.forEach(sale => {
+                const sd = new Date(sale.val().timestamp);
+                sd.setHours(0, 0, 0, 0);
+                const idx = last7.findIndex(d => d.getTime() === sd.getTime());
+                if (idx !== -1) data[idx] += sale.val().total;
+            });
+            
+            if (salesChart) salesChart.destroy();
+            
+            salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: last7.map(d => d.toLocaleDateString('bn-BD', { weekday: 'short' })),
+                    datasets: [{
+                        label: 'বিক্রি',
+                        data: data,
+                        borderColor: '#6C5CE7',
+                        backgroundColor: 'rgba(108,92,231,0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#6C5CE7',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+    // Load user data
     function loadUserData() {
         const today = new Date();
         today.setHours(0,0,0,0);
@@ -1154,54 +1539,25 @@
         db.ref('users/' + currentUserId + '/sales').orderByChild('timestamp').limitToLast(5).once('value')
             .then(snap => {
                 const tbody = document.getElementById('userRecentSales');
+                if (!tbody) return;
                 tbody.innerHTML = '';
+                
                 snap.forEach(sale => {
                     const s = sale.val();
                     tbody.innerHTML += `
                         <tr>
                             <td>${new Date(s.timestamp).toLocaleDateString('bn-BD')}</td>
-                            <td>${s.productName}</td>
+                            <td><strong>${s.productName}</strong></td>
                             <td>${s.quantity}</td>
                             <td>৳${s.total}</td>
-                            <td>${s.paymentMethod === 'cash' ? 'ক্যাশ' : 'বাকি'}</td>
+                            <td>${s.paymentMethod === 'cash' ? '<span class="badge badge-success">ক্যাশ</span>' : '<span class="badge badge-warning">বাকি</span>'}</td>
                         </tr>
                     `;
                 });
             });
     }
 
-    // Load Admin Data
-    function loadAdminData() {
-        db.ref('users').once('value')
-            .then(snap => {
-                document.getElementById('adminTotalUsers').textContent = snap.numChildren();
-                
-                let totalProducts = 0;
-                let totalSales = 0;
-                let totalCustomers = 0;
-                
-                snap.forEach(userSnap => {
-                    const products = userSnap.child('products').val();
-                    if (products) totalProducts += Object.keys(products).length;
-                    
-                    const sales = userSnap.child('sales').val();
-                    if (sales) {
-                        Object.values(sales).forEach(sale => {
-                            totalSales += sale.total || 0;
-                        });
-                    }
-                    
-                    const customers = userSnap.child('customers').val();
-                    if (customers) totalCustomers += Object.keys(customers).length;
-                });
-                
-                document.getElementById('adminTotalProducts').textContent = totalProducts;
-                document.getElementById('adminTotalSales').textContent = '৳' + totalSales.toFixed(2);
-                document.getElementById('adminTotalCustomers').textContent = totalCustomers;
-            });
-    }
-
-    // Show User Section
+    // Show user section
     function showUserSection(section) {
         document.querySelectorAll('#user-dashboard .content-section').forEach(el => el.classList.remove('active'));
         document.getElementById('user-' + section + '-section').classList.add('active');
@@ -1210,25 +1566,459 @@
         document.querySelectorAll(`#user-dashboard .menu-item-link[data-section="${section}"]`).forEach(el => el.classList.add('active'));
     }
 
-    // Show Admin Section
-    function showAdminSection(section) {
-        document.querySelectorAll('#admin-dashboard .content-section').forEach(el => el.classList.remove('active'));
-        document.getElementById('admin-' + section + '-section').classList.add('active');
-        
-        document.querySelectorAll('#admin-dashboard .menu-item-link').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll(`#admin-dashboard .menu-item-link[data-section="${section}"]`).forEach(el => el.classList.add('active'));
+    // Modal functions
+    function openProductModal() {
+        Swal.fire({
+            title: '<i class="fas fa-box"></i> নতুন পণ্য',
+            html: `
+                <div class="form-group">
+                    <label>পণ্যের নাম</label>
+                    <input type="text" id="product-name" class="swal2-input" placeholder="পণ্যের নাম" required>
+                </div>
+                <div class="form-group">
+                    <label>ক্যাটাগরি</label>
+                    <input type="text" id="product-category" class="swal2-input" placeholder="ক্যাটাগরি" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ক্রয় মূল্য</label>
+                        <input type="number" id="product-purchase-price" class="swal2-input" placeholder="৳" required>
+                    </div>
+                    <div class="form-group">
+                        <label>বিক্রয় মূল্য</label>
+                        <input type="number" id="product-sale-price" class="swal2-input" placeholder="৳" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>স্টক</label>
+                    <input type="number" id="product-stock" class="swal2-input" placeholder="স্টক" required>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-plus"></i> যোগ করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const name = document.getElementById('product-name').value;
+                const category = document.getElementById('product-category').value;
+                const purchasePrice = parseFloat(document.getElementById('product-purchase-price').value);
+                const salePrice = parseFloat(document.getElementById('product-sale-price').value);
+                const stock = parseInt(document.getElementById('product-stock').value);
+                
+                return db.ref('users/' + currentUserId + '/products').push({
+                    name, category, purchasePrice, salePrice, stock,
+                    lowStock: 5, deleted: false, createdAt: Date.now()
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('পণ্য যোগ হয়েছে!', 'success');
+                loadUserProducts();
+            }
+        });
     }
 
-    // Event Listeners
+    function openSaleModal() {
+        if (!Object.keys(allProducts).length) {
+            showToast('কোনো পণ্য নেই! আগে পণ্য যোগ করুন', 'warning');
+            return;
+        }
+        
+        Swal.fire({
+            title: '<i class="fas fa-cart-plus"></i> নতুন বিক্রি',
+            html: `
+                <div class="form-group">
+                    <label>পণ্য নির্বাচন</label>
+                    <select id="sale-product" class="swal2-select" required>
+                        <option value="">পণ্য নির্বাচন করুন</option>
+                        ${Object.entries(allProducts).map(([id, p]) => `<option value="${id}">${p.name} (৳${p.salePrice})</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>পরিমাণ</label>
+                    <input type="number" id="sale-quantity" class="swal2-input" placeholder="পরিমাণ" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>পেমেন্ট পদ্ধতি</label>
+                    <select id="sale-payment" class="swal2-select" required>
+                        <option value="cash">ক্যাশ</option>
+                        <option value="due">বাকি</option>
+                    </select>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-check"></i> বিক্রি করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const productId = document.getElementById('sale-product').value;
+                const quantity = parseInt(document.getElementById('sale-quantity').value);
+                const paymentMethod = document.getElementById('sale-payment').value;
+                
+                const product = allProducts[productId];
+                if (!product) {
+                    Swal.showValidationMessage('পণ্য নির্বাচন করুন');
+                    return;
+                }
+                
+                const total = product.salePrice * quantity;
+                const profit = (product.salePrice - product.purchasePrice) * quantity;
+                
+                return db.ref('users/' + currentUserId + '/sales').push({
+                    productId, productName: product.name, quantity,
+                    price: product.salePrice, total, profit,
+                    paymentMethod, timestamp: Date.now()
+                }).then(() => {
+                    return db.ref('users/' + currentUserId + '/products/' + productId).update({
+                        stock: product.stock - quantity
+                    });
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('বিক্রি সফল!', 'success');
+                loadUserProducts();
+                loadUserSales();
+                loadUserData();
+                loadUserChart();
+            }
+        });
+    }
+
+    function openPurchaseModal() {
+        if (!Object.keys(allProducts).length) {
+            showToast('কোনো পণ্য নেই! আগে পণ্য যোগ করুন', 'warning');
+            return;
+        }
+        
+        Swal.fire({
+            title: '<i class="fas fa-cart-arrow-down"></i> নতুন ক্রয়',
+            html: `
+                <div class="form-group">
+                    <label>পণ্য নির্বাচন</label>
+                    <select id="purchase-product" class="swal2-select" required>
+                        <option value="">পণ্য নির্বাচন করুন</option>
+                        ${Object.entries(allProducts).map(([id, p]) => `<option value="${id}">${p.name}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>পরিমাণ</label>
+                        <input type="number" id="purchase-quantity" class="swal2-input" placeholder="পরিমাণ" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ক্রয় মূল্য</label>
+                        <input type="number" id="purchase-price" class="swal2-input" placeholder="৳" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>সাপ্লায়ার</label>
+                    <input type="text" id="purchase-supplier" class="swal2-input" placeholder="সাপ্লায়ারের নাম" required>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-check"></i> ক্রয় করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const productId = document.getElementById('purchase-product').value;
+                const quantity = parseInt(document.getElementById('purchase-quantity').value);
+                const price = parseFloat(document.getElementById('purchase-price').value);
+                const supplier = document.getElementById('purchase-supplier').value;
+                
+                const product = allProducts[productId];
+                if (!product) {
+                    Swal.showValidationMessage('পণ্য নির্বাচন করুন');
+                    return;
+                }
+                
+                const total = price * quantity;
+                
+                return db.ref('users/' + currentUserId + '/purchases').push({
+                    productId, productName: product.name, quantity,
+                    price, total, supplier, timestamp: Date.now()
+                }).then(() => {
+                    return db.ref('users/' + currentUserId + '/products/' + productId).update({
+                        stock: (product.stock || 0) + quantity,
+                        purchasePrice: price
+                    });
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('ক্রয় সফল!', 'success');
+                loadUserProducts();
+                loadUserPurchases();
+                loadUserData();
+            }
+        });
+    }
+
+    function openCustomerModal() {
+        Swal.fire({
+            title: '<i class="fas fa-user-plus"></i> নতুন কাস্টমার',
+            html: `
+                <div class="form-group">
+                    <label>নাম</label>
+                    <input type="text" id="customer-name" class="swal2-input" placeholder="নাম" required>
+                </div>
+                <div class="form-group">
+                    <label>ফোন</label>
+                    <input type="text" id="customer-phone" class="swal2-input" placeholder="ফোন" required>
+                </div>
+                <div class="form-group">
+                    <label>ঠিকানা</label>
+                    <textarea id="customer-address" class="swal2-textarea" placeholder="ঠিকানা"></textarea>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-plus"></i> যোগ করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const name = document.getElementById('customer-name').value;
+                const phone = document.getElementById('customer-phone').value;
+                const address = document.getElementById('customer-address').value;
+                
+                return db.ref('users/' + currentUserId + '/customers').push({
+                    name, phone, address, due: 0, deleted: false, createdAt: Date.now()
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('কাস্টমার যোগ হয়েছে!', 'success');
+                loadUserCustomers();
+            }
+        });
+    }
+
+    function openExpenseModal() {
+        Swal.fire({
+            title: '<i class="fas fa-wallet"></i> নতুন খরচ',
+            html: `
+                <div class="form-group">
+                    <label>খরচের ধরন</label>
+                    <select id="expense-type" class="swal2-select" required>
+                        <option value="rent">ভাড়া</option>
+                        <option value="salary">বেতন</option>
+                        <option value="utilities">ইউটিলিটি</option>
+                        <option value="transport">পরিবহন</option>
+                        <option value="other">অন্যান্য</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>বিবরণ</label>
+                    <textarea id="expense-description" class="swal2-textarea" placeholder="বিবরণ" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>পরিমাণ</label>
+                    <input type="number" id="expense-amount" class="swal2-input" placeholder="৳" required>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-plus"></i> যোগ করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const type = document.getElementById('expense-type').value;
+                const description = document.getElementById('expense-description').value;
+                const amount = parseFloat(document.getElementById('expense-amount').value);
+                
+                return db.ref('users/' + currentUserId + '/expenses').push({
+                    type, description, amount, timestamp: Date.now()
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('খরচ যোগ হয়েছে!', 'success');
+                loadUserExpenses();
+                loadUserData();
+            }
+        });
+    }
+
+    function openSupplierModal() {
+        Swal.fire({
+            title: '<i class="fas fa-truck"></i> নতুন সাপ্লায়ার',
+            html: `
+                <div class="form-group">
+                    <label>নাম</label>
+                    <input type="text" id="supplier-name" class="swal2-input" placeholder="নাম" required>
+                </div>
+                <div class="form-group">
+                    <label>ফোন</label>
+                    <input type="text" id="supplier-phone" class="swal2-input" placeholder="ফোন">
+                </div>
+                <div class="form-group">
+                    <label>ঠিকানা</label>
+                    <textarea id="supplier-address" class="swal2-textarea" placeholder="ঠিকানা"></textarea>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-plus"></i> যোগ করুন',
+            cancelButtonText: 'বাতিল',
+            preConfirm: () => {
+                const name = document.getElementById('supplier-name').value;
+                const phone = document.getElementById('supplier-phone').value;
+                const address = document.getElementById('supplier-address').value;
+                
+                return db.ref('users/' + currentUserId + '/suppliers').push({
+                    name, phone, address, deleted: false, createdAt: Date.now()
+                });
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                showToast('সাপ্লায়ার যোগ হয়েছে!', 'success');
+                loadUserSuppliers();
+            }
+        });
+    }
+
+    // Restore product
+    function restoreProduct(productId) {
+        db.ref('users/' + currentUserId + '/products/' + productId).update({
+            deleted: false, deletedAt: null
+        }).then(() => {
+            db.ref('users/' + currentUserId + '/recycleBin/products/' + productId).remove();
+            showToast('পণ্য রিস্টোর হয়েছে!', 'success');
+            loadUserProducts();
+            loadUserRecycle();
+        });
+    }
+
+    // Change shop name
+    function changeShopName() {
+        Swal.fire({
+            title: 'দোকানের নাম',
+            input: 'text',
+            inputValue: currentShopName,
+            showCancelButton: true,
+            confirmButtonText: 'আপডেট করুন',
+            cancelButtonText: 'বাতিল'
+        }).then(result => {
+            if (result.isConfirmed) {
+                db.ref('users/' + currentUserId + '/settings/shopName').set(result.value);
+                currentShopName = result.value;
+                document.getElementById('userShopName').textContent = result.value;
+                showToast('দোকানের নাম আপডেট হয়েছে!', 'success');
+            }
+        });
+    }
+
+    // Edit profile
+    function editProfile() {
+        db.ref('users/' + currentUserId + '/profile').once('value', snap => {
+            const profile = snap.val();
+            
+            Swal.fire({
+                title: 'প্রোফাইল এডিট',
+                html: `
+                    <div class="form-group">
+                        <label>নাম</label>
+                        <input type="text" id="edit-name" class="swal2-input" value="${profile.name || ''}" placeholder="নাম">
+                    </div>
+                    <div class="form-group">
+                        <label>ফোন</label>
+                        <input type="text" id="edit-phone" class="swal2-input" value="${profile.phone || ''}" placeholder="ফোন">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'আপডেট করুন',
+                cancelButtonText: 'বাতিল',
+                preConfirm: () => {
+                    const name = document.getElementById('edit-name').value;
+                    const phone = document.getElementById('edit-phone').value;
+                    
+                    return db.ref('users/' + currentUserId + '/profile').update({
+                        name, phone
+                    });
+                }
+            }).then(result => {
+                if (result.isConfirmed) {
+                    showToast('প্রোফাইল আপডেট হয়েছে!', 'success');
+                }
+            });
+        });
+    }
+
+    // Show profile
+    function showProfile() {
+        db.ref('users/' + currentUserId + '/profile').once('value', snap => {
+            const profile = snap.val();
+            
+            Swal.fire({
+                title: 'প্রোফাইল',
+                html: `
+                    <div style="text-align:center;">
+                        <div style="width:80px;height:80px;border-radius:50%;background:var(--primary-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:700;margin:0 auto 16px;">
+                            ${profile.name ? profile.name[0] : 'U'}
+                        </div>
+                        <h4>${profile.name || 'User'}</h4>
+                        <p style="color:var(--gray);">${profile.email}</p>
+                        <p>রোল: <span class="badge badge-success">USER</span></p>
+                    </div>
+                `,
+                showCloseButton: true,
+                confirmButtonText: 'লগআউট'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    logout();
+                }
+            });
+        });
+    }
+
+    // Logout
+    function logout() {
+        auth.signOut();
+        document.getElementById('login-page').style.display = 'flex';
+        document.getElementById('user-dashboard').classList.remove('active');
+        
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+    }
+
+    // Toast
+    function showToast(message, type = 'success') {
+        Swal.fire({
+            title: type === 'success' ? 'সফল!' : 'ভুল!',
+            text: message,
+            icon: type,
+            timer: 2000,
+            showConfirmButton: false
+        });
+    }
+
+    // Loading
+    function showLoading(message = 'লোড হচ্ছে...') {
+        document.getElementById('loading').classList.add('active');
+        document.querySelector('#loading p').textContent = message;
+    }
+
+    function hideLoading() {
+        document.getElementById('loading').classList.remove('active');
+    }
+
+    // Tab switching
+    function showLoginTab() {
+        document.getElementById('login-tab').style.display = 'block';
+        document.getElementById('register-tab').style.display = 'none';
+    }
+
+    function showRegisterTab() {
+        document.getElementById('login-tab').style.display = 'none';
+        document.getElementById('register-tab').style.display = 'block';
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+        const isDark = document.body.classList.contains('dark-mode');
+        if (isDark) {
+            document.body.classList.remove('dark-mode');
+        } else {
+            document.body.classList.add('dark-mode');
+        }
+    }
+
+    // Event listeners
     document.querySelectorAll('#user-dashboard .menu-item-link, #user-dashboard .mobile-nav-item').forEach(el => {
         el.addEventListener('click', () => {
             showUserSection(el.dataset.section);
-        });
-    });
-
-    document.querySelectorAll('#admin-dashboard .menu-item-link').forEach(el => {
-        el.addEventListener('click', () => {
-            showAdminSection(el.dataset.section);
         });
     });
 </script>

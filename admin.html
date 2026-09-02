@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6C5CE7">
+    <title>বসনীসে হেসাব · এডমিন প্যানেল</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --primary-gradient: linear-gradient(135deg, #6C5CE7 0%, #4a3fbf 100%);
+            --success: #00B894;
+            --danger: #E17055;
+            --warning: #FDCB6E;
+            --info: #0984E3;
+            --dark: #2D3436;
+            --gray: #636E72;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --border: #E9ECEF;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            background: #F0F2F5;
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .admin-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-header h1 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Sidebar */
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+        .sidebar {
+            width: 250px;
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 20px;
+        }
+        .sidebar-menu {
+            list-style: none;
+        }
+        .sidebar-menu li {
+            margin-bottom: 8px;
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        .sidebar-menu a i {
+            width: 20px;
+        }
+
+        /* Main Content */
+        .admin-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+        .stat-card.green { border-left-color: var(--success); }
+        .stat-card.red { border-left-color: var(--danger); }
+        .stat-card.orange { border-left-color: var(--warning); }
+        .stat-card.blue { border-left-color: var(--info); }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: var(--light);
+            padding: 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            border-bottom: 2px solid var(--border);
+        }
+        td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        tr:hover {
+            background: #FAFBFC;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: var(--primary-gradient); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-info { background: var(--info); color: white; }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-admin { background: rgba(108,92,231,0.1); color: var(--primary); }
+        .badge-user { background: rgba(0,184,148,0.1); color: var(--success); }
+        .badge-active { background: rgba(0,184,148,0.1); color: var(--success); }
+        .badge-inactive { background: rgba(225,112,85,0.1); color: var(--danger); }
+
+        /* Search */
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            padding: 10px 16px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 10px;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu li {
+                margin-bottom: 0;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Admin Header -->
+<header class="admin-header">
+    <h1><i class="fas fa-shield-alt"></i> এডমিন প্যানেল</h1>
+    <div class="header-right">
+        <span id="adminName">Admin</span>
+        <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
+    </div>
+</header>
+
+<div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-chart-pie"></i> ড্যাশবোর্ড</a></li>
+            <li><a href="#" data-page="users"><i class="fas fa-users"></i> ইউজার ম্যানেজ</a></li>
+            <li><a href="#" data-page="all-products"><i class="fas fa-boxes"></i> সব পণ্য</a></li>
+            <li><a href="#" data-page="all-sales"><i class="fas fa-cart-plus"></i> সব বিক্রি</a></li>
+            <li><a href="#" data-page="all-purchases"><i class="fas fa-cart-arrow-down"></i> সব ক্রয়</a></li>
+            <li><a href="#" data-page="all-customers"><i class="fas fa-users"></i> সব কাস্টমার</a></li>
+            <li><a href="#" data-page="all-expenses"><i class="fas fa-wallet"></i> সব খরচ</a></li>
+            <li><a href="#" data-page="all-suppliers"><i class="fas fa-truck"></i> সব সাপ্লায়ার</a></li>
+            <li><a href="#" data-page="reports"><i class="fas fa-chart-line"></i> রিপোর্ট</a></li>
+            <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> সেটিংস</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+        <!-- Dashboard -->
+        <div class="page-section active" id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div style="color: var(--gray);">মোট ইউজার</div>
+                    <div class="stat-value" id="totalUsers">0</div>
+                </div>
+                <div class="stat-card green">
+                    <div style="color: var(--gray);">মোট পণ্য</div>
+                    <div class="stat-value" id="totalProducts">0</div>
+                </div>
+                <div class="stat-card blue">
+                    <div style="color: var(--gray);">মোট বিক্রি</div>
+                    <div class="stat-value" id="totalSales">৳0</div>
+                </div>
+                <div class="stat-card orange">
+                    <div style="color: var(--gray);">মোট কাস্টমার</div>
+                    <div class="stat-value" id="totalCustomers">0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সাম্প্রতিক ইউজারগণ</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>নাম</th>
+                                <th>ইমেইল</th>
+                                <th>রোল</th>
+                                <th>স্ট্যাটাস</th>
+                                <th>অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentUsersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Management -->
+        <div class="page-section" id="users">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজার</div>
+                    <div class="search-box" style="margin:0;width:300px;">
+                        <i class="fas fa-search" style="color: var(--gray);"></i>
+                        <input type="text" placeholder="ইউজার খুঁজুন..." id="userSearch" oninput="filterUsers()">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>নাম</th>
+                                <th>ইমেইল</th>
+                                <th>ফোন</th>
+                                <th>রোল</th>
+                                <th>স্ট্যাটাস</th>
+                                <th>অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Products -->
+        <div class="page-section" id="all-products">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের পণ্য</div>
+                    <button class="btn btn-info" onclick="exportProducts()"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>পণ্যের নাম</th>
+                                <th>ক্যাটাগরি</th>
+                                <th>ক্রয় মূল্য</th>
+                                <th>বিক্রয় মূল্য</th>
+                                <th>স্টক</th>
+                                <th>স্ট্যাটাস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allProductsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Sales -->
+        <div class="page-section" id="all-sales">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের বিক্রি</div>
+                    <button class="btn btn-info" onclick="exportSales()"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>তারিখ</th>
+                                <th>পণ্য</th>
+                                <th>পরিমাণ</th>
+                                <th>মোট</th>
+                                <th>পেমেন্ট</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allSalesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Purchases -->
+        <div class="page-section" id="all-purchases">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের ক্রয়</div>
+                    <button class="btn btn-info" onclick="exportPurchases()"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>তারিখ</th>
+                                <th>পণ্য</th>
+                                <th>পরিমাণ</th>
+                                <th>মোট</th>
+                                <th>সাপ্লায়ার</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allPurchasesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Customers -->
+        <div class="page-section" id="all-customers">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের কাস্টমার</div>
+                    <button class="btn btn-info" onclick="exportCustomers()"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>নাম</th>
+                                <th>ফোন</th>
+                                <th>বাকি</th>
+                                <th>স্ট্যাটাস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allCustomersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Expenses -->
+        <div class="page-section" id="all-expenses">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের খরচ</div>
+                    <button class="btn btn-info" onclick="exportExpenses()"><i class="fas fa-download"></i> Export</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>তারিখ</th>
+                                <th>ধরন</th>
+                                <th>বিবরণ</th>
+                                <th>পরিমাণ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allExpensesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Suppliers -->
+        <div class="page-section" id="all-suppliers">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সব ইউজারের সাপ্লায়ার</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>নাম</th>
+                                <th>ফোন</th>
+                                <th>স্ট্যাটাস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allSuppliersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <div class="page-section" id="reports">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">ব্যবসার সারসংক্ষেপ</div>
+                </div>
+                <div id="reportSummary" class="stats-grid"></div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="page-section" id="settings">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">সেটিংস</div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+                    <button class="btn btn-primary" onclick="changeShopName()"><i class="fas fa-store"></i> দোকানের নাম পরিবর্তন</button>
+                    <button class="btn btn-warning" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal" id="editUserModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-edit"></i> ইউজার এডিট</h3>
+            <button class="btn btn-danger" onclick="closeModal('editUserModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>নাম</label>
+                <input type="text" id="editUserName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>ফোন</label>
+                <input type="text" id="editUserPhone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>রোল</label>
+                <select id="editUserRole" class="form-control">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>স্ট্যাটাস</label>
+                <select id="editUserStatus" class="form-control">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal('editUserModal')">বাতিল</button>
+            <button class="btn btn-primary" onclick="saveUserChanges()"><i class="fas fa-save"></i> সেভ করুন</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAu3n9h853q1KciAJH7M31kOto8hsdlcTs",
+        authDomain: "basnise-hesab-khata.firebaseapp.com",
+        databaseURL: "https://basnise-hesab-khata-default-rtdb.firebaseio.com",
+        projectId: "basnise-hesab-khata",
+        storageBucket: "basnise-hesab-khata.firebasestorage.app",
+        messagingSenderId: "707770414615",
+        appId: "1:707770414615:web:c64488a739122d1ed9ce52"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let currentUser = null;
+    let currentUserId = null;
+    let currentUserRole = null;
+    let editingUserId = null;
+    let allUsers = {};
+
+    // Initialize
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            currentUser = user;
+            currentUserId = user.uid;
+            
+            // Check if admin
+            db.ref('users/' + currentUserId + '/profile/role').once('value')
+                .then(snap => {
+                    currentUserRole = snap.val();
+                    
+                    if (currentUserRole !== 'admin') {
+                        Swal.fire({
+                            title: 'অনুমতি নেই',
+                            text: 'শুধুমাত্র এডমিন এই প্যানেল ব্যবহার করতে পারবেন',
+                            icon: 'error',
+                            confirmButtonText: 'ঠিক আছে'
+                        }).then(() => {
+                            window.location.href = 'index.html';
+                        });
+                        return;
+                    }
+                    
+                    // Load admin data
+                    loadDashboard();
+                    loadAllUsers();
+                    loadAllUserData();
+                    loadAdminProfile();
+                });
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    // Load admin profile
+    function loadAdminProfile() {
+        db.ref('users/' + currentUserId + '/profile/name').once('value')
+            .then(snap => {
+                document.getElementById('adminName').textContent = snap.val() || 'Admin';
+            });
+    }
+
+    // Load dashboard stats
+    function loadDashboard() {
+        // Total users
+        db.ref('users').once('value').then(snap => {
+            document.getElementById('totalUsers').textContent = snap.numChildren();
+        });
+        
+        // Total products (all users)
+        db.ref('users').once('value').then(snap => {
+            let totalProducts = 0;
+            snap.forEach(userSnap => {
+                const products = userSnap.child('products').val();
+                if (products) {
+                    totalProducts += Object.keys(products).length;
+                }
+            });
+            document.getElementById('totalProducts').textContent = totalProducts;
+        });
+        
+        // Total sales (all users)
+        db.ref('users').once('value').then(snap => {
+            let totalSales = 0;
+            snap.forEach(userSnap => {
+                const sales = userSnap.child('sales').val();
+                if (sales) {
+                    Object.values(sales).forEach(sale => {
+                        totalSales += sale.total || 0;
+                    });
+                }
+            });
+            document.getElementById('totalSales').textContent = '৳' + totalSales.toFixed(2);
+        });
+        
+        // Total customers (all users)
+        db.ref('users').once('value').then(snap => {
+            let totalCustomers = 0;
+            snap.forEach(userSnap => {
+                const customers = userSnap.child('customers').val();
+                if (customers) {
+                    totalCustomers += Object.keys(customers).length;
+                }
+            });
+            document.getElementById('totalCustomers').textContent = totalCustomers;
+        });
+        
+        // Load recent users
+        loadRecentUsers();
+    }
+
+    // Load all users
+    function loadAllUsers() {
+        db.ref('users').on('value', snap => {
+            allUsers = snap.val() || {};
+            renderUsersTable();
+        });
+    }
+
+    // Render users table
+    function renderUsersTable() {
+        const tbody = document.getElementById('usersTable');
+        tbody.innerHTML = '';
+        
+        Object.entries(allUsers).forEach(([userId, userData]) => {
+            const profile = userData.profile || {};
+            const role = profile.role || 'user';
+            const status = profile.status || 'active';
+            
+            tbody.innerHTML += `
+                <tr>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="width:36px;height:36px;border-radius:50%;background:var(--primary-gradient);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;">
+                                ${profile.name ? profile.name[0] : 'U'}
+                            </div>
+                            <div>
+                                <strong>${profile.name || 'Unknown'}</strong>
+                                <div style="font-size:12px;color:var(--gray);">${userId.substring(0, 8)}...</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${profile.email || 'N/A'}</td>
+                    <td>${profile.phone || 'N/A'}</td>
+                    <td>
+                        <span class="badge ${role === 'admin' ? 'badge-admin' : 'badge-user'}">
+                            ${role === 'admin' ? 'Admin' : 'User'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge ${status === 'active' ? 'badge-active' : 'badge-inactive'}">
+                            ${status === 'active' ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" onclick="editUser('${userId}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger" onclick="deleteUser('${userId}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    // Filter users
+    function filterUsers() {
+        const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+        const tbody = document.getElementById('usersTable');
+        tbody.innerHTML = '';
+        
+        Object.entries(allUsers).forEach(([userId, userData]) => {
+            const profile = userData.profile || {};
+            const name = (profile.name || '').toLowerCase();
+            const email = (profile.email || '').toLowerCase();
+            
+            if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                const role = profile.role || 'user';
+                const status = profile.status || 'active';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${profile.name || 'Unknown'}</td>
+                        <td>${profile.email || 'N/A'}</td>
+                        <td>${profile.phone || 'N/A'}</td>
+                        <td><span class="badge ${role === 'admin' ? 'badge-admin' : 'badge-user'}">${role}</span></td>
+                        <td><span class="badge ${status === 'active' ? 'badge-active' : 'badge-inactive'}">${status}</span></td>
+                        <td>
+                            <button class="btn btn-info" onclick="editUser('${userId}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger" onclick="deleteUser('${userId}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }
+        });
+    }
+
+    // Load recent users
+    function loadRecentUsers() {
+        db.ref('users').orderByChild('profile/createdAt').limitToLast(5).once('value')
+            .then(snap => {
+                const tbody = document.getElementById('recentUsersTable');
+                tbody.innerHTML = '';
+                
+                snap.forEach(userSnap => {
+                    const userId = userSnap.key;
+                    const profile = userSnap.child('profile').val() || {};
+                    const role = profile.role || 'user';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${profile.name || 'Unknown'}</td>
+                            <td>${profile.email || 'N/A'}</td>
+                            <td><span class="badge ${role === 'admin' ? 'badge-admin' : 'badge-user'}">${role}</span></td>
+                            <td><span class="badge badge-active">Active</span></td>
+                            <td>
+                                <button class="btn btn-info" onclick="editUser('${userId}')"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+
+    // Edit user
+    function editUser(userId) {
+        editingUserId = userId;
+        const userData = allUsers[userId];
+        const profile = userData.profile || {};
+        
+        document.getElementById('editUserName').value = profile.name || '';
+        document.getElementById('editUserPhone').value = profile.phone || '';
+        document.getElementById('editUserRole').value = profile.role || 'user';
+        document.getElementById('editUserStatus').value = profile.status || 'active';
+        
+        document.getElementById('editUserModal').classList.add('active');
+    }
+
+    // Save user changes
+    function saveUserChanges() {
+        const name = document.getElementById('editUserName').value;
+        const phone = document.getElementById('editUserPhone').value;
+        const role = document.getElementById('editUserRole').value;
+        const status = document.getElementById('editUserStatus').value;
+        
+        db.ref('users/' + editingUserId + '/profile').update({
+            name: name,
+            phone: phone,
+            role: role,
+            status: status
+        }).then(() => {
+            closeModal('editUserModal');
+            Swal.fire({
+                title: 'সফল!',
+                text: 'ইউজার তথ্য আপডেট হয়েছে',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+            loadAllUsers();
+            loadDashboard();
+        }).catch(error => {
+            Swal.fire({
+                title: 'ব্যর্থ!',
+                text: error.message,
+                icon: 'error'
+            });
+        });
+    }
+
+    // Delete user
+    function deleteUser(userId) {
+        Swal.fire({
+            title: 'ইউজার ডিলিট করবেন?',
+            text: 'এই কাজটি ফেরত নেওয়া যাবে না',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'হ্যাঁ, ডিলিট করুন',
+            cancelButtonText: 'বাতিল'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                db.ref('users/' + userId).remove()
+                    .then(() => {
+                        Swal.fire({
+                            title: 'ডিলিট হয়েছে!',
+                            text: 'ইউজার ডিলিট করা হয়েছে',
+                            icon: 'success'
+                        });
+                        loadAllUsers();
+                        loadDashboard();
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'ব্যর্থ!',
+                            text: error.message,
+                            icon: 'error'
+                        });
+                    });
+            }
+        });
+    }
+
+    // Load all user data
+    function loadAllUserData() {
+        loadAllProducts();
+        loadAllSales();
+        loadAllPurchases();
+        loadAllCustomers();
+        loadAllExpenses();
+        loadAllSuppliers();
+    }
+
+    // Load all products
+    function loadAllProducts() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allProductsTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const products = userSnap.child('products').val() || {};
+                
+                Object.entries(products).forEach(([productId, product]) => {
+                    if (!product.deleted) {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${profile.name || 'Unknown'}</td>
+                                <td>${product.name}</td>
+                                <td>${product.category}</td>
+                                <td>৳${product.purchasePrice}</td>
+                                <td>৳${product.salePrice}</td>
+                                <td>${product.stock}</td>
+                                <td>
+                                    ${product.stock <= product.lowStock ? '<span class="badge badge-inactive">স্টক কম</span>' : '<span class="badge badge-active">স্টক আছে</span>'}
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+            });
+        });
+    }
+
+    // Load all sales
+    function loadAllSales() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allSalesTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const sales = userSnap.child('sales').val() || {};
+                
+                Object.entries(sales).forEach(([saleId, sale]) => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${profile.name || 'Unknown'}</td>
+                            <td>${new Date(sale.timestamp).toLocaleDateString('bn-BD')}</td>
+                            <td>${sale.productName}</td>
+                            <td>${sale.quantity}</td>
+                            <td>৳${sale.total}</td>
+                            <td>${sale.paymentMethod === 'cash' ? 'ক্যাশ' : 'বাকি'}</td>
+                        </tr>
+                    `;
+                });
+            });
+        });
+    }
+
+    // Load all purchases
+    function loadAllPurchases() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allPurchasesTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const purchases = userSnap.child('purchases').val() || {};
+                
+                Object.entries(purchases).forEach(([purchaseId, purchase]) => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${profile.name || 'Unknown'}</td>
+                            <td>${new Date(purchase.timestamp).toLocaleDateString('bn-BD')}</td>
+                            <td>${purchase.productName}</td>
+                            <td>${purchase.quantity}</td>
+                            <td>৳${purchase.total}</td>
+                            <td>${purchase.supplier}</td>
+                        </tr>
+                    `;
+                });
+            });
+        });
+    }
+
+    // Load all customers
+    function loadAllCustomers() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allCustomersTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const customers = userSnap.child('customers').val() || {};
+                
+                Object.entries(customers).forEach(([customerId, customer]) => {
+                    if (!customer.deleted) {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${profile.name || 'Unknown'}</td>
+                                <td>${customer.name}</td>
+                                <td>${customer.phone}</td>
+                                <td>৳${customer.due || 0}</td>
+                                <td><span class="badge badge-active">Active</span></td>
+                            </tr>
+                        `;
+                    }
+                });
+            });
+        });
+    }
+
+    // Load all expenses
+    function loadAllExpenses() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allExpensesTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const expenses = userSnap.child('expenses').val() || {};
+                
+                Object.entries(expenses).forEach(([expenseId, expense]) => {
+                    const typeNames = { rent: 'ভাড়া', salary: 'বেতন', utilities: 'ইউটিলিটি', transport: 'পরিবহন', other: 'অন্যান্য' };
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${profile.name || 'Unknown'}</td>
+                            <td>${new Date(expense.timestamp).toLocaleDateString('bn-BD')}</td>
+                            <td>${typeNames[expense.type] || expense.type}</td>
+                            <td>${expense.description}</td>
+                            <td>৳${expense.amount}</td>
+                        </tr>
+                    `;
+                });
+            });
+        });
+    }
+
+    // Load all suppliers
+    function loadAllSuppliers() {
+        db.ref('users').on('value', snap => {
+            const tbody = document.getElementById('allSuppliersTable');
+            tbody.innerHTML = '';
+            
+            snap.forEach(userSnap => {
+                const userId = userSnap.key;
+                const profile = userSnap.child('profile').val() || {};
+                const suppliers = userSnap.child('suppliers').val() || {};
+                
+                Object.entries(suppliers).forEach(([supplierId, supplier]) => {
+                    if (!supplier.deleted) {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${profile.name || 'Unknown'}</td>
+                                <td>${supplier.name}</td>
+                                <td>${supplier.phone || 'N/A'}</td>
+                                <td><span class="badge badge-active">Active</span></td>
+                            </tr>
+                        `;
+                    }
+                });
+            });
+        });
+    }
+
+    // Close modal
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Logout
+    function logout() {
+        auth.signOut();
+        window.location.href = 'index.html';
+    }
+
+    // Export functions
+    function exportProducts() {
+        const data = [];
+        const tbody = document.getElementById('allProductsTable');
+        const rows = tbody.querySelectorAll('tr');
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            data.push({
+                'ইউজার': cells[0].textContent,
+                'পণ্যের নাম': cells[1].textContent,
+                'ক্যাটাগরি': cells[2].textContent,
+                'ক্রয় মূল্য': cells[3].textContent,
+                'বিক্রয় মূল্য': cells[4].textContent,
+                'স্টক': cells[5].textContent
+            });
+        });
+        
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Products');
+        XLSX.writeFile(wb, `all_products_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    function exportSales() {
+        const data = [];
+        const tbody = document.getElementById('allSalesTable');
+        const rows = tbody.querySelectorAll('tr');
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            data.push({
+                'ইউজার': cells[0].textContent,
+                'তারিখ': cells[1].textContent,
+                'পণ্য': cells[2].textContent,
+                'পরিমাণ': cells[3].textContent,
+                'মোট': cells[4].textContent,
+                'পেমেন্ট': cells[5].textContent
+            });
+        });
+        
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sales');
+        XLSX.writeFile(wb, `all_sales_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // Sidebar menu handling
+    document.querySelectorAll('.sidebar-menu a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Remove active class from all links
+            document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+            
+            // Add active class to clicked link
+            link.classList.add('active');
+            
+            // Get page id
+            const pageId = link.dataset.page;
+            
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(pageId).classList.add('active');
+        });
+    });
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+        const isDark = document.body.classList.contains('dark-mode');
+        if (isDark) {
+            document.body.classList.remove('dark-mode');
+        } else {
+            document.body.classList.add('dark-mode');
+        }
+    }
+
+    // Shop name change
+    function changeShopName() {
+        Swal.fire({
+            title: 'দোকানের নাম',
+            input: 'text',
+            inputPlaceholder: 'নতুন নাম',
+            showCancelButton: true
+        }).then(result => {
+            if (result.isConfirmed) {
+                // Update all users' shop name
+                db.ref('users').once('value', snap => {
+                    snap.forEach(userSnap => {
+                        db.ref('users/' + userSnap.key + '/settings/shopName').set(result.value);
+                    });
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>
